@@ -7,8 +7,8 @@ namespace Bioterio.Models
     {
         public int IdRegAlim { get; set; }
         public DateTime Data { get; set; }
-        public double Peso { get; set; }
-        public double? Sobras { get; set; }
+        public float Peso { get; set; }
+        public float? Sobras { get; set; }
         public int PlanoAlimentarIdPlanAlim { get; set; }
         public int TanqueIdTanque { get; set; }
 

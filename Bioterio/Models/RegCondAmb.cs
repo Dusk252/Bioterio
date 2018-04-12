@@ -7,10 +7,10 @@ namespace Bioterio.Models
     {
         public int IdRegCondAmb { get; set; }
         public DateTime Data { get; set; }
-        public double? Temperatura { get; set; }
-        public double? VolAgua { get; set; }
-        public double? SalinidadeAgua { get; set; }
-        public double? NivelO2 { get; set; }
+        public float? Temperatura { get; set; }
+        public float? VolAgua { get; set; }
+        public float? SalinidadeAgua { get; set; }
+        public float? NivelO2 { get; set; }
         public int CircuitoTanqueIdCircuito { get; set; }
 
         public CircuitoTanque CircuitoTanqueIdCircuitoNavigation { get; set; }

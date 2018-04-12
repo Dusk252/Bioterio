@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bioterio", "Bioterio\Bioterio.csproj", "{AA28E7FC-99A7-4693-BE61-D12FB857386F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bioterio", "Bioterio\Bioterio.csproj", "{C8A7FC05-8926-4D61-A120-DAADF93CB287}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AA28E7FC-99A7-4693-BE61-D12FB857386F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AA28E7FC-99A7-4693-BE61-D12FB857386F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AA28E7FC-99A7-4693-BE61-D12FB857386F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AA28E7FC-99A7-4693-BE61-D12FB857386F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8A7FC05-8926-4D61-A120-DAADF93CB287}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8A7FC05-8926-4D61-A120-DAADF93CB287}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8A7FC05-8926-4D61-A120-DAADF93CB287}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8A7FC05-8926-4D61-A120-DAADF93CB287}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {519F6162-C00D-4726-86F2-7E7907ADFDDC}
+		SolutionGuid = {87A25724-D467-4A45-A4B0-8DEDE15BF4C6}
 	EndGlobalSection
 EndGlobal

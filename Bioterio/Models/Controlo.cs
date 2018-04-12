@@ -8,7 +8,7 @@ namespace Bioterio.Models
         public int EntryId { get; set; }
         public string TableName { get; set; }
         public string AttributeName { get; set; }
-        public double? LowerBound { get; set; }
-        public double? UpperBound { get; set; }
+        public float? LowerBound { get; set; }
+        public float? UpperBound { get; set; }
     }
 }

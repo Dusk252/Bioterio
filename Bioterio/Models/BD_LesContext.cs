@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Bioterio.Models
 {
-    public partial class BD_LesContext : DbContext
+    public partial class bd_lesContext : DbContext
     {
         public virtual DbSet<AgenteTrat> AgenteTrat { get; set; }
         public virtual DbSet<CircuitoTanque> CircuitoTanque { get; set; }
@@ -43,7 +43,7 @@ namespace Bioterio.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=BD-Les;Trusted_Connection=True;");
+                optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=root;database=bd-les");
             }
         }
 
@@ -57,13 +57,12 @@ namespace Bioterio.Models
 
                 entity.Property(e => e.IdAgenTra)
                     .HasColumnName("idAgenTra")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.NomeAgenTra)
                     .IsRequired()
                     .HasColumnName("nomeAgenTra")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                    .HasMaxLength(45);
             });
 
             modelBuilder.Entity<CircuitoTanque>(entity =>
@@ -77,26 +76,28 @@ namespace Bioterio.Models
 
                 entity.Property(e => e.IdCircuito)
                     .HasColumnName("idCircuito")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.CodigoCircuito)
                     .HasColumnName("codigoCircuito")
-                    .HasMaxLength(15)
-                    .IsUnicode(false);
+                    .HasMaxLength(15);
 
                 entity.Property(e => e.DataCriacao)
                     .HasColumnName("dataCriacao")
-                    .HasColumnType("date");
+                    .HasColumnType("datetime");
 
                 entity.Property(e => e.DataFinal)
                     .HasColumnName("dataFinal")
-                    .HasColumnType("date");
+                    .HasColumnType("datetime");
 
-                entity.Property(e => e.ProjetoIdProjeto).HasColumnName("Projeto_idProjeto");
+                entity.Property(e => e.ProjetoIdProjeto)
+                    .HasColumnName("Projeto_idProjeto")
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.VarControlo)
                     .HasColumnName("varControlo")
-                    .HasDefaultValueSql("('0')");
+                    .HasColumnType("bit(1)")
+                    .HasDefaultValueSql("'b\\'0\\''");
 
                 entity.HasOne(d => d.ProjetoIdProjetoNavigation)
                     .WithMany(p => p.CircuitoTanque)
@@ -114,15 +115,18 @@ namespace Bioterio.Models
                 entity.HasIndex(e => e.DistritoId)
                     .HasName("fk_Conselho_Distrito1_idx");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.DistritoId).HasColumnName("Distrito_id");
+                entity.Property(e => e.DistritoId)
+                    .HasColumnName("Distrito_id")
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.NomeConselho)
                     .IsRequired()
                     .HasColumnName("nomeConselho")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                    .HasMaxLength(45);
 
                 entity.HasOne(d => d.Distrito)
                     .WithMany(p => p.Conselho)
@@ -137,17 +141,17 @@ namespace Bioterio.Models
 
                 entity.ToTable("controlo");
 
-                entity.Property(e => e.EntryId).HasColumnName("entry_id");
+                entity.Property(e => e.EntryId)
+                    .HasColumnName("entry_id")
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.TableName)
                     .HasColumnName("table_name")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                    .HasMaxLength(45);
 
                 entity.Property(e => e.AttributeName)
                     .HasColumnName("attribute_name")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                    .HasMaxLength(45);
 
                 entity.Property(e => e.LowerBound).HasColumnName("lower_bound");
 
@@ -160,28 +164,29 @@ namespace Bioterio.Models
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.NomeDistrito)
                     .HasColumnName("nomeDistrito")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                    .HasMaxLength(45);
             });
 
             modelBuilder.Entity<Elementoequipa>(entity =>
             {
-                entity.HasKey(e => e.ProjetoIdProjeto);
+                entity.HasKey(e => new { e.ProjetoIdProjeto, e.FuncionarioIdFuncionario });
 
                 entity.ToTable("elementoequipa");
 
                 entity.HasIndex(e => e.FuncionarioIdFuncionario)
-                    .HasName("fk_equipaProjeto_Funcionario1_idx");
+                    .HasName("fk_elementoEquipa_Funcionario1_idx");
 
                 entity.Property(e => e.ProjetoIdProjeto)
                     .HasColumnName("Projeto_idProjeto")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.FuncionarioIdFuncionario).HasColumnName("Funcionario_idFuncionario");
+                entity.Property(e => e.FuncionarioIdFuncionario)
+                    .HasColumnName("Funcionario_idFuncionario")
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.Função)
                     .IsRequired()
@@ -192,11 +197,11 @@ namespace Bioterio.Models
                     .WithMany(p => p.Elementoequipa)
                     .HasForeignKey(d => d.FuncionarioIdFuncionario)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_equipaProjeto_Funcionario1");
+                    .HasConstraintName("fk_elementoEquipa_Funcionario1");
 
                 entity.HasOne(d => d.ProjetoIdProjetoNavigation)
-                    .WithOne(p => p.Elementoequipa)
-                    .HasForeignKey<Elementoequipa>(d => d.ProjetoIdProjeto)
+                    .WithMany(p => p.Elementoequipa)
+                    .HasForeignKey(d => d.ProjetoIdProjeto)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_equipaProjeto_Projeto1");
             });
@@ -213,29 +218,38 @@ namespace Bioterio.Models
                 entity.HasIndex(e => e.ProjetoIdProjeto)
                     .HasName("fk_Ensaio_Projeto1_idx");
 
-                entity.Property(e => e.IdEnsaio).HasColumnName("idEnsaio");
+                entity.Property(e => e.IdEnsaio)
+                    .HasColumnName("idEnsaio")
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.ProjetoIdProjeto).HasColumnName("Projeto_idProjeto");
+                entity.Property(e => e.ProjetoIdProjeto)
+                    .HasColumnName("Projeto_idProjeto")
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.DataFim)
                     .HasColumnName("dataFim")
-                    .HasColumnType("date");
+                    .HasColumnType("datetime");
 
                 entity.Property(e => e.DataInicio)
                     .HasColumnName("dataInicio")
-                    .HasColumnType("date");
+                    .HasColumnType("datetime");
 
                 entity.Property(e => e.DescTratamento)
                     .IsRequired()
                     .HasColumnName("descTratamento")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                    .HasMaxLength(45);
 
-                entity.Property(e => e.GrauSeveridade).HasColumnName("grauSeveridade");
+                entity.Property(e => e.GrauSeveridade)
+                    .HasColumnName("grauSeveridade")
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.LoteIdLote).HasColumnName("Lote_idLote");
+                entity.Property(e => e.LoteIdLote)
+                    .HasColumnName("Lote_idLote")
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.MembroEquipaIdEquipa).HasColumnName("membroEquipa_idEquipa");
+                entity.Property(e => e.MembroEquipaIdEquipa)
+                    .HasColumnName("membroEquipa_idEquipa")
+                    .HasColumnType("int(11)");
 
                 entity.HasOne(d => d.LoteIdLoteNavigation)
                     .WithMany(p => p.Ensaio)
@@ -256,26 +270,25 @@ namespace Bioterio.Models
 
                 entity.ToTable("especie");
 
-                entity.HasIndex(e => e.IdEspecie)
-                    .HasName("UQ__especie__8E5AC249BF672312")
-                    .IsUnique();
-
                 entity.HasIndex(e => new { e.FamiliaIdFamilia, e.FamiliaGrupoIdGrupo })
                     .HasName("fk_Especie_Familia1_idx");
 
-                entity.Property(e => e.IdEspecie).HasColumnName("idEspecie");
+                entity.Property(e => e.IdEspecie)
+                    .HasColumnName("idEspecie")
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedOnAdd();
 
-                entity.Property(e => e.FamiliaIdFamilia).HasColumnName("Familia_idFamilia");
+                entity.Property(e => e.FamiliaIdFamilia)
+                    .HasColumnName("Familia_idFamilia")
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.FamiliaGrupoIdGrupo).HasColumnName("Familia_Grupo_idGrupo");
+                entity.Property(e => e.FamiliaGrupoIdGrupo)
+                    .HasColumnName("Familia_Grupo_idGrupo")
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.NomeCient)
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                entity.Property(e => e.NomeCient).HasMaxLength(45);
 
-                entity.Property(e => e.NomeVulgar)
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                entity.Property(e => e.NomeVulgar).HasMaxLength(45);
 
                 entity.HasOne(d => d.Familia)
                     .WithMany(p => p.Especie)
@@ -293,9 +306,14 @@ namespace Bioterio.Models
                 entity.HasIndex(e => e.GrupoIdGrupo)
                     .HasName("fk_Familia_Grupo1_idx");
 
-                entity.Property(e => e.IdFamilia).HasColumnName("idFamilia");
+                entity.Property(e => e.IdFamilia)
+                    .HasColumnName("idFamilia")
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedOnAdd();
 
-                entity.Property(e => e.GrupoIdGrupo).HasColumnName("Grupo_idGrupo");
+                entity.Property(e => e.GrupoIdGrupo)
+                    .HasColumnName("Grupo_idGrupo")
+                    .HasColumnType("int(11)");
 
                 entity.HasOne(d => d.GrupoIdGrupoNavigation)
                     .WithMany(p => p.Familia)
@@ -312,12 +330,11 @@ namespace Bioterio.Models
 
                 entity.Property(e => e.IdFinalidade)
                     .HasColumnName("idFinalidade")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.TFinalidade)
                     .HasColumnName("T_Finalidade")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                    .HasMaxLength(45);
             });
 
             modelBuilder.Entity<Fornecedorcolector>(entity =>
@@ -328,24 +345,23 @@ namespace Bioterio.Models
 
                 entity.Property(e => e.IdFornColect)
                     .HasColumnName("idFornColect")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.Morada)
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                entity.Property(e => e.Morada).HasMaxLength(45);
 
-                entity.Property(e => e.Nif).HasColumnName("NIF");
+                entity.Property(e => e.Nif)
+                    .HasColumnName("NIF")
+                    .HasColumnType("int(10)");
 
-                entity.Property(e => e.Nome)
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                entity.Property(e => e.Nome).HasMaxLength(45);
 
-                entity.Property(e => e.NroLicenca).HasColumnName("nroLicenca");
+                entity.Property(e => e.NroLicenca)
+                    .HasColumnName("nroLicenca")
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.Telefone)
                     .HasColumnName("telefone")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                    .HasMaxLength(10);
 
                 entity.Property(e => e.Tipo)
                     .IsRequired()
@@ -360,30 +376,26 @@ namespace Bioterio.Models
 
                 entity.Property(e => e.IdFuncionario)
                     .HasColumnName("idFuncionario")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.NomeCompleto)
                     .IsRequired()
                     .HasColumnName("nomeCompleto")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                    .HasMaxLength(45);
 
                 entity.Property(e => e.NomeUtilizador)
                     .IsRequired()
                     .HasColumnName("nomeUtilizador")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                    .HasMaxLength(45);
 
                 entity.Property(e => e.Password)
                     .IsRequired()
                     .HasColumnName("password")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                    .HasMaxLength(45);
 
                 entity.Property(e => e.Telefone)
                     .HasColumnName("telefone")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                    .HasMaxLength(45);
             });
 
             modelBuilder.Entity<Grupo>(entity =>
@@ -394,11 +406,9 @@ namespace Bioterio.Models
 
                 entity.Property(e => e.IdGrupo)
                     .HasColumnName("idGrupo")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.NomeGrupo)
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                entity.Property(e => e.NomeGrupo).HasMaxLength(45);
             });
 
             modelBuilder.Entity<Localcaptura>(entity =>
@@ -410,15 +420,23 @@ namespace Bioterio.Models
                 entity.HasIndex(e => new { e.ConselhoId, e.ConselhoDistritoId })
                     .HasName("fk_LocalCaptura_Conselho1_idx");
 
-                entity.Property(e => e.IdLocalCaptura).HasColumnName("idLocalCaptura");
+                entity.Property(e => e.IdLocalCaptura)
+                    .HasColumnName("idLocalCaptura")
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.ConselhoId).HasColumnName("Conselho_id");
+                entity.Property(e => e.ConselhoId)
+                    .HasColumnName("Conselho_id")
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.ConselhoDistritoId).HasColumnName("Conselho_Distrito_id");
+                entity.Property(e => e.ConselhoDistritoId)
+                    .HasColumnName("Conselho_Distrito_id")
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.Localidade)
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                entity.Property(e => e.Latitude).HasColumnType("float(10,6)");
+
+                entity.Property(e => e.Localidade).HasMaxLength(45);
+
+                entity.Property(e => e.Longitude).HasColumnType("float(10,6)");
 
                 entity.HasOne(d => d.Conselho)
                     .WithMany(p => p.Localcaptura)
@@ -441,33 +459,35 @@ namespace Bioterio.Models
 
                 entity.Property(e => e.IdLote)
                     .HasColumnName("idLote")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.CodigoLote)
                     .IsRequired()
                     .HasColumnName("codigoLote")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                    .HasMaxLength(10);
 
                 entity.Property(e => e.DataFim)
                     .HasColumnName("dataFim")
-                    .HasColumnType("date");
+                    .HasColumnType("datetime");
 
                 entity.Property(e => e.DataInicio)
                     .HasColumnName("dataInicio")
-                    .HasColumnType("date");
+                    .HasColumnType("datetime");
 
-                entity.Property(e => e.FuncionarioIdFuncionario).HasColumnName("Funcionario_idFuncionario");
+                entity.Property(e => e.FuncionarioIdFuncionario)
+                    .HasColumnName("Funcionario_idFuncionario")
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.Observacoes)
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                entity.Property(e => e.Observacoes).HasMaxLength(45);
 
-                entity.Property(e => e.RegNovosAnimaisIdRegAnimal).HasColumnName("Reg_Novos_Animais_idRegAnimal");
+                entity.Property(e => e.RegNovosAnimaisIdRegAnimal)
+                    .HasColumnName("Reg_Novos_Animais_idRegAnimal")
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.VarControlo)
                     .HasColumnName("varControlo")
-                    .HasDefaultValueSql("('0')");
+                    .HasColumnType("bit(1)")
+                    .HasDefaultValueSql("'b\\'0\\''");
 
                 entity.HasOne(d => d.FuncionarioIdFuncionarioNavigation)
                     .WithMany(p => p.Lote)
@@ -494,15 +514,18 @@ namespace Bioterio.Models
                 entity.HasIndex(e => e.LoteIdLotePrev)
                     .HasName("fk_Sub_Lote_Lote1_idx");
 
-                entity.Property(e => e.LoteIdLotePrev).HasColumnName("Lote_idLote_prev");
+                entity.Property(e => e.LoteIdLotePrev)
+                    .HasColumnName("Lote_idLote_prev")
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.LoteIdLoteAtual).HasColumnName("Lote_idLote_atual");
+                entity.Property(e => e.LoteIdLoteAtual)
+                    .HasColumnName("Lote_idLote_atual")
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.CodigoSubLote)
                     .IsRequired()
                     .HasColumnName("codigoSubLote")
-                    .HasMaxLength(15)
-                    .IsUnicode(false);
+                    .HasMaxLength(15);
 
                 entity.HasOne(d => d.LoteIdLoteAtualNavigation)
                     .WithMany(p => p.LoteSubLoteLoteIdLoteAtualNavigation)
@@ -525,18 +548,17 @@ namespace Bioterio.Models
 
                 entity.Property(e => e.IdMotivo)
                     .HasColumnName("idMotivo")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.NomeMotivo)
                     .IsRequired()
                     .HasColumnName("nomeMotivo")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                    .HasMaxLength(45);
 
                 entity.Property(e => e.TipoMotivo)
                     .IsRequired()
                     .HasColumnName("tipoMotivo")
-                    .HasColumnType("nchar(1)");
+                    .HasColumnType("char(1)");
             });
 
             modelBuilder.Entity<Origem>(entity =>
@@ -547,7 +569,9 @@ namespace Bioterio.Models
 
                 entity.Property(e => e.IdOrigem)
                     .HasColumnName("idOrigem")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.TipoOrigem).HasColumnType("int(11)");
             });
 
             modelBuilder.Entity<PlanoAlimentar>(entity =>
@@ -558,16 +582,15 @@ namespace Bioterio.Models
 
                 entity.Property(e => e.IdPlanAlim)
                     .HasColumnName("idPlanAlim")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.MarcaAlim)
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                entity.Property(e => e.MarcaAlim).HasMaxLength(45);
 
                 entity.Property(e => e.Nome)
                     .IsRequired()
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                    .HasMaxLength(45);
+
+                entity.Property(e => e.Tipo).HasColumnType("int(11)");
             });
 
             modelBuilder.Entity<Projeto>(entity =>
@@ -578,33 +601,38 @@ namespace Bioterio.Models
 
                 entity.Property(e => e.IdProjeto)
                     .HasColumnName("idProjeto")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.AutorizacaoDgva)
                     .HasColumnName("AutorizacaoDGVA")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                    .HasMaxLength(45);
 
                 entity.Property(e => e.DataFim)
                     .HasColumnName("dataFim")
-                    .HasColumnType("date");
+                    .HasColumnType("datetime");
 
                 entity.Property(e => e.DataInicio)
                     .HasColumnName("dataInicio")
-                    .HasColumnType("date");
+                    .HasColumnType("datetime");
 
                 entity.Property(e => e.Nome)
                     .IsRequired()
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                    .HasMaxLength(45);
 
-                entity.Property(e => e.NroAnimaisAutoriz).HasColumnName("nroAnimaisAutoriz");
+                entity.Property(e => e.NroAnimaisAutoriz)
+                    .HasColumnName("nroAnimaisAutoriz")
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.RefOrbea).HasColumnName("RefORBEA");
+                entity.Property(e => e.RefOrbea)
+                    .HasColumnName("RefORBEA")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.SubmisInsEurop).HasColumnType("tinyint(1)");
 
                 entity.Property(e => e.VarControlo)
                     .HasColumnName("varControlo")
-                    .HasDefaultValueSql("('0')");
+                    .HasColumnType("bit(1)")
+                    .HasDefaultValueSql("'b\\'0\\''");
             });
 
             modelBuilder.Entity<RegAlimentar>(entity =>
@@ -619,15 +647,22 @@ namespace Bioterio.Models
                 entity.HasIndex(e => e.TanqueIdTanque)
                     .HasName("fk_Reg_Alimentar_Tanque1_idx");
 
-                entity.Property(e => e.IdRegAlim).HasColumnName("idRegAlim");
+                entity.Property(e => e.IdRegAlim)
+                    .HasColumnName("idRegAlim")
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedOnAdd();
 
-                entity.Property(e => e.TanqueIdTanque).HasColumnName("Tanque_idTanque");
+                entity.Property(e => e.TanqueIdTanque)
+                    .HasColumnName("Tanque_idTanque")
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.Data)
                     .HasColumnName("data")
-                    .HasColumnType("date");
+                    .HasColumnType("datetime");
 
-                entity.Property(e => e.PlanoAlimentarIdPlanAlim).HasColumnName("Plano_Alimentar_idPlanAlim");
+                entity.Property(e => e.PlanoAlimentarIdPlanAlim)
+                    .HasColumnName("Plano_Alimentar_idPlanAlim")
+                    .HasColumnType("int(11)");
 
                 entity.HasOne(d => d.PlanoAlimentarIdPlanAlimNavigation)
                     .WithMany(p => p.RegAlimentar)
@@ -651,15 +686,22 @@ namespace Bioterio.Models
                 entity.HasIndex(e => e.TanqueIdTanque)
                     .HasName("fk_Reg_Amostragens_Tanque1_idx");
 
-                entity.Property(e => e.IdRegAmo).HasColumnName("idRegAmo");
+                entity.Property(e => e.IdRegAmo)
+                    .HasColumnName("idRegAmo")
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedOnAdd();
 
-                entity.Property(e => e.TanqueIdTanque).HasColumnName("Tanque_idTanque");
+                entity.Property(e => e.TanqueIdTanque)
+                    .HasColumnName("Tanque_idTanque")
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.Data)
                     .HasColumnName("data")
-                    .HasColumnType("date");
+                    .HasColumnType("datetime");
 
-                entity.Property(e => e.NroIndividuos).HasColumnName("nroIndividuos");
+                entity.Property(e => e.NroIndividuos)
+                    .HasColumnName("nroIndividuos")
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.PesoMedio).HasColumnName("pesoMedio");
 
@@ -681,13 +723,18 @@ namespace Bioterio.Models
                 entity.HasIndex(e => e.CircuitoTanqueIdCircuito)
                     .HasName("fk_Reg_Cond_Amb_Circuito_Tanque1_idx");
 
-                entity.Property(e => e.IdRegCondAmb).HasColumnName("idRegCondAmb");
+                entity.Property(e => e.IdRegCondAmb)
+                    .HasColumnName("idRegCondAmb")
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedOnAdd();
 
-                entity.Property(e => e.CircuitoTanqueIdCircuito).HasColumnName("Circuito_Tanque_idCircuito");
+                entity.Property(e => e.CircuitoTanqueIdCircuito)
+                    .HasColumnName("Circuito_Tanque_idCircuito")
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.Data)
                     .HasColumnName("data")
-                    .HasColumnType("date");
+                    .HasColumnType("datetime");
 
                 entity.Property(e => e.NivelO2).HasColumnName("nivelO2");
 
@@ -716,15 +763,22 @@ namespace Bioterio.Models
                 entity.HasIndex(e => e.TipoManuntecaoIdTManutencao)
                     .HasName("fk_Reg_Manutencao_Tipo_Manuntecao1_idx");
 
-                entity.Property(e => e.IdRegMan).HasColumnName("idRegMan");
+                entity.Property(e => e.IdRegMan)
+                    .HasColumnName("idRegMan")
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedOnAdd();
 
-                entity.Property(e => e.TanqueIdTanque).HasColumnName("Tanque_idTanque");
+                entity.Property(e => e.TanqueIdTanque)
+                    .HasColumnName("Tanque_idTanque")
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.Data)
                     .HasColumnName("data")
-                    .HasColumnType("date");
+                    .HasColumnType("datetime");
 
-                entity.Property(e => e.TipoManuntecaoIdTManutencao).HasColumnName("Tipo_Manuntecao_idT_Manutencao");
+                entity.Property(e => e.TipoManuntecaoIdTManutencao)
+                    .HasColumnName("Tipo_Manuntecao_idT_Manutencao")
+                    .HasColumnType("int(11)");
 
                 entity.HasOne(d => d.TanqueIdTanqueNavigation)
                     .WithMany(p => p.RegManutencao)
@@ -768,71 +822,151 @@ namespace Bioterio.Models
 
                 entity.Property(e => e.IdRegAnimal)
                     .HasColumnName("idRegAnimal")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.AdicaoO2).HasColumnName("Adicao_O2");
+                entity.Property(e => e.AdicaoO2)
+                    .HasColumnName("Adicao_O2")
+                    .HasColumnType("tinyint(1)");
 
                 entity.Property(e => e.Anestesico).HasColumnName("anestesico");
+
+                entity.Property(e => e.Arejamento).HasColumnType("tinyint(1)");
 
                 entity.Property(e => e.CompMedio).HasColumnName("compMedio");
 
                 entity.Property(e => e.DataNasc)
                     .HasColumnName("dataNasc")
-                    .HasColumnType("date");
+                    .HasColumnType("datetime");
 
-                entity.Property(e => e.EspecieIdEspecie).HasColumnName("Especie_idEspecie");
+                entity.Property(e => e.DuracaoViagem).HasColumnType("time");
 
-                entity.Property(e => e.FornecedorIdFornColect).HasColumnName("Fornecedor_idFornColect");
+                entity.Property(e => e.EspecieIdEspecie)
+                    .HasColumnName("Especie_idEspecie")
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.FuncionarioIdFuncionario).HasColumnName("Funcionario_idFuncionario");
+                entity.Property(e => e.FornecedorIdFornColect)
+                    .HasColumnName("Fornecedor_idFornColect")
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.FuncionarioIdFuncionario1).HasColumnName("Funcionario_idFuncionario1");
+                entity.Property(e => e.FuncionarioIdFuncionario)
+                    .HasColumnName("Funcionario_idFuncionario")
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.Idade).HasColumnName("idade");
+                entity.Property(e => e.FuncionarioIdFuncionario1)
+                    .HasColumnName("Funcionario_idFuncionario1")
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.LocalCapturaIdLocalCaptura).HasColumnName("LocalCaptura_idLocalCaptura");
+                entity.Property(e => e.Gelo).HasColumnType("tinyint(1)");
 
-                entity.Property(e => e.NroCaixasIsoter).HasColumnName("nroCaixasIsoter");
+                entity.Property(e => e.Idade)
+                    .HasColumnName("idade")
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.NroContentores).HasColumnName("nroContentores");
+                entity.Property(e => e.Imaturos).HasColumnType("int(11)");
 
-                entity.Property(e => e.NroExemplares).HasColumnName("nroExemplares");
+                entity.Property(e => e.Juvenis).HasColumnType("int(11)");
 
-                entity.Property(e => e.NroFemeas).HasColumnName("nroFemeas");
+                entity.Property(e => e.Larvas).HasColumnType("int(11)");
 
-                entity.Property(e => e.NroMachos).HasColumnName("nroMachos");
+                entity.Property(e => e.LocalCapturaIdLocalCaptura)
+                    .HasColumnName("LocalCaptura_idLocalCaptura")
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.NroMortosCheg).HasColumnName("nroMortosCheg");
+                entity.Property(e => e.NroCaixasIsoter)
+                    .HasColumnName("nroCaixasIsoter")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.NroContentores)
+                    .HasColumnName("nroContentores")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.NroExemplares)
+                    .HasColumnName("nroExemplares")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.NroFemeas)
+                    .HasColumnName("nroFemeas")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.NroMachos)
+                    .HasColumnName("nroMachos")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.NroMortosCheg)
+                    .HasColumnName("nroMortosCheg")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Ovos).HasColumnType("int(11)");
 
                 entity.Property(e => e.PesoMedio).HasColumnName("pesoMedio");
 
-                entity.Property(e => e.Refrigeracao).HasColumnName("refrigeracao");
+                entity.Property(e => e.Refrigeracao)
+                    .HasColumnName("refrigeracao")
+                    .HasColumnType("tinyint(1)");
 
                 entity.Property(e => e.RespTransporte)
                     .HasColumnName("respTransporte")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                    .HasMaxLength(45);
 
                 entity.Property(e => e.SatO2transp).HasColumnName("satO2Transp");
 
-                entity.Property(e => e.Sedação).HasColumnName("sedação");
+                entity.Property(e => e.Sedação)
+                    .HasColumnName("sedação")
+                    .HasColumnType("tinyint(1)");
 
-                entity.Property(e => e.TOrigemIdTOrigem).HasColumnName("T_Origem_idT_Origem");
+                entity.Property(e => e.TOrigemIdTOrigem)
+                    .HasColumnName("T_Origem_idT_Origem")
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.TempChegada).HasColumnName("tempChegada");
+                entity.Property(e => e.TempChegada)
+                    .HasColumnName("tempChegada")
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.TempPartida).HasColumnName("tempPartida");
+                entity.Property(e => e.TempPartida)
+                    .HasColumnName("tempPartida")
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.TipoContentor)
                     .HasColumnName("tipoContentor")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                    .HasMaxLength(45);
 
-                entity.Property(e => e.TipoEstatutoGeneticoIdTipoEstatutoGenetico).HasColumnName("TipoEstatutoGenetico_idTipoEstatutoGenetico");
+                entity.Property(e => e.TipoEstatutoGeneticoIdTipoEstatutoGenetico)
+                    .HasColumnName("TipoEstatutoGenetico_idTipoEstatutoGenetico")
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.VolAgua).HasColumnName("volAgua");
 
                 entity.Property(e => e.VolContentor).HasColumnName("volContentor");
+
+                entity.HasOne(d => d.FornecedorIdFornColectNavigation)
+                    .WithMany(p => p.RegNovosAnimais)
+                    .HasForeignKey(d => d.FornecedorIdFornColect)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_Reg_Novos_Animais_Fornecedor1");
+
+                entity.HasOne(d => d.FuncionarioIdFuncionarioNavigation)
+                    .WithMany(p => p.RegNovosAnimaisFuncionarioIdFuncionarioNavigation)
+                    .HasForeignKey(d => d.FuncionarioIdFuncionario)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_Reg_Novos_Animais_Funcionario1");
+
+                entity.HasOne(d => d.FuncionarioIdFuncionario1Navigation)
+                    .WithMany(p => p.RegNovosAnimaisFuncionarioIdFuncionario1Navigation)
+                    .HasForeignKey(d => d.FuncionarioIdFuncionario1)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_Reg_Novos_Animais_Funcionario2");
+
+                entity.HasOne(d => d.TOrigemIdTOrigemNavigation)
+                    .WithMany(p => p.RegNovosAnimais)
+                    .HasForeignKey(d => d.TOrigemIdTOrigem)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_Reg_Novos_Animais_T_Origem1");
+
+                entity.HasOne(d => d.TipoEstatutoGeneticoIdTipoEstatutoGeneticoNavigation)
+                    .WithMany(p => p.RegNovosAnimais)
+                    .HasForeignKey(d => d.TipoEstatutoGeneticoIdTipoEstatutoGenetico)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_Reg_Novos_Animais_TipoEstatutoGenetico1");
             });
 
             modelBuilder.Entity<RegRemocoes>(entity =>
@@ -847,9 +981,14 @@ namespace Bioterio.Models
                 entity.HasIndex(e => e.TanqueIdTanque)
                     .HasName("fk_Reg_Remocoes_Tanque1_idx");
 
-                entity.Property(e => e.IdRegRemo).HasColumnName("idRegRemo");
+                entity.Property(e => e.IdRegRemo)
+                    .HasColumnName("idRegRemo")
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedOnAdd();
 
-                entity.Property(e => e.TanqueIdTanque).HasColumnName("Tanque_idTanque");
+                entity.Property(e => e.TanqueIdTanque)
+                    .HasColumnName("Tanque_idTanque")
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.CausaMorte)
                     .HasColumnName("causaMorte")
@@ -857,11 +996,27 @@ namespace Bioterio.Models
 
                 entity.Property(e => e.Date)
                     .HasColumnName("date")
-                    .HasColumnType("date");
+                    .HasColumnType("datetime");
 
-                entity.Property(e => e.MotivoIdMotivo).HasColumnName("Motivo_idMotivo");
+                entity.Property(e => e.MotivoIdMotivo)
+                    .HasColumnName("Motivo_idMotivo")
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.NroRemoções).HasColumnName("nroRemoções");
+                entity.Property(e => e.NroRemoções)
+                    .HasColumnName("nroRemoções")
+                    .HasColumnType("int(11)");
+
+                entity.HasOne(d => d.MotivoIdMotivoNavigation)
+                    .WithMany(p => p.RegRemocoes)
+                    .HasForeignKey(d => d.MotivoIdMotivo)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_Reg_Remocoes_Motivo1");
+
+                entity.HasOne(d => d.TanqueIdTanqueNavigation)
+                    .WithMany(p => p.RegRemocoes)
+                    .HasForeignKey(d => d.TanqueIdTanque)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_Reg_Remocoes_Tanque1");
             });
 
             modelBuilder.Entity<RegTratamento>(entity =>
@@ -879,21 +1034,48 @@ namespace Bioterio.Models
                 entity.HasIndex(e => e.TanqueIdTanque)
                     .HasName("fk_Reg_Tratamento_Tanque1_idx");
 
-                entity.Property(e => e.IdRegTra).HasColumnName("idRegTra");
+                entity.Property(e => e.IdRegTra)
+                    .HasColumnName("idRegTra")
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedOnAdd();
 
-                entity.Property(e => e.TanqueIdTanque).HasColumnName("Tanque_idTanque");
+                entity.Property(e => e.TanqueIdTanque)
+                    .HasColumnName("Tanque_idTanque")
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.AgenteTratIdAgenTra).HasColumnName("agente_Trat_idAgenTra");
+                entity.Property(e => e.AgenteTratIdAgenTra)
+                    .HasColumnName("agente_Trat_idAgenTra")
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.ConcAgenTra).HasColumnName("concAgenTra");
+                entity.Property(e => e.ConcAgenTra)
+                    .HasColumnName("concAgenTra")
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.Date)
                     .HasColumnName("date")
-                    .HasColumnType("date");
+                    .HasColumnType("datetime");
 
-                entity.Property(e => e.FinalidadeIdFinalidade).HasColumnName("Finalidade_idFinalidade");
+                entity.Property(e => e.FinalidadeIdFinalidade)
+                    .HasColumnName("Finalidade_idFinalidade")
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.Tempo).HasColumnType("time(6)");
+                entity.HasOne(d => d.AgenteTratIdAgenTraNavigation)
+                    .WithMany(p => p.RegTratamento)
+                    .HasForeignKey(d => d.AgenteTratIdAgenTra)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_Reg_Tratamento_agente_Trat1");
+
+                entity.HasOne(d => d.FinalidadeIdFinalidadeNavigation)
+                    .WithMany(p => p.RegTratamento)
+                    .HasForeignKey(d => d.FinalidadeIdFinalidade)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_Reg_Tratamento_Finalidade1");
+
+                entity.HasOne(d => d.TanqueIdTanqueNavigation)
+                    .WithMany(p => p.RegTratamento)
+                    .HasForeignKey(d => d.TanqueIdTanque)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_Reg_Tratamento_Tanque1");
             });
 
             modelBuilder.Entity<Tanque>(entity =>
@@ -910,28 +1092,45 @@ namespace Bioterio.Models
 
                 entity.Property(e => e.IdTanque)
                     .HasColumnName("idTanque")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.CircuitoTanqueIdCircuito).HasColumnName("Circuito_Tanque_idCircuito");
+                entity.Property(e => e.CircuitoTanqueIdCircuito)
+                    .HasColumnName("Circuito_Tanque_idCircuito")
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.LoteIdLote).HasColumnName("Lote_idLote");
+                entity.Property(e => e.LoteIdLote)
+                    .HasColumnName("Lote_idLote")
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.NroAnimais).HasColumnName("nroAnimais");
+                entity.Property(e => e.NroAnimais)
+                    .HasColumnName("nroAnimais")
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.Observacoes)
                     .HasColumnName("observacoes")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                    .HasMaxLength(45);
 
                 entity.Property(e => e.Sala)
                     .IsRequired()
                     .HasColumnName("sala")
-                    .HasMaxLength(15)
-                    .IsUnicode(false);
+                    .HasMaxLength(15);
 
                 entity.Property(e => e.VarControlo)
                     .HasColumnName("varControlo")
-                    .HasDefaultValueSql("('0')");
+                    .HasColumnType("bit(1)")
+                    .HasDefaultValueSql("'b\\'0\\''");
+
+                entity.HasOne(d => d.CircuitoTanqueIdCircuitoNavigation)
+                    .WithMany(p => p.Tanque)
+                    .HasForeignKey(d => d.CircuitoTanqueIdCircuito)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_Tanque_Circuito_Tanque1");
+
+                entity.HasOne(d => d.LoteIdLoteNavigation)
+                    .WithMany(p => p.Tanque)
+                    .HasForeignKey(d => d.LoteIdLote)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_Tanque_Lote1");
             });
 
             modelBuilder.Entity<Tipoestatutogenetico>(entity =>
@@ -942,11 +1141,9 @@ namespace Bioterio.Models
 
                 entity.Property(e => e.IdTipoEstatutoGenetico)
                     .HasColumnName("idTipoEstatutoGenetico")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.TipoEstatutoGeneticocol)
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                entity.Property(e => e.TipoEstatutoGeneticocol).HasMaxLength(45);
             });
 
             modelBuilder.Entity<TipoManuntecao>(entity =>
@@ -957,12 +1154,11 @@ namespace Bioterio.Models
 
                 entity.Property(e => e.IdTManutencao)
                     .HasColumnName("idT_Manutencao")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.TManutencao)
                     .HasColumnName("T_Manutencao")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                    .HasMaxLength(45);
             });
 
             modelBuilder.Entity<TOrigem>(entity =>
@@ -973,11 +1169,9 @@ namespace Bioterio.Models
 
                 entity.Property(e => e.IdTOrigem)
                     .HasColumnName("idT_Origem")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.Descrição)
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
+                entity.Property(e => e.Descrição).HasMaxLength(45);
             });
         }
     }

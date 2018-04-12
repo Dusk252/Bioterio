@@ -20,24 +20,24 @@ namespace Bioterio.Models
         public int? Ovos { get; set; }
         public DateTime? DataNasc { get; set; }
         public int? Idade { get; set; }
-        public double? PesoMedio { get; set; }
-        public double? CompMedio { get; set; }
+        public float? PesoMedio { get; set; }
+        public float? CompMedio { get; set; }
         public TimeSpan? DuracaoViagem { get; set; }
         public int? TempPartida { get; set; }
         public int? TempChegada { get; set; }
         public int? NroContentores { get; set; }
         public string TipoContentor { get; set; }
-        public double? VolContentor { get; set; }
-        public double? VolAgua { get; set; }
+        public float? VolContentor { get; set; }
+        public float? VolAgua { get; set; }
         public int? NroCaixasIsoter { get; set; }
         public int? NroMortosCheg { get; set; }
-        public double? SatO2transp { get; set; }
-        public double? Anestesico { get; set; }
-        public byte? Gelo { get; set; }
-        public byte? AdicaoO2 { get; set; }
-        public byte? Arejamento { get; set; }
-        public byte? Refrigeracao { get; set; }
-        public byte? Sedação { get; set; }
+        public float? SatO2transp { get; set; }
+        public float? Anestesico { get; set; }
+        public sbyte? Gelo { get; set; }
+        public sbyte? AdicaoO2 { get; set; }
+        public sbyte? Arejamento { get; set; }
+        public sbyte? Refrigeracao { get; set; }
+        public sbyte? Sedação { get; set; }
         public string RespTransporte { get; set; }
         public int EspecieIdEspecie { get; set; }
         public int FornecedorIdFornColect { get; set; }
@@ -47,6 +47,11 @@ namespace Bioterio.Models
         public int FuncionarioIdFuncionario { get; set; }
         public int FuncionarioIdFuncionario1 { get; set; }
 
+        public Fornecedorcolector FornecedorIdFornColectNavigation { get; set; }
+        public Funcionario FuncionarioIdFuncionario1Navigation { get; set; }
+        public Funcionario FuncionarioIdFuncionarioNavigation { get; set; }
+        public TOrigem TOrigemIdTOrigemNavigation { get; set; }
+        public Tipoestatutogenetico TipoEstatutoGeneticoIdTipoEstatutoGeneticoNavigation { get; set; }
         public ICollection<Lote> Lote { get; set; }
     }
 }

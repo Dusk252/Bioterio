@@ -11,5 +11,8 @@ namespace Bioterio.Models
         public int MotivoIdMotivo { get; set; }
         public string CausaMorte { get; set; }
         public int TanqueIdTanque { get; set; }
+
+        public Motivo MotivoIdMotivoNavigation { get; set; }
+        public Tanque TanqueIdTanqueNavigation { get; set; }
     }
 }

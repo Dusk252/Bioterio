@@ -7,8 +7,8 @@ namespace Bioterio.Models
     {
         public int IdLocalCaptura { get; set; }
         public string Localidade { get; set; }
-        public double? Latitude { get; set; }
-        public double? Longitude { get; set; }
+        public float? Latitude { get; set; }
+        public float? Longitude { get; set; }
         public int ConselhoId { get; set; }
         public int ConselhoDistritoId { get; set; }
 

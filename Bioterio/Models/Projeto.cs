@@ -8,6 +8,7 @@ namespace Bioterio.Models
         public Projeto()
         {
             CircuitoTanque = new HashSet<CircuitoTanque>();
+            Elementoequipa = new HashSet<Elementoequipa>();
             Ensaio = new HashSet<Ensaio>();
         }
 
@@ -17,12 +18,12 @@ namespace Bioterio.Models
         public DateTime DataFim { get; set; }
         public string AutorizacaoDgva { get; set; }
         public int? RefOrbea { get; set; }
-        public byte? SubmisInsEurop { get; set; }
+        public sbyte? SubmisInsEurop { get; set; }
         public int? NroAnimaisAutoriz { get; set; }
-        public byte? VarControlo { get; set; }
+        public bool? VarControlo { get; set; }
 
-        public Elementoequipa Elementoequipa { get; set; }
         public ICollection<CircuitoTanque> CircuitoTanque { get; set; }
+        public ICollection<Elementoequipa> Elementoequipa { get; set; }
         public ICollection<Ensaio> Ensaio { get; set; }
     }
 }

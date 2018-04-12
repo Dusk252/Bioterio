@@ -10,6 +10,7 @@ namespace Bioterio.Models
             Ensaio = new HashSet<Ensaio>();
             LoteSubLoteLoteIdLoteAtualNavigation = new HashSet<LoteSubLote>();
             LoteSubLoteLoteIdLotePrevNavigation = new HashSet<LoteSubLote>();
+            Tanque = new HashSet<Tanque>();
         }
 
         public int IdLote { get; set; }
@@ -19,12 +20,13 @@ namespace Bioterio.Models
         public string Observacoes { get; set; }
         public int RegNovosAnimaisIdRegAnimal { get; set; }
         public int FuncionarioIdFuncionario { get; set; }
-        public byte? VarControlo { get; set; }
+        public bool? VarControlo { get; set; }
 
         public Funcionario FuncionarioIdFuncionarioNavigation { get; set; }
         public RegNovosAnimais RegNovosAnimaisIdRegAnimalNavigation { get; set; }
         public ICollection<Ensaio> Ensaio { get; set; }
         public ICollection<LoteSubLote> LoteSubLoteLoteIdLoteAtualNavigation { get; set; }
         public ICollection<LoteSubLote> LoteSubLoteLoteIdLotePrevNavigation { get; set; }
+        public ICollection<Tanque> Tanque { get; set; }
     }
 }

@@ -8,6 +8,7 @@ namespace Bioterio.Models
         public CircuitoTanque()
         {
             RegCondAmb = new HashSet<RegCondAmb>();
+            Tanque = new HashSet<Tanque>();
         }
 
         public int IdCircuito { get; set; }
@@ -15,9 +16,10 @@ namespace Bioterio.Models
         public string CodigoCircuito { get; set; }
         public DateTime DataCriacao { get; set; }
         public DateTime DataFinal { get; set; }
-        public byte? VarControlo { get; set; }
+        public bool? VarControlo { get; set; }
 
         public Projeto ProjetoIdProjetoNavigation { get; set; }
         public ICollection<RegCondAmb> RegCondAmb { get; set; }
+        public ICollection<Tanque> Tanque { get; set; }
     }
 }
