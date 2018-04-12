@@ -38,6 +38,7 @@ namespace Bioterio.Models
         public virtual DbSet<TipoManuntecao> TipoManuntecao { get; set; }
         public virtual DbSet<TOrigem> TOrigem { get; set; }
 
+        /*
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -45,6 +46,10 @@ namespace Bioterio.Models
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=root;database=bd-les");
             }
+        }*/
+
+        public bd_lesContext(DbContextOptions<bd_lesContext> options) : base(options)
+        {
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
