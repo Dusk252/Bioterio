@@ -1,0 +1,55 @@
+﻿@model Bioterio.Models.ConfigurationsViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+    <h2>Index</h2>
+
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @{
+                        var example = new Especie(); var exampleg = new Grupo();
+                    }
+                    @Html.DisplayNameFor(model => example.NomeCient)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => example.NomeVulgar)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => example.Familia)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => example.Familia.GrupoIdGrupoNavigation.NomeGrupo)
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Especies)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NomeCient)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NomeVulgar)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Familia.NomeFamilia)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Familia.GrupoIdGrupoNavigation.NomeGrupo)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.IdEspecie">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.IdEspecie">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.IdEspecie">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+

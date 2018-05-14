@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Bioterio.Models.Familia>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Familias</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+@if ((bool?)TempData["deleted"] == true)
+{
+    @await Html.PartialAsync("DeleteSuccess")
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NomeFamilia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GrupoIdGrupoNavigation.NomeGrupo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NomeFamilia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GrupoIdGrupoNavigation.NomeGrupo)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.IdFamilia">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.IdFamilia">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.IdFamilia">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

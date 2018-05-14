@@ -33,8 +33,8 @@ DROP TABLE IF EXISTS `BD-LES`.`Projeto` ;
 CREATE TABLE IF NOT EXISTS `BD-LES`.`Projeto` (
   `idProjeto` INT NOT NULL AUTO_INCREMENT,
   `Nome` VARCHAR(45) NOT NULL,
-  `dataInicio` DATE NOT NULL,
-  `dataFim` DATE NOT NULL,
+  `dataInicio` DATETIME NOT NULL,
+  `dataFim` DATETIME NOT NULL,
   `AutorizacaoDGVA` VARCHAR(45) NULL,
   `RefORBEA` INT NULL,
   `SubmisInsEurop` TINYINT(1) NULL,
@@ -53,8 +53,8 @@ CREATE TABLE IF NOT EXISTS `BD-LES`.`Circuito_Tanque` (
   `idCircuito` INT NOT NULL AUTO_INCREMENT,
   `Projeto_idProjeto` INT NOT NULL,
   `codigoCircuito` VARCHAR(15) NULL,
-  `dataCriacao` DATE NOT NULL,
-  `dataFinal` DATE NOT NULL,
+  `dataCriacao` DATETIME NOT NULL,
+  `dataFinal` DATETIME NOT NULL,
   `varControlo` BIT NULL DEFAULT 0,
   PRIMARY KEY (`idCircuito`),
   INDEX `fk_Circuito_Tanque_Projeto1_idx` (`Projeto_idProjeto` ASC),
@@ -98,6 +98,7 @@ DROP TABLE IF EXISTS `BD-LES`.`Familia` ;
 
 CREATE TABLE IF NOT EXISTS `BD-LES`.`Familia` (
   `idFamilia` INT NOT NULL AUTO_INCREMENT,
+  `NomeFamilia` VARCHAR(45) NULL,
   `Grupo_idGrupo` INT NOT NULL,
   PRIMARY KEY (`idFamilia`, `Grupo_idGrupo`),
   INDEX `fk_Familia_Grupo1_idx` (`Grupo_idGrupo` ASC),
@@ -230,7 +231,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `BD-LES`.`Funcionario` ;
 
 CREATE TABLE IF NOT EXISTS `BD-LES`.`Funcionario` (
-  `idFuncionario` INT NOT NULL,
+  `idFuncionario` INT NOT NULL AUTO_INCREMENT,
   `nomeCompleto` VARCHAR(45) NOT NULL,
   `nomeUtilizador` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
@@ -253,7 +254,7 @@ CREATE TABLE IF NOT EXISTS `BD-LES`.`Reg_Novos_Animais` (
   `Juvenis` INT NULL,
   `Larvas` INT NULL,
   `Ovos` INT NULL,
-  `dataNasc` DATE NULL,
+  `dataNasc` DATETIME NULL,
   `idade` INT NULL,
   `pesoMedio` FLOAT NULL,
   `compMedio` FLOAT NULL,
@@ -335,8 +336,8 @@ DROP TABLE IF EXISTS `BD-LES`.`Lote` ;
 CREATE TABLE IF NOT EXISTS `BD-LES`.`Lote` (
   `idLote` INT NOT NULL AUTO_INCREMENT,
   `codigoLote` VARCHAR(10) NOT NULL,
-  `dataInicio` DATE NOT NULL,
-  `dataFim` DATE NULL,
+  `dataInicio` DATETIME NOT NULL,
+  `dataFim` DATETIME NULL,
   `Observacoes` VARCHAR(45) NULL,
   `Reg_Novos_Animais_idRegAnimal` INT NOT NULL,
   `Funcionario_idFuncionario` INT NOT NULL,
@@ -393,7 +394,7 @@ DROP TABLE IF EXISTS `BD-LES`.`Reg_Remocoes` ;
 
 CREATE TABLE IF NOT EXISTS `BD-LES`.`Reg_Remocoes` (
   `idRegRemo` INT NOT NULL AUTO_INCREMENT,
-  `date` DATE NOT NULL,
+  `date` DATETIME NOT NULL,
   `nroRemoções` INT NULL,
   `Motivo_idMotivo` INT NOT NULL,
   `causaMorte` CHAR(1) NULL,
@@ -421,7 +422,7 @@ DROP TABLE IF EXISTS `BD-LES`.`Reg_Amostragens` ;
 
 CREATE TABLE IF NOT EXISTS `BD-LES`.`Reg_Amostragens` (
   `idRegAmo` INT NOT NULL AUTO_INCREMENT,
-  `data` DATE NOT NULL,
+  `data` DATETIME NOT NULL,
   `pesoMedio` FLOAT NOT NULL,
   `nroIndividuos` INT NOT NULL,
   `pesoTotal` FLOAT NOT NULL,
@@ -443,7 +444,7 @@ DROP TABLE IF EXISTS `BD-LES`.`Reg_Cond_Amb` ;
 
 CREATE TABLE IF NOT EXISTS `BD-LES`.`Reg_Cond_Amb` (
   `idRegCondAmb` INT NOT NULL AUTO_INCREMENT,
-  `data` DATE NOT NULL,
+  `data` DATETIME NOT NULL,
   `temperatura` FLOAT NULL,
   `volAgua` FLOAT NULL,
   `salinidadeAgua` FLOAT NULL,
@@ -490,7 +491,7 @@ DROP TABLE IF EXISTS `BD-LES`.`Reg_Tratamento` ;
 
 CREATE TABLE IF NOT EXISTS `BD-LES`.`Reg_Tratamento` (
   `idRegTra` INT NOT NULL AUTO_INCREMENT,
-  `date` DATE NOT NULL,
+  `date` DATETIME NOT NULL,
   `Tempo` TIME(6) NOT NULL,
   `Concentracao` FLOAT NOT NULL,
   `Finalidade_idFinalidade` INT NOT NULL,
@@ -538,7 +539,7 @@ DROP TABLE IF EXISTS `BD-LES`.`Reg_Manutencao` ;
 
 CREATE TABLE IF NOT EXISTS `BD-LES`.`Reg_Manutencao` (
   `idRegMan` INT NOT NULL AUTO_INCREMENT,
-  `data` DATE NOT NULL,
+  `data` DATETIME NOT NULL,
   `Tipo_Manuntecao_idT_Manutencao` INT NOT NULL,
   `Tanque_idTanque` INT NOT NULL,
   PRIMARY KEY (`idRegMan`, `Tanque_idTanque`),
@@ -581,7 +582,7 @@ DROP TABLE IF EXISTS `BD-LES`.`Reg_Alimentar` ;
 
 CREATE TABLE IF NOT EXISTS `BD-LES`.`Reg_Alimentar` (
   `idRegAlim` INT NOT NULL AUTO_INCREMENT,
-  `data` DATE NOT NULL,
+  `data` DATETIME NOT NULL,
   `Peso` FLOAT NOT NULL,
   `Sobras` FLOAT NULL,
   `Plano_Alimentar_idPlanAlim` INT NOT NULL,
@@ -669,9 +670,9 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `BD-LES`.`Ensaio` ;
 
 CREATE TABLE IF NOT EXISTS `BD-LES`.`Ensaio` (
-  `idEnsaio` INT NOT NULL,
-  `dataInicio` DATE NOT NULL,
-  `dataFim` DATE NOT NULL,
+  `idEnsaio` INT NOT NULL AUTO_INCREMENT,
+  `dataInicio` DATETIME NOT NULL,
+  `dataFim` DATETIME NOT NULL,
   `descTratamento` VARCHAR(45) NOT NULL,
   `grauSeveridade` INT NOT NULL,
   `Projeto_idProjeto` INT NOT NULL,
