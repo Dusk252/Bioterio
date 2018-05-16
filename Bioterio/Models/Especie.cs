@@ -14,8 +14,10 @@ namespace Bioterio.Models
         public string NomeCient { get; set; }
         public string NomeVulgar { get; set; }
         public int FamiliaIdFamilia { get; set; }
+        public int GrupoIdGrupo { get; set; }
 
         public Familia FamiliaIdFamiliaNavigation { get; set; }
+        public Grupo GrupoIdGrupoNavigation { get; set; }
         public ICollection<RegNovosAnimais> RegNovosAnimais { get; set; }
     }
 }

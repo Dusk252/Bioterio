@@ -22,7 +22,7 @@ namespace Bioterio.Controllers
         public async Task<IActionResult> Index()
         {
             TempData["origin_controller"] = @Url.Action("Index", "Especies");
-            var bd_lesContext = _context.Especie.Include(e => e.Familia)
+            var bd_lesContext = _context.Especie.Include(e => e.FamiliaIdFamiliaNavigation)
                                 .ThenInclude(f => f.GrupoIdGrupoNavigation);
             return View(await bd_lesContext.ToListAsync());
         }
@@ -36,7 +36,7 @@ namespace Bioterio.Controllers
             }
 
             var especie = await _context.Especie
-                .Include(e => e.Familia)
+                .Include(e => e.FamiliaIdFamiliaNavigation)
                 .ThenInclude(f => f.GrupoIdGrupoNavigation)
                 .SingleOrDefaultAsync(m => m.IdEspecie == id);
             if (especie == null)
@@ -79,7 +79,7 @@ namespace Bioterio.Controllers
             }
             var val_family_group = await _context.Familia
                 .SingleOrDefaultAsync(m => m.IdFamilia == especie.FamiliaIdFamilia);
-            if (val_family_group.GrupoIdGrupo != especie.FamiliaGrupoIdGrupo)
+            if (val_family_group.GrupoIdGrupo != especie.FamiliaIdFamiliaNavigation.GrupoIdGrupo)
             {
                 ModelState.AddModelError("FamiliaIdFamilia", "A familia selecionada não pertence ao grupo selecionado.");
                 ModelState.AddModelError("FamiliaGrupoIdGrupo", "O grupo selecionado não contém a familia selecionada.");
@@ -92,7 +92,7 @@ namespace Bioterio.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["FamiliaIdFamilia"] = new SelectList(_context.Familia, "IdFamilia", "NomeFamilia", especie.FamiliaIdFamilia).Prepend(new SelectListItem() {Text = "---Selecione uma Familia---", Value = ""});
-            ViewData["GrupoIdGrupo"] = new SelectList(_context.Grupo, "IdGrupo", "NomeGrupo", especie.FamiliaGrupoIdGrupo).Prepend(new SelectListItem() { Text = "---Selecione um Grupo---", Value = "" });
+            ViewData["GrupoIdGrupo"] = new SelectList(_context.Grupo, "IdGrupo", "NomeGrupo", especie.FamiliaIdFamiliaNavigation.GrupoIdGrupo).Prepend(new SelectListItem() { Text = "---Selecione um Grupo---", Value = "" });
             return View(especie);
         }
 
@@ -143,7 +143,7 @@ namespace Bioterio.Controllers
             }
             var val_family_group = await _context.Familia
                 .SingleOrDefaultAsync(m => m.IdFamilia == especie.FamiliaIdFamilia);
-            if (val_family_group.GrupoIdGrupo != especie.FamiliaGrupoIdGrupo)
+            if (val_family_group.GrupoIdGrupo != especie.FamiliaIdFamiliaNavigation.GrupoIdGrupo)
             {
                 ModelState.AddModelError("FamiliaIdFamilia", "A familia selecionada não pertence ao grupo selecionado.");
                 ModelState.AddModelError("FamiliaGrupoIdGrupo", "O grupo selecionado não contém a familia selecionada.");
@@ -185,7 +185,7 @@ namespace Bioterio.Controllers
             }
 
             var especie = await _context.Especie
-                .Include(e => e.Familia)
+                .Include(e => e.FamiliaIdFamiliaNavigation)
                 .SingleOrDefaultAsync(m => m.IdEspecie == id);
             if (especie == null)
             {
@@ -201,7 +201,7 @@ namespace Bioterio.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var especie = await _context.Especie
-                .Include(f => f.Familia)
+                .Include(f => f.FamiliaIdFamiliaNavigation)
                 .SingleOrDefaultAsync(m => m.IdEspecie == id);
             _context.Especie.Remove(especie);
             await _context.SaveChangesAsync();
@@ -211,7 +211,7 @@ namespace Bioterio.Controllers
             {
                 TempData["more"] = false;
                 TempData["id"] = especie.FamiliaIdFamilia;
-                TempData["name"] = especie.Familia.NomeFamilia;
+                TempData["name"] = especie.FamiliaIdFamiliaNavigation.NomeFamilia;
                 TempData["controller"] = "Familias";
                 TempData["empty"] = "família";
             }

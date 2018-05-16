@@ -36,13 +36,8 @@ namespace Bioterio.Models
         public virtual DbSet<TipoManuntecao> TipoManuntecao { get; set; }
         public virtual DbSet<TOrigem> TOrigem { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public bd_lesContext(DbContextOptions<bd_lesContext> options) : base(options)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySql("Server=localhost;User Id=root;Password=root;Database=bd-les");
-            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -248,12 +243,19 @@ namespace Bioterio.Models
                 entity.HasIndex(e => e.FamiliaIdFamilia)
                     .HasName("fk_Especie_Familia1_idx");
 
+                entity.HasIndex(e => e.GrupoIdGrupo)
+                    .HasName("fk_Especie_Grupo1_idx");
+
                 entity.Property(e => e.IdEspecie)
                     .HasColumnName("idEspecie")
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.FamiliaIdFamilia)
                     .HasColumnName("Familia_idFamilia")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.GrupoIdGrupo)
+                    .HasColumnName("Grupo_idGrupo")
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.NomeCient).HasMaxLength(45);
@@ -265,6 +267,12 @@ namespace Bioterio.Models
                     .HasForeignKey(d => d.FamiliaIdFamilia)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Especie_Familia1");
+
+                entity.HasOne(d => d.GrupoIdGrupoNavigation)
+                    .WithMany(p => p.Especie)
+                    .HasForeignKey(d => d.GrupoIdGrupo)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_Especie_Grupo1");
             });
 
             modelBuilder.Entity<Familia>(entity =>
@@ -283,6 +291,8 @@ namespace Bioterio.Models
                 entity.Property(e => e.GrupoIdGrupo)
                     .HasColumnName("Grupo_idGrupo")
                     .HasColumnType("int(11)");
+
+                entity.Property(e => e.NomeFamilia).HasMaxLength(45);
 
                 entity.HasOne(d => d.GrupoIdGrupoNavigation)
                     .WithMany(p => p.Familia)
@@ -389,12 +399,19 @@ namespace Bioterio.Models
                 entity.HasIndex(e => e.ConcelhoId)
                     .HasName("fk_LocalCaptura_Concelho1_idx");
 
+                entity.HasIndex(e => e.DistritoId)
+                    .HasName("fk_LocalCaptura_Distrito1");
+
                 entity.Property(e => e.IdLocalCaptura)
                     .HasColumnName("idLocalCaptura")
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.ConcelhoId)
                     .HasColumnName("Concelho_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.DistritoId)
+                    .HasColumnName("Distrito_id")
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.Latitude).HasColumnType("float(10,6)");
@@ -408,6 +425,12 @@ namespace Bioterio.Models
                     .HasForeignKey(d => d.ConcelhoId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_LocalCaptura_Concelho1");
+
+                entity.HasOne(d => d.Distrito)
+                    .WithMany(p => p.Localcaptura)
+                    .HasForeignKey(d => d.DistritoId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_LocalCaptura_Distrito1");
             });
 
             modelBuilder.Entity<Lote>(entity =>
@@ -746,6 +769,9 @@ namespace Bioterio.Models
                 entity.HasIndex(e => e.FuncionarioIdFuncionario)
                     .HasName("fk_Reg_Novos_Animais_Funcionario1");
 
+                entity.HasIndex(e => e.FuncionarioIdFuncionario1)
+                    .HasName("fk_Reg_Novos_Animais_Funcionario2");
+
                 entity.HasIndex(e => e.LocalCapturaIdLocalCaptura)
                     .HasName("fk_Reg_Novos_Animais_LocalCaptura1");
 
@@ -785,6 +811,10 @@ namespace Bioterio.Models
 
                 entity.Property(e => e.FuncionarioIdFuncionario)
                     .HasColumnName("Funcionario_idFuncionario")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.FuncionarioIdFuncionario1)
+                    .HasColumnName("Funcionario_idFuncionario1")
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.Gelo).HasColumnType("tinyint(1)");
@@ -882,10 +912,16 @@ namespace Bioterio.Models
                     .HasConstraintName("fk_Reg_Novos_Animais_Fornecedor1");
 
                 entity.HasOne(d => d.FuncionarioIdFuncionarioNavigation)
-                    .WithMany(p => p.RegNovosAnimais)
+                    .WithMany(p => p.RegNovosAnimaisFuncionarioIdFuncionarioNavigation)
                     .HasForeignKey(d => d.FuncionarioIdFuncionario)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Reg_Novos_Animais_Funcionario1");
+
+                entity.HasOne(d => d.FuncionarioIdFuncionario1Navigation)
+                    .WithMany(p => p.RegNovosAnimaisFuncionarioIdFuncionario1Navigation)
+                    .HasForeignKey(d => d.FuncionarioIdFuncionario1)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_Reg_Novos_Animais_Funcionario2");
 
                 entity.HasOne(d => d.LocalCapturaIdLocalCapturaNavigation)
                     .WithMany(p => p.RegNovosAnimais)

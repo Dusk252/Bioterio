@@ -25,10 +25,10 @@
                 @Html.DisplayNameFor(model => model.NomeVulgar)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Familia)
+                @Html.DisplayNameFor(model => model.FamiliaIdFamiliaNavigation)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Familia.GrupoIdGrupoNavigation.NomeGrupo)
+                @Html.DisplayNameFor(model => model.FamiliaIdFamiliaNavigation.GrupoIdGrupoNavigation.NomeGrupo)
             </th>
             <th></th>
         </tr>
@@ -44,10 +44,10 @@
                     @Html.DisplayFor(modelItem => item.NomeVulgar)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Familia.NomeFamilia)
+                    @Html.DisplayFor(modelItem => item.FamiliaIdFamiliaNavigation.NomeFamilia)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Familia.GrupoIdGrupoNavigation.NomeGrupo)
+                    @Html.DisplayFor(modelItem => item.FamiliaIdFamiliaNavigation.GrupoIdGrupoNavigation.NomeGrupo)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.IdEspecie">Edit</a> |

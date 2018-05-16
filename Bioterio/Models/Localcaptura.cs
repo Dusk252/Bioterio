@@ -15,8 +15,10 @@ namespace Bioterio.Models
         public float? Latitude { get; set; }
         public float? Longitude { get; set; }
         public int ConcelhoId { get; set; }
+        public int DistritoId { get; set; }
 
         public Concelho Concelho { get; set; }
+        public Distrito Distrito { get; set; }
         public ICollection<RegNovosAnimais> RegNovosAnimais { get; set; }
     }
 }

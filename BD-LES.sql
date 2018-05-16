@@ -96,6 +96,7 @@ DROP TABLE IF EXISTS `BD-LES`.`Familia` ;
 
 CREATE TABLE IF NOT EXISTS `BD-LES`.`Familia` (
   `idFamilia` INT NOT NULL AUTO_INCREMENT,
+  `NomeFamilia` VARCHAR(45) NULL,
   `Grupo_idGrupo` INT NOT NULL,
   PRIMARY KEY (`idFamilia`),
   INDEX `fk_Familia_Grupo1_idx` (`Grupo_idGrupo` ASC),
@@ -117,11 +118,18 @@ CREATE TABLE IF NOT EXISTS `BD-LES`.`Especie` (
   `NomeCient` VARCHAR(45) NULL,
   `NomeVulgar` VARCHAR(45) NULL,
   `Familia_idFamilia` INT NOT NULL,
+  `Grupo_idGrupo` INT NOT NULL,
   PRIMARY KEY (`idEspecie`),
   INDEX `fk_Especie_Familia1_idx` (`Familia_idFamilia` ASC),
   CONSTRAINT `fk_Especie_Familia1`
     FOREIGN KEY (`Familia_idFamilia`)
     REFERENCES `BD-LES`.`Familia` (`idFamilia`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  INDEX `fk_Especie_Grupo1_idx` (`Grupo_idGrupo` ASC),
+  CONSTRAINT `fk_Especie_Grupo1`
+    FOREIGN KEY (`Grupo_idGrupo`)
+    REFERENCES `BD-LES`.`Grupo` (`idGrupo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -198,11 +206,17 @@ CREATE TABLE IF NOT EXISTS `BD-LES`.`LocalCaptura` (
   `Latitude` FLOAT(10,6) NULL,
   `Longitude` FLOAT(10,6) NULL,
   `Concelho_id` INT NOT NULL,
+  `Distrito_id` INT NOT NULL,
   PRIMARY KEY (`idLocalCaptura`),
   INDEX `fk_LocalCaptura_Concelho1_idx` (`Concelho_id` ASC),
   CONSTRAINT `fk_LocalCaptura_Concelho1`
     FOREIGN KEY (`Concelho_id`)
     REFERENCES `BD-LES`.`Concelho` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_LocalCaptura_Distrito1`
+    FOREIGN KEY (`Distrito_id`)
+    REFERENCES `BD-LES`.`Distrito` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -276,6 +290,7 @@ CREATE TABLE IF NOT EXISTS `BD-LES`.`Reg_Novos_Animais` (
   `LocalCaptura_idLocalCaptura` INT NULL,
   `TipoEstatutoGenetico_idTipoEstatutoGenetico` INT NOT NULL,
   `Funcionario_idFuncionario` INT NOT NULL,
+  `Funcionario_idFuncionario1` INT NOT NULL,
   PRIMARY KEY (`idRegAnimal`),
   CONSTRAINT `fk_Reg_Novos_Animais_Especie1`
     FOREIGN KEY (`Especie_idEspecie`)
@@ -304,6 +319,11 @@ CREATE TABLE IF NOT EXISTS `BD-LES`.`Reg_Novos_Animais` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Reg_Novos_Animais_Funcionario1`
     FOREIGN KEY (`Funcionario_idFuncionario`)
+    REFERENCES `BD-LES`.`Funcionario` (`idFuncionario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Reg_Novos_Animais_Funcionario2`
+    FOREIGN KEY (`Funcionario_idFuncionario1`)
     REFERENCES `BD-LES`.`Funcionario` (`idFuncionario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)

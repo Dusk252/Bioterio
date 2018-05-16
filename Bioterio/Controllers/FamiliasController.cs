@@ -140,21 +140,6 @@ namespace Bioterio.Controllers
                     var old_familia = await _context.Familia
                         .SingleOrDefaultAsync(m => m.IdFamilia == id);
 
-                    //update group id on species if there are species in the edited family
-                    //(the fact species are directly connected to a group in itself is hard to understand 
-                    //considering the information can always be gotten from family, which we're including anyway)
-                    var especies = await _context.Especie
-                        .Where(e => e.FamiliaIdFamilia == familia.IdFamilia)
-                        .ToArrayAsync();
-                    _context.UpdateRange(especies);
-                    if (especies != null && especies[0].FamiliaGrupoIdGrupo != familia.GrupoIdGrupo)
-                    {
-                        foreach (var e in especies)
-                        {
-                            e.FamiliaGrupoIdGrupo = familia.GrupoIdGrupo;
-                        }
-                    }
-
                  /*   var old_familia = await _context.Familia
                 .SingleOrDefaultAsync(m => m.IdFamilia == id);*/
                     _context.Entry(old_familia).CurrentValues.SetValues(familia);

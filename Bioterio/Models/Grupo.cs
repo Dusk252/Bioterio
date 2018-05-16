@@ -7,12 +7,14 @@ namespace Bioterio.Models
     {
         public Grupo()
         {
+            Especie = new HashSet<Especie>();
             Familia = new HashSet<Familia>();
         }
 
         public int IdGrupo { get; set; }
         public string NomeGrupo { get; set; }
 
+        public ICollection<Especie> Especie { get; set; }
         public ICollection<Familia> Familia { get; set; }
     }
 }
