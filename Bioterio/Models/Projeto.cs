@@ -20,7 +20,6 @@ namespace Bioterio.Models
         public int? RefOrbea { get; set; }
         public sbyte? SubmisInsEurop { get; set; }
         public int? NroAnimaisAutoriz { get; set; }
-        public bool? VarControlo { get; set; }
 
         public ICollection<CircuitoTanque> CircuitoTanque { get; set; }
         public ICollection<Elementoequipa> Elementoequipa { get; set; }

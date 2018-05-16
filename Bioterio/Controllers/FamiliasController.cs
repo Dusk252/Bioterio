@@ -120,10 +120,10 @@ namespace Bioterio.Controllers
             {
                 ModelState.AddModelError("NomeFamilia", "O nome é um campo requirido.");
             }
-/*            if (familia.GrupoIdGrupo == 0)
+            if (familia.GrupoIdGrupo == 0)
             {
                 ModelState.AddModelError("GrupoIdGrupo", "É requirido que cada família pertença a um grupo.");
-            }*/
+            }
 
             var val_nome = await _context.Familia
                 .SingleOrDefaultAsync(m => m.NomeFamilia == familia.NomeFamilia);
@@ -137,13 +137,13 @@ namespace Bioterio.Controllers
                 try
                 {
                     //update family
-                    /*var old_familia = await _context.Familia
-                        .SingleOrDefaultAsync(m => m.IdFamilia == id);*/
+                    var old_familia = await _context.Familia
+                        .SingleOrDefaultAsync(m => m.IdFamilia == id);
 
                     //update group id on species if there are species in the edited family
                     //(the fact species are directly connected to a group in itself is hard to understand 
                     //considering the information can always be gotten from family, which we're including anyway)
-                    /*var especies = await _context.Especie
+                    var especies = await _context.Especie
                         .Where(e => e.FamiliaIdFamilia == familia.IdFamilia)
                         .ToArrayAsync();
                     _context.UpdateRange(especies);
@@ -153,10 +153,10 @@ namespace Bioterio.Controllers
                         {
                             e.FamiliaGrupoIdGrupo = familia.GrupoIdGrupo;
                         }
-                    }*/
+                    }
 
-                    var old_familia = await _context.Familia
-                .SingleOrDefaultAsync(m => m.IdFamilia == id);
+                 /*   var old_familia = await _context.Familia
+                .SingleOrDefaultAsync(m => m.IdFamilia == id);*/
                     _context.Entry(old_familia).CurrentValues.SetValues(familia);
                     await _context.SaveChangesAsync();
                 }

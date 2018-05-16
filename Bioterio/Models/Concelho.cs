@@ -3,15 +3,15 @@ using System.Collections.Generic;
 
 namespace Bioterio.Models
 {
-    public partial class Conselho
+    public partial class Concelho
     {
-        public Conselho()
+        public Concelho()
         {
             Localcaptura = new HashSet<Localcaptura>();
         }
 
         public int Id { get; set; }
-        public string NomeConselho { get; set; }
+        public string NomeConcelho { get; set; }
         public int DistritoId { get; set; }
 
         public Distrito Distrito { get; set; }

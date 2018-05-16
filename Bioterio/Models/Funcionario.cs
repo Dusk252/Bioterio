@@ -9,8 +9,7 @@ namespace Bioterio.Models
         {
             Elementoequipa = new HashSet<Elementoequipa>();
             Lote = new HashSet<Lote>();
-            RegNovosAnimaisFuncionarioIdFuncionario1Navigation = new HashSet<RegNovosAnimais>();
-            RegNovosAnimaisFuncionarioIdFuncionarioNavigation = new HashSet<RegNovosAnimais>();
+            RegNovosAnimais = new HashSet<RegNovosAnimais>();
         }
 
         public int IdFuncionario { get; set; }
@@ -21,7 +20,6 @@ namespace Bioterio.Models
 
         public ICollection<Elementoequipa> Elementoequipa { get; set; }
         public ICollection<Lote> Lote { get; set; }
-        public ICollection<RegNovosAnimais> RegNovosAnimaisFuncionarioIdFuncionario1Navigation { get; set; }
-        public ICollection<RegNovosAnimais> RegNovosAnimaisFuncionarioIdFuncionarioNavigation { get; set; }
+        public ICollection<RegNovosAnimais> RegNovosAnimais { get; set; }
     }
 }

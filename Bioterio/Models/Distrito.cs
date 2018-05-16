@@ -7,12 +7,12 @@ namespace Bioterio.Models
     {
         public Distrito()
         {
-            Conselho = new HashSet<Conselho>();
+            Concelho = new HashSet<Concelho>();
         }
 
         public int Id { get; set; }
         public string NomeDistrito { get; set; }
 
-        public ICollection<Conselho> Conselho { get; set; }
+        public ICollection<Concelho> Concelho { get; set; }
     }
 }

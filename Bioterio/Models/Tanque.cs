@@ -20,7 +20,6 @@ namespace Bioterio.Models
         public string Observacoes { get; set; }
         public int LoteIdLote { get; set; }
         public int CircuitoTanqueIdCircuito { get; set; }
-        public bool? VarControlo { get; set; }
 
         public CircuitoTanque CircuitoTanqueIdCircuitoNavigation { get; set; }
         public Lote LoteIdLoteNavigation { get; set; }

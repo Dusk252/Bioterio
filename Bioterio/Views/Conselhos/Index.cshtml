@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Bioterio.Models.Conselho>
+﻿@model IEnumerable<Bioterio.Models.Concelho>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,7 +13,7 @@
     <thead>
         <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.NomeConselho)
+                    @Html.DisplayNameFor(model => model.NomeConcelho)
                 </th>
             <th>
                 @Html.DisplayNameFor(model => model.Distrito)
@@ -25,7 +25,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.NomeConselho)
+                @Html.DisplayFor(modelItem => item.NomeConcelho)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Distrito.Id)

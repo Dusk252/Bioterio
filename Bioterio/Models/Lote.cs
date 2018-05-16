@@ -20,7 +20,6 @@ namespace Bioterio.Models
         public string Observacoes { get; set; }
         public int RegNovosAnimaisIdRegAnimal { get; set; }
         public int FuncionarioIdFuncionario { get; set; }
-        public bool? VarControlo { get; set; }
 
         public Funcionario FuncionarioIdFuncionarioNavigation { get; set; }
         public RegNovosAnimais RegNovosAnimaisIdRegAnimalNavigation { get; set; }

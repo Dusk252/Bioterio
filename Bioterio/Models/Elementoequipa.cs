@@ -5,6 +5,7 @@ namespace Bioterio.Models
 {
     public partial class Elementoequipa
     {
+        public int IdElementoEquipa { get; set; }
         public string Função { get; set; }
         public int ProjetoIdProjeto { get; set; }
         public int FuncionarioIdFuncionario { get; set; }

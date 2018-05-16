@@ -45,11 +45,11 @@ namespace Bioterio.Models
         public int? LocalCapturaIdLocalCaptura { get; set; }
         public int TipoEstatutoGeneticoIdTipoEstatutoGenetico { get; set; }
         public int FuncionarioIdFuncionario { get; set; }
-        public int FuncionarioIdFuncionario1 { get; set; }
 
+        public Especie EspecieIdEspecieNavigation { get; set; }
         public Fornecedorcolector FornecedorIdFornColectNavigation { get; set; }
-        public Funcionario FuncionarioIdFuncionario1Navigation { get; set; }
         public Funcionario FuncionarioIdFuncionarioNavigation { get; set; }
+        public Localcaptura LocalCapturaIdLocalCapturaNavigation { get; set; }
         public TOrigem TOrigemIdTOrigemNavigation { get; set; }
         public Tipoestatutogenetico TipoEstatutoGeneticoIdTipoEstatutoGeneticoNavigation { get; set; }
         public ICollection<Lote> Lote { get; set; }

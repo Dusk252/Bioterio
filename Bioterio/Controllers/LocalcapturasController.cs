@@ -21,7 +21,7 @@ namespace Bioterio.Controllers
         // GET: Localcapturas
         public async Task<IActionResult> Index()
         {
-            var bd_lesContext = _context.Localcaptura.Include(l => l.Conselho);
+            var bd_lesContext = _context.Localcaptura.Include(l => l.Concelho);
             return View(await bd_lesContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace Bioterio.Controllers
             }
 
             var localcaptura = await _context.Localcaptura
-                .Include(l => l.Conselho)
+                .Include(l => l.Concelho)
                 .SingleOrDefaultAsync(m => m.IdLocalCaptura == id);
             if (localcaptura == null)
             {
@@ -47,7 +47,7 @@ namespace Bioterio.Controllers
         // GET: Localcapturas/Create
         public IActionResult Create()
         {
-            ViewData["ConselhoId"] = new SelectList(_context.Conselho, "Id", "NomeConselho");
+            ViewData["ConcelhoId"] = new SelectList(_context.Concelho, "Id", "NomeConcelho");
             return View();
         }
 
@@ -56,7 +56,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdLocalCaptura,Localidade,Latitude,Longitude,ConselhoId,ConselhoDistritoId")] Localcaptura localcaptura)
+        public async Task<IActionResult> Create([Bind("IdLocalCaptura,Localidade,Latitude,Longitude,ConcelhoId,ConcelhoDistritoId")] Localcaptura localcaptura)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +64,7 @@ namespace Bioterio.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ConselhoId"] = new SelectList(_context.Conselho, "Id", "NomeConselho", localcaptura.ConselhoId);
+            ViewData["ConcelhoId"] = new SelectList(_context.Concelho, "Id", "NomeConcelho", localcaptura.ConcelhoId);
             return View(localcaptura);
         }
 
@@ -81,7 +81,7 @@ namespace Bioterio.Controllers
             {
                 return NotFound();
             }
-            ViewData["ConselhoId"] = new SelectList(_context.Conselho, "Id", "NomeConselho", localcaptura.ConselhoId);
+            ViewData["ConcelhoId"] = new SelectList(_context.Concelho, "Id", "NomeConcelho", localcaptura.ConcelhoId);
             return View(localcaptura);
         }
 
@@ -90,7 +90,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdLocalCaptura,Localidade,Latitude,Longitude,ConselhoId,ConselhoDistritoId")] Localcaptura localcaptura)
+        public async Task<IActionResult> Edit(int id, [Bind("IdLocalCaptura,Localidade,Latitude,Longitude,ConcelhoId,ConcelhoDistritoId")] Localcaptura localcaptura)
         {
             if (id != localcaptura.IdLocalCaptura)
             {
@@ -117,7 +117,7 @@ namespace Bioterio.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ConselhoId"] = new SelectList(_context.Conselho, "Id", "NomeConselho", localcaptura.ConselhoId);
+            ViewData["ConcelhoId"] = new SelectList(_context.Concelho, "Id", "NomeConcelho", localcaptura.ConcelhoId);
             return View(localcaptura);
         }
 
@@ -130,7 +130,7 @@ namespace Bioterio.Controllers
             }
 
             var localcaptura = await _context.Localcaptura
-                .Include(l => l.Conselho)
+                .Include(l => l.Concelho)
                 .SingleOrDefaultAsync(m => m.IdLocalCaptura == id);
             if (localcaptura == null)
             {

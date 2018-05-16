@@ -11,7 +11,6 @@ namespace Bioterio.Models
         }
 
         public int IdFamilia { get; set; }
-        public string NomeFamilia { get; set; }
         public int GrupoIdGrupo { get; set; }
 
         public Grupo GrupoIdGrupoNavigation { get; set; }

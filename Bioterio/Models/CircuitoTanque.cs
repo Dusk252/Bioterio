@@ -16,7 +16,6 @@ namespace Bioterio.Models
         public string CodigoCircuito { get; set; }
         public DateTime DataCriacao { get; set; }
         public DateTime DataFinal { get; set; }
-        public bool? VarControlo { get; set; }
 
         public Projeto ProjetoIdProjetoNavigation { get; set; }
         public ICollection<RegCondAmb> RegCondAmb { get; set; }

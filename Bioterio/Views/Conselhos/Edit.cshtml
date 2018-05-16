@@ -1,4 +1,4 @@
-﻿@model Bioterio.Models.Conselho
+﻿@model Bioterio.Models.Concelho
 
 @{
     ViewData["Title"] = "Edit";
@@ -6,7 +6,7 @@
 
 <h2>Edit</h2>
 
-<h4>Conselho</h4>
+<h4>Concelho</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,9 +14,9 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="NomeConselho" class="control-label"></label>
-                <input asp-for="NomeConselho" class="form-control" />
-                <span asp-validation-for="NomeConselho" class="text-danger"></span>
+                <label asp-for="NomeConcelho" class="control-label"></label>
+                <input asp-for="NomeConcelho" class="form-control" />
+                <span asp-validation-for="NomeConcelho" class="text-danger"></span>
             </div>
             <input type="hidden" asp-for="DistritoId" />
             <div class="form-group">
