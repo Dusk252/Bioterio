@@ -66,7 +66,7 @@ namespace Bioterio.Controllers
             }
             if (familia.GrupoIdGrupo == 0)
             {
-                ModelState.AddModelError("GrupoId", "É requirido que cada família pertença a um grupo.");
+                ModelState.AddModelError("GrupoIdGrupo", "É requirido que cada família pertença a um grupo.");
             }
 
             var val_nome = await _context.Familia
@@ -99,7 +99,7 @@ namespace Bioterio.Controllers
             {
                 return NotFound();
             }
-            //ViewData["GrupoIdGrupo"] = new SelectList(_context.Grupo, "IdGrupo", "NomeGrupo", familia.GrupoIdGrupo);
+            ViewData["GrupoIdGrupo"] = new SelectList(_context.Grupo, "IdGrupo", "NomeGrupo").Prepend(new SelectListItem() { Text = "---Selecione um Grupo---", Value = "" });
             return View(familia);
         }
 
@@ -158,7 +158,7 @@ namespace Bioterio.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GrupoIdGrupo"] = new SelectList(_context.Grupo, "IdGrupo", "NomeGrupo", familia.GrupoIdGrupo);
+            ViewData["GrupoIdGrupo"] = new SelectList(_context.Grupo, "IdGrupo", "NomeGrupo").Prepend(new SelectListItem() { Text = "---Selecione um Grupo---", Value = "" });
             return View(familia);
         }
 

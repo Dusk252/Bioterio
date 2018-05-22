@@ -23,13 +23,13 @@
                 <span asp-validation-for="NomeVulgar" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FamiliaGrupoIdGrupo" class="control-label"></label>
-                <select asp-for="FamiliaGrupoIdGrupo" class="form-control" id="groupDropDown" asp-items="ViewBag.GrupoIdGrupo" onchange="getFamilyList()"></select>
-                <span asp-validation-for="FamiliaGrupoIdGrupo" class="text-danger"></span>
+                <label asp-for="GrupoIdGrupo" class="control-label"></label>
+                <select asp-for="GrupoIdGrupo" class="form-control" id="groupDropDown" asp-items="ViewBag.GrupoIdGrupo" onchange="getFamilyList()"></select>
+                <span asp-validation-for="GrupoIdGrupo" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="FamiliaIdFamilia" class="control-label"></label>
-                <select asp-for="FamiliaIdFamilia" class="form-control" id="familyDropDown"></select>
+                <select asp-for="FamiliaIdFamilia" class="form-control" id="familyDropDown" asp-items="ViewBag.FamiliaIdFamilia"></select>
                 <span asp-validation-for="FamiliaIdFamilia" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -44,30 +44,6 @@
 </div>
 
 @section scripts {
-
-    <script type="text/javascript">
-        function getFamilyList() {
-            debugger;
-            var IdGrupo = $("#groupDropDown").val();
-            $.ajax({
-                url: '/Grupos/GetFamilyList/' + IdGrupo,
-                type: 'POST',
-                datatype: 'application/json',
-                contentType: 'application/json',
-                data: { },
-                success: function (result) {
-                    $("#familyDropDown").html("");
-                    document.getElementById("familyDropDown").disabled = false;
-                    $("#familyDropDown").append
-                        ($('<option></option>').val(null).html("---Selecione uma Familia---"));
-                    if (result != null)
-                    $.each($.parseJSON(result), function (i, family) { $("#familyDropDown").append($('<option></option>').val(family.IdFamilia).html(family.NomeFamilia)) })
-
-                },
-                error: function () { alert("Whooaaa! Something went wrong..") },
-            });
-        }
-        window.onload = getFamilyList();
-    </script>
+    window.onload = getFamilyList();
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

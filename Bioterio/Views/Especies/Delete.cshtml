@@ -24,17 +24,17 @@
             @Html.DisplayFor(model => model.NomeVulgar)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Familia)
+            @Html.DisplayNameFor(model => model.FamiliaIdFamiliaNavigation)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Familia.NomeFamilia)
+            @Html.DisplayFor(model => model.FamiliaIdFamiliaNavigation.NomeFamilia)
         </dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="IdEspecie" />
         <input type="hidden" asp-for="FamiliaIdFamilia" />
-        <input type="hidden" asp-for="FamiliaGrupoIdGrupo" />
+        <input type="hidden" asp-for="GrupoIdGrupo" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
         <a asp-action="Index">Back to List</a>
     </form>

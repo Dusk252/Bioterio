@@ -6,15 +6,15 @@
 
 <h2>Create</h2>
 
-<h4>Fornecedor/Colector</h4>
+<h4>Fornecedorcolector</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Tipo" class="control-label">ID</label>
-                <input asp-for="Tipo" class="form-control" />
+                <label asp-for="Tipo" class="control-label"></label>
+                <select asp-for="Tipo" class="form-control" id="typeDropDown" asp-items="ViewBag.Tipo"></select>
                 <span asp-validation-for="Tipo" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -24,12 +24,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Nif" class="control-label"></label>
-                <input asp-for="Nif" class="form-control" />
+                <input asp-for="Nif" class="form-control" type="text"/>
                 <span asp-validation-for="Nif" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="NroLicenca" class="control-label">Numero da Licença</label>
-                <input asp-for="NroLicenca" class="form-control" />
+                <label asp-for="NroLicenca" class="control-label"></label>
+                <input asp-for="NroLicenca" class="form-control" type="text"/>
                 <span asp-validation-for="NroLicenca" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -53,6 +53,3 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

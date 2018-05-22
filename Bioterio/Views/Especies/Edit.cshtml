@@ -24,14 +24,14 @@
                 <span asp-validation-for="NomeVulgar" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FamiliaIdFamilia" class="control-label"></label>
-                <select asp-for="FamiliaIdFamilia" class="form-control" asp-items="ViewBag.FamiliaIdFamilia"></select>
-                <span asp-validation-for="FamiliaIdFamilia" class="text-danger"></span>
+                <label asp-for="GrupoIdGrupo" class="control-label"></label>
+                <select asp-for="GrupoIdGrupo" class="form-control" id="groupDropDown" asp-items="ViewBag.GrupoIdGrupo" onchange="getFamilyList()"></select>
+                <span asp-validation-for="GrupoIdGrupo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FamiliaGrupoIdGrupo" class="control-label"></label>
-                <select asp-for="FamiliaGrupoIdGrupo" class="form-control" asp-items="ViewBag.GrupoIdGrupo"></select>
-                <span asp-validation-for="FamiliaGrupoIdGrupo" class="text-danger"></span>
+                <label asp-for="FamiliaIdFamilia" class="control-label"></label>
+                <select asp-for="FamiliaIdFamilia" class="form-control" id="familyDropDown" asp-items="ViewBag.FamiliaIdFamilia"></select>
+                <span asp-validation-for="FamiliaIdFamilia" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
@@ -43,4 +43,15 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+@section scripts {
+    <script type="text/javascript">
+        window.onload = function () {
+            var v = $("#familyDropDown").val();
+            getFamilyList(v);
+        };
+    </script>
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 

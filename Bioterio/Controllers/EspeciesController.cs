@@ -60,7 +60,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdEspecie,NomeCient,NomeVulgar,FamiliaIdFamilia,FamiliaGrupoIdGrupo")] Especie especie)
+        public async Task<IActionResult> Create([Bind("IdEspecie,NomeCient,NomeVulgar,FamiliaIdFamilia,GrupoIdGrupo")] Especie especie)
         {
             //validation
             if (especie.NomeCient == null)
@@ -79,10 +79,10 @@ namespace Bioterio.Controllers
             }
             var val_family_group = await _context.Familia
                 .SingleOrDefaultAsync(m => m.IdFamilia == especie.FamiliaIdFamilia);
-            if (val_family_group.GrupoIdGrupo != especie.FamiliaIdFamiliaNavigation.GrupoIdGrupo)
+            if (val_family_group.GrupoIdGrupo != especie.GrupoIdGrupo)
             {
                 ModelState.AddModelError("FamiliaIdFamilia", "A familia selecionada não pertence ao grupo selecionado.");
-                ModelState.AddModelError("FamiliaGrupoIdGrupo", "O grupo selecionado não contém a familia selecionada.");
+                ModelState.AddModelError("GrupoIdGrupo", "O grupo selecionado não contém a familia selecionada.");
             }
 
             if (ModelState.IsValid)
@@ -92,7 +92,7 @@ namespace Bioterio.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["FamiliaIdFamilia"] = new SelectList(_context.Familia, "IdFamilia", "NomeFamilia", especie.FamiliaIdFamilia).Prepend(new SelectListItem() {Text = "---Selecione uma Familia---", Value = ""});
-            ViewData["GrupoIdGrupo"] = new SelectList(_context.Grupo, "IdGrupo", "NomeGrupo", especie.FamiliaIdFamiliaNavigation.GrupoIdGrupo).Prepend(new SelectListItem() { Text = "---Selecione um Grupo---", Value = "" });
+            ViewData["GrupoIdGrupo"] = new SelectList(_context.Grupo, "IdGrupo", "NomeGrupo", especie.GrupoIdGrupo).Prepend(new SelectListItem() { Text = "---Selecione um Grupo---", Value = "" });
             return View(especie);
         }
 
@@ -109,8 +109,8 @@ namespace Bioterio.Controllers
             {
                 return NotFound();
             }
-            ViewData["FamiliaIdFamilia"] = new SelectList(_context.Familia, "IdFamilia", "NomeFamilia");
-            ViewData["GrupoIdGrupo"] = new SelectList(_context.Grupo, "IdGrupo", "NomeGrupo");
+            ViewData["FamiliaIdFamilia"] = new SelectList(_context.Familia, "IdFamilia", "NomeFamilia", especie.FamiliaIdFamilia).Prepend(new SelectListItem() { Text = "---Selecione uma Familia---", Value = "" });
+            ViewData["GrupoIdGrupo"] = new SelectList(_context.Grupo, "IdGrupo", "NomeGrupo", especie.GrupoIdGrupo).Prepend(new SelectListItem() { Text = "---Selecione um Grupo---", Value = "" });
             return View(especie);
         }
 
@@ -119,7 +119,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdEspecie,NomeCient,NomeVulgar,FamiliaIdFamilia,FamiliaGrupoIdGrupo")] Especie especie)
+        public async Task<IActionResult> Edit(int id, [Bind("IdEspecie,NomeCient,NomeVulgar,FamiliaIdFamilia,GrupoIdGrupo")] Especie especie)
         {
             if (id != especie.IdEspecie)
             {
@@ -143,10 +143,10 @@ namespace Bioterio.Controllers
             }
             var val_family_group = await _context.Familia
                 .SingleOrDefaultAsync(m => m.IdFamilia == especie.FamiliaIdFamilia);
-            if (val_family_group.GrupoIdGrupo != especie.FamiliaIdFamiliaNavigation.GrupoIdGrupo)
+            if (val_family_group.GrupoIdGrupo != especie.GrupoIdGrupo)
             {
                 ModelState.AddModelError("FamiliaIdFamilia", "A familia selecionada não pertence ao grupo selecionado.");
-                ModelState.AddModelError("FamiliaGrupoIdGrupo", "O grupo selecionado não contém a familia selecionada.");
+                ModelState.AddModelError("GrupoIdGrupo", "O grupo selecionado não contém a familia selecionada.");
             }
 
             if (ModelState.IsValid)
@@ -171,8 +171,8 @@ namespace Bioterio.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FamiliaIdFamilia"] = new SelectList(_context.Familia, "IdFamilia", "NomeFamilia");
-            ViewData["GrupoIdGrupo"] = new SelectList(_context.Grupo, "IdGrupo", "NomeGrupo");
+            ViewData["FamiliaIdFamilia"] = new SelectList(_context.Familia, "IdFamilia", "NomeFamilia", especie.FamiliaIdFamilia).Prepend(new SelectListItem() { Text = "---Selecione uma Familia---", Value = "" });
+            ViewData["GrupoIdGrupo"] = new SelectList(_context.Grupo, "IdGrupo", "NomeGrupo", especie.GrupoIdGrupo).Prepend(new SelectListItem() { Text = "---Selecione um Grupo---", Value = "" });
             return View(especie);
         }
 

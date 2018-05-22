@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bioterio.Models;
+using System.Text.RegularExpressions;
 
 namespace Bioterio.Controllers
 {
@@ -45,6 +46,11 @@ namespace Bioterio.Controllers
         // GET: Fornecedorcolectors/Create
         public IActionResult Create()
         {
+            List<SelectListItem> items = new List<SelectListItem>();
+            items.Add(new SelectListItem() { Text = "---Selecione um Tipo---", Value = "" });
+            items.Add(new SelectListItem() { Text = "Colector", Value = "c" });
+            items.Add(new SelectListItem() { Text = "Fornecedor", Value = "f" });
+            ViewData["Tipo"] = new SelectList(items, "Value", "Text");
             return View();
         }
 
@@ -55,12 +61,52 @@ namespace Bioterio.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdFornColect,Tipo,Nome,Nif,NroLicenca,Morada,Telefone")] Fornecedorcolector fornecedorcolector)
         {
+
+            //validation
+            if (fornecedorcolector.Tipo == null)
+            {
+                ModelState.AddModelError("Tipo", "Por favor escolha um tipo.");
+            }
+            if (fornecedorcolector.Nome == null)
+            {
+                ModelState.AddModelError("Nome", "O nome é um campo requirido.");
+            }
+            if (fornecedorcolector.Nif == null)
+            {
+                ModelState.AddModelError("Nif", "O NIF é um campo requirido.");
+            }
+            else if (!validateNIF(fornecedorcolector.Nif)) {
+                ModelState.AddModelError("Nif", "Insira um NIF válido.");
+            }
+
+            if (fornecedorcolector.NroLicenca == null)
+            {
+                ModelState.AddModelError("NroLicenca", "O número de licença é um campo requirido.");
+            }
+            if (fornecedorcolector.Morada == null)
+            {
+                ModelState.AddModelError("Morada", "A morada é um campo requirido.");
+            }
+            if (fornecedorcolector.Telefone == null)
+            {
+                ModelState.AddModelError("Telefone", "O telefone é um campo requirido.");
+            }
+            else if (!Regex.IsMatch(fornecedorcolector.Telefone, @"^\+?[\s\d]*$")) {
+                ModelState.AddModelError("Telefone", "Insira um número de telefone válido.");
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(fornecedorcolector);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+            List<SelectListItem> items = new List<SelectListItem>();
+            items.Add(new SelectListItem() { Text = "---Selecione um Tipo---", Value = "" });
+            items.Add(new SelectListItem() { Text = "Colector", Value = "c" });
+            items.Add(new SelectListItem() { Text = "Fornecedor", Value = "f" });
+            ViewData["Tipo"] = new SelectList(items, "Value", "Text");
             return View(fornecedorcolector);
         }
 
@@ -77,6 +123,13 @@ namespace Bioterio.Controllers
             {
                 return NotFound();
             }
+
+
+            List<SelectListItem> items = new List<SelectListItem>();
+            items.Add(new SelectListItem() { Text = "---Selecione um Tipo---", Value = "" });
+            items.Add(new SelectListItem() { Text = "Colector", Value = "c" });
+            items.Add(new SelectListItem() { Text = "Fornecedor", Value = "f" });
+            ViewData["Tipo"] = new SelectList(items, "Value", "Text");
             return View(fornecedorcolector);
         }
 
@@ -90,6 +143,41 @@ namespace Bioterio.Controllers
             if (id != fornecedorcolector.IdFornColect)
             {
                 return NotFound();
+            }
+
+            //validation
+            if (fornecedorcolector.Tipo == null)
+            {
+                ModelState.AddModelError("Tipo", "Por favor escolha um tipo.");
+            }
+            if (fornecedorcolector.Nome == null)
+            {
+                ModelState.AddModelError("Nome", "O nome é um campo requirido.");
+            }
+            if (fornecedorcolector.Nif == null)
+            {
+                ModelState.AddModelError("Nif", "O NIF é um campo requirido.");
+            }
+            else if (!validateNIF(fornecedorcolector.Nif))
+            {
+                ModelState.AddModelError("Nif", "Insira um NIF válido.");
+            }
+
+            if (fornecedorcolector.NroLicenca == null)
+            {
+                ModelState.AddModelError("NroLicenca", "O número de licença é um campo requirido.");
+            }
+            if (fornecedorcolector.Morada == null)
+            {
+                ModelState.AddModelError("Morada", "A morada é um campo requirido.");
+            }
+            if (fornecedorcolector.Telefone == null)
+            {
+                ModelState.AddModelError("Telefone", "O telefone é um campo requirido.");
+            }
+            else if (!Regex.IsMatch(fornecedorcolector.Telefone, @"^\+?[\s\d]*$"))
+            {
+                ModelState.AddModelError("Telefone", "Insira um número de telefone válido.");
             }
 
             if (ModelState.IsValid)
@@ -112,6 +200,12 @@ namespace Bioterio.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
+            List<SelectListItem> items = new List<SelectListItem>();
+            items.Add(new SelectListItem() { Text = "---Selecione um Tipo---", Value = "" });
+            items.Add(new SelectListItem() { Text = "Colector", Value = "c" });
+            items.Add(new SelectListItem() { Text = "Fornecedor", Value = "f" });
+            ViewData["Tipo"] = new SelectList(items, "Value", "Text");
             return View(fornecedorcolector);
         }
 
@@ -147,6 +241,25 @@ namespace Bioterio.Controllers
         private bool FornecedorcolectorExists(int id)
         {
             return _context.Fornecedorcolector.Any(e => e.IdFornColect == id);
+        }
+
+        private bool validateNIF(int? nif)
+        {
+            int[] nif_array = Array.ConvertAll(nif.ToString().ToArray(), c => (int)Char.GetNumericValue(c));
+            //check lenght
+            if (nif_array.Length != 9) return false;
+            //check first digit
+            if (nif_array[0] != 1 && nif_array[0] != 2 && nif_array[0] != 5) return false;
+            //checkbit validation
+            int checkbit = nif_array[0] * 9;
+            for (int i = 2; i <= 8; i++)
+            {
+                checkbit += nif_array[i - 1] * (10 - i);
+            }
+            checkbit = 11 - (checkbit % 11);
+            if (checkbit >= 10) checkbit = 0;
+            if (nif_array[8] == checkbit) return true;
+            return false;
         }
     }
 }
