@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Bioterio.Models
 {
@@ -11,9 +12,12 @@ namespace Bioterio.Models
         }
 
         public int IdFamilia { get; set; }
+        [DisplayName("Nome")]
         public string NomeFamilia { get; set; }
+        [DisplayName("Grupo")]
         public int GrupoIdGrupo { get; set; }
 
+        [DisplayName("Grupo")]
         public Grupo GrupoIdGrupoNavigation { get; set; }
         public ICollection<Especie> Especie { get; set; }
     }

@@ -15,7 +15,7 @@
             <input type="hidden" asp-for="IdFornColect" />
             <div class="form-group">
                 <label asp-for="Tipo" class="control-label"></label>
-                <input asp-for="Tipo" class="form-control" />
+                <select asp-for="Tipo" class="form-control" id="typeDropDown" asp-items="ViewBag.Tipo"></select>
                 <span asp-validation-for="Tipo" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -25,12 +25,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Nif" class="control-label"></label>
-                <input asp-for="Nif" class="form-control" />
+                <input asp-for="Nif" class="form-control" type="text" />
                 <span asp-validation-for="Nif" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="NroLicenca" class="control-label"></label>
-                <input asp-for="NroLicenca" class="form-control" />
+                <input asp-for="NroLicenca" class="form-control" type="text" />
                 <span asp-validation-for="NroLicenca" class="text-danger"></span>
             </div>
             <div class="form-group">

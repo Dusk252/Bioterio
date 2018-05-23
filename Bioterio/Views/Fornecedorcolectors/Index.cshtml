@@ -12,24 +12,24 @@
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Tipo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Nome)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Nif)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.NroLicenca)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Morada)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Telefone)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tipo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nif)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NroLicenca)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Morada)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefone)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -37,7 +37,8 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Tipo)
+                @{ string tipo = item.Tipo.Equals("c") ? "Colector" : "Fornecedor"; }
+                @tipo
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nome)

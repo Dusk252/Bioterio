@@ -14,6 +14,11 @@ namespace Bioterio.Controllers
     {
         private readonly bd_lesContext _context;
 
+        private SelectList types = new SelectList(new List<SelectListItem>() {
+                new SelectListItem() { Text = "---Selecione um Tipo---", Value = "" },
+                new SelectListItem() { Text = "Colector", Value = "c" },
+                new SelectListItem() { Text = "Fornecedor", Value = "f" } }, "Value", "Text");
+
         public FornecedorcolectorsController(bd_lesContext context)
         {
             _context = context;
@@ -40,17 +45,15 @@ namespace Bioterio.Controllers
                 return NotFound();
             }
 
+            string tipo = fornecedorcolector.Tipo.Equals("c") ? "Colector" : "Fornecedor";
+            ViewData["tipo_string"] = tipo;
             return View(fornecedorcolector);
         }
 
         // GET: Fornecedorcolectors/Create
         public IActionResult Create()
         {
-            List<SelectListItem> items = new List<SelectListItem>();
-            items.Add(new SelectListItem() { Text = "---Selecione um Tipo---", Value = "" });
-            items.Add(new SelectListItem() { Text = "Colector", Value = "c" });
-            items.Add(new SelectListItem() { Text = "Fornecedor", Value = "f" });
-            ViewData["Tipo"] = new SelectList(items, "Value", "Text");
+            ViewData["Tipo"] = types;
             return View();
         }
 
@@ -78,11 +81,18 @@ namespace Bioterio.Controllers
             else if (!validateNIF(fornecedorcolector.Nif)) {
                 ModelState.AddModelError("Nif", "Insira um NIF válido.");
             }
-
             if (fornecedorcolector.NroLicenca == null)
             {
                 ModelState.AddModelError("NroLicenca", "O número de licença é um campo requirido.");
             }
+            /*if (Regex.IsMatch(fornecedorcolector.NroLicenca.ToString(), @"\D"))
+            {
+                ModelState.AddModelError("Licença", "Insira um número de licença válido.");
+            }
+            if (!int.TryParse(fornecedorcolector.NroLicenca.ToString(), out int i))
+            {
+                ModelState.AddModelError("Licença", "Insira um número de licença válido.");
+            }*/
             if (fornecedorcolector.Morada == null)
             {
                 ModelState.AddModelError("Morada", "A morada é um campo requirido.");
@@ -102,11 +112,7 @@ namespace Bioterio.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            List<SelectListItem> items = new List<SelectListItem>();
-            items.Add(new SelectListItem() { Text = "---Selecione um Tipo---", Value = "" });
-            items.Add(new SelectListItem() { Text = "Colector", Value = "c" });
-            items.Add(new SelectListItem() { Text = "Fornecedor", Value = "f" });
-            ViewData["Tipo"] = new SelectList(items, "Value", "Text");
+            ViewData["Tipo"] = types;
             return View(fornecedorcolector);
         }
 
@@ -124,12 +130,7 @@ namespace Bioterio.Controllers
                 return NotFound();
             }
 
-
-            List<SelectListItem> items = new List<SelectListItem>();
-            items.Add(new SelectListItem() { Text = "---Selecione um Tipo---", Value = "" });
-            items.Add(new SelectListItem() { Text = "Colector", Value = "c" });
-            items.Add(new SelectListItem() { Text = "Fornecedor", Value = "f" });
-            ViewData["Tipo"] = new SelectList(items, "Value", "Text");
+            ViewData["Tipo"] = types;
             return View(fornecedorcolector);
         }
 
@@ -201,11 +202,7 @@ namespace Bioterio.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            List<SelectListItem> items = new List<SelectListItem>();
-            items.Add(new SelectListItem() { Text = "---Selecione um Tipo---", Value = "" });
-            items.Add(new SelectListItem() { Text = "Colector", Value = "c" });
-            items.Add(new SelectListItem() { Text = "Fornecedor", Value = "f" });
-            ViewData["Tipo"] = new SelectList(items, "Value", "Text");
+            ViewData["Tipo"] = types;
             return View(fornecedorcolector);
         }
 
