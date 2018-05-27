@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Bioterio.Models
 {
@@ -12,13 +14,19 @@ namespace Bioterio.Models
         }
 
         public int IdFamilia { get; set; }
+
         [DisplayName("Nome")]
+        [Required(ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "RequiredField")]
+        [Remote("ValidateFamilyName", "Familias", AdditionalFields = "IdFamilia")]
         public string NomeFamilia { get; set; }
+
         [DisplayName("Grupo")]
-        public int GrupoIdGrupo { get; set; }
+        [Required(ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "RequiredField")]
+        public int? GrupoIdGrupo { get; set; }
 
         [DisplayName("Grupo")]
         public Grupo GrupoIdGrupoNavigation { get; set; }
+
         public ICollection<Especie> Especie { get; set; }
     }
 }

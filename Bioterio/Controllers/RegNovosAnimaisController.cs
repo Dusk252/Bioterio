@@ -51,12 +51,22 @@ namespace Bioterio.Controllers
         // GET: RegNovosAnimais/Create
         public IActionResult Create()
         {
-            ViewData["EspecieIdEspecie"] = new SelectList(_context.Especie, "IdEspecie", "NomeCient");
-            ViewData["FornecedorIdFornColect"] = new SelectList(_context.Fornecedorcolector, "IdFornColect", "Tipo");
-            ViewData["FuncionarioIdFuncionario1"] = new SelectList(_context.Funcionario, "IdFuncionario", "NomeCompleto");
-            ViewData["FuncionarioIdFuncionario"] = new SelectList(_context.Funcionario, "IdFuncionario", "NomeCompleto");
-            ViewData["TOrigemIdTOrigem"] = new SelectList(_context.TOrigem, "IdTOrigem", "IdTOrigem");
-            ViewData["TipoEstatutoGeneticoIdTipoEstatutoGenetico"] = new SelectList(_context.Tipoestatutogenetico, "IdTipoEstatutoGenetico", "IdTipoEstatutoGenetico");
+            ViewData["EspecieIdEspecie"] = new SelectList(_context.Especie, "IdEspecie", "NomeCient").Prepend(new SelectListItem() { Text = "---Selecione uma Espécie---", Value = "" });
+            ViewData["FornecedorIdFornColect"] = new SelectList(_context.Fornecedorcolector, "IdFornColect", "Nome").Prepend(new SelectListItem() { Text = "---Selecione um Fornecedor/Colector---", Value = "" });
+            ViewData["FuncionarioIdFuncionario1"] = new SelectList(_context.Funcionario, "IdFuncionario", "NomeCompleto").Prepend(new SelectListItem() { Text = "---Selecione um Funcionário---", Value = "" });
+            ViewData["FuncionarioIdFuncionario"] = new SelectList(_context.Funcionario, "IdFuncionario", "NomeCompleto").Prepend(new SelectListItem() { Text = "---Selecione um Funcionário---", Value = "" });
+            var locais =
+              _context.Localcaptura
+                .Select(s => new
+                {
+                    LocalId = s.IdLocalCaptura,
+                    Description = string.Format("{0} ({1} {2})", s.Localidade, s.Latitude, s.Longitude)
+                })
+                .ToList();
+            ViewData["LocalCapturaIdLocalCaptura"] = new SelectList(locais, "LocalId", "Description").Prepend(new SelectListItem() { Text = "---Selecione um Local de Captura---", Value = "" });
+            ViewData["TOrigem"] = new List<TOrigem>(_context.TOrigem);
+            ViewData["TOrigem"] = new List<TOrigem>(_context.TOrigem);
+            ViewData["TipoEstatutoGenetico"] = new List<Tipoestatutogenetico>(_context.Tipoestatutogenetico);
             return View();
         }
 
@@ -73,11 +83,22 @@ namespace Bioterio.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FornecedorIdFornColect"] = new SelectList(_context.Fornecedorcolector, "IdFornColect", "Tipo", regNovosAnimais.FornecedorIdFornColect);
-            ViewData["FuncionarioIdFuncionario1"] = new SelectList(_context.Funcionario, "IdFuncionario", "NomeCompleto", regNovosAnimais.FuncionarioIdFuncionario1);
-            ViewData["FuncionarioIdFuncionario"] = new SelectList(_context.Funcionario, "IdFuncionario", "NomeCompleto", regNovosAnimais.FuncionarioIdFuncionario);
-            ViewData["TOrigemIdTOrigem"] = new SelectList(_context.TOrigem, "IdTOrigem", "IdTOrigem", regNovosAnimais.TOrigemIdTOrigem);
-            ViewData["TipoEstatutoGeneticoIdTipoEstatutoGenetico"] = new SelectList(_context.Tipoestatutogenetico, "IdTipoEstatutoGenetico", "IdTipoEstatutoGenetico", regNovosAnimais.TipoEstatutoGeneticoIdTipoEstatutoGenetico);
+            ViewData["EspecieIdEspecie"] = new SelectList(_context.Especie, "IdEspecie", "NomeCient").Prepend(new SelectListItem() { Text = "---Selecione uma Espécie---", Value = "" });
+            ViewData["FornecedorIdFornColect"] = new SelectList(_context.Fornecedorcolector, "IdFornColect", "Nome").Prepend(new SelectListItem() { Text = "---Selecione um Fornecedor/Colector---", Value = "" });
+            ViewData["FuncionarioIdFuncionario1"] = new SelectList(_context.Funcionario, "IdFuncionario", "NomeCompleto").Prepend(new SelectListItem() { Text = "---Selecione um Funcionário---", Value = "" });
+            ViewData["FuncionarioIdFuncionario"] = new SelectList(_context.Funcionario, "IdFuncionario", "NomeCompleto").Prepend(new SelectListItem() { Text = "---Selecione um Funcionário---", Value = "" });
+            var locais =
+              _context.Localcaptura
+                .Select(s => new
+                {
+                    LocalId = s.IdLocalCaptura,
+                    Description = string.Format("{0} ({1} {2})", s.Localidade, s.Latitude, s.Longitude)
+                })
+                .ToList();
+            ViewData["LocalCapturaIdLocalCaptura"] = new SelectList(locais, "LocalId", "Description").Prepend(new SelectListItem() { Text = "---Selecione um Local de Captura---", Value = "" });
+            ViewData["TOrigem"] = new List<TOrigem>(_context.TOrigem);
+            ViewData["TOrigem"] = new List<TOrigem>(_context.TOrigem);
+            ViewData["TipoEstatutoGenetico"] = new List<Tipoestatutogenetico>(_context.Tipoestatutogenetico);
             return View(regNovosAnimais);
         }
 
@@ -94,11 +115,21 @@ namespace Bioterio.Controllers
             {
                 return NotFound();
             }
-            ViewData["FornecedorIdFornColect"] = new SelectList(_context.Fornecedorcolector, "IdFornColect", "Tipo", regNovosAnimais.FornecedorIdFornColect);
-            ViewData["FuncionarioIdFuncionario1"] = new SelectList(_context.Funcionario, "IdFuncionario", "NomeCompleto", regNovosAnimais.FuncionarioIdFuncionario1);
-            ViewData["FuncionarioIdFuncionario"] = new SelectList(_context.Funcionario, "IdFuncionario", "NomeCompleto", regNovosAnimais.FuncionarioIdFuncionario);
-            ViewData["TOrigemIdTOrigem"] = new SelectList(_context.TOrigem, "IdTOrigem", "IdTOrigem", regNovosAnimais.TOrigemIdTOrigem);
-            ViewData["TipoEstatutoGeneticoIdTipoEstatutoGenetico"] = new SelectList(_context.Tipoestatutogenetico, "IdTipoEstatutoGenetico", "IdTipoEstatutoGenetico", regNovosAnimais.TipoEstatutoGeneticoIdTipoEstatutoGenetico);
+            ViewData["EspecieIdEspecie"] = new SelectList(_context.Especie, "IdEspecie", "NomeCient").Prepend(new SelectListItem() { Text = "---Selecione uma Espécie---", Value = "" });
+            ViewData["FornecedorIdFornColect"] = new SelectList(_context.Fornecedorcolector, "IdFornColect", "Nome").Prepend(new SelectListItem() { Text = "---Selecione um Fornecedor/Colector---", Value = "" });
+            ViewData["FuncionarioIdFuncionario1"] = new SelectList(_context.Funcionario, "IdFuncionario", "NomeCompleto").Prepend(new SelectListItem() { Text = "---Selecione um Funcionário---", Value = "" });
+            ViewData["FuncionarioIdFuncionario"] = new SelectList(_context.Funcionario, "IdFuncionario", "NomeCompleto").Prepend(new SelectListItem() { Text = "---Selecione um Funcionário---", Value = "" });
+            var locais =
+              _context.Localcaptura
+                .Select(s => new
+                {
+                    LocalId = s.IdLocalCaptura,
+                    Description = string.Format("{0} ({1} {2})", s.Localidade, s.Latitude, s.Longitude)
+                })
+                .ToList();
+            ViewData["LocalCapturaIdLocalCaptura"] = new SelectList(locais, "LocalId", "Description").Prepend(new SelectListItem() { Text = "---Selecione um Local de Captura---", Value = "" });
+            ViewData["TOrigem"] = new List<TOrigem>(_context.TOrigem);
+            ViewData["TipoEstatutoGenetico"] = new List<Tipoestatutogenetico>(_context.Tipoestatutogenetico);
             return View(regNovosAnimais);
         }
 
@@ -113,7 +144,6 @@ namespace Bioterio.Controllers
             {
                 return NotFound();
             }
-
             if (ModelState.IsValid)
             {
                 try
@@ -134,11 +164,21 @@ namespace Bioterio.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FornecedorIdFornColect"] = new SelectList(_context.Fornecedorcolector, "IdFornColect", "Tipo", regNovosAnimais.FornecedorIdFornColect);
-            ViewData["FuncionarioIdFuncionario1"] = new SelectList(_context.Funcionario, "IdFuncionario", "NomeCompleto", regNovosAnimais.FuncionarioIdFuncionario1);
-            ViewData["FuncionarioIdFuncionario"] = new SelectList(_context.Funcionario, "IdFuncionario", "NomeCompleto", regNovosAnimais.FuncionarioIdFuncionario);
-            ViewData["TOrigemIdTOrigem"] = new SelectList(_context.TOrigem, "IdTOrigem", "IdTOrigem", regNovosAnimais.TOrigemIdTOrigem);
-            ViewData["TipoEstatutoGeneticoIdTipoEstatutoGenetico"] = new SelectList(_context.Tipoestatutogenetico, "IdTipoEstatutoGenetico", "IdTipoEstatutoGenetico", regNovosAnimais.TipoEstatutoGeneticoIdTipoEstatutoGenetico);
+            ViewData["EspecieIdEspecie"] = new SelectList(_context.Especie, "IdEspecie", "NomeCient").Prepend(new SelectListItem() { Text = "---Selecione uma Espécie---", Value = "" });
+            ViewData["FornecedorIdFornColect"] = new SelectList(_context.Fornecedorcolector, "IdFornColect", "Nome").Prepend(new SelectListItem() { Text = "---Selecione um Fornecedor/Colector---", Value = "" });
+            ViewData["FuncionarioIdFuncionario1"] = new SelectList(_context.Funcionario, "IdFuncionario", "NomeCompleto").Prepend(new SelectListItem() { Text = "---Selecione um Funcionário---", Value = "" });
+            ViewData["FuncionarioIdFuncionario"] = new SelectList(_context.Funcionario, "IdFuncionario", "NomeCompleto").Prepend(new SelectListItem() { Text = "---Selecione um Funcionário---", Value = "" });
+            var locais =
+              _context.Localcaptura
+                .Select(s => new
+                {
+                    LocalId = s.IdLocalCaptura,
+                    Description = string.Format("{0} ({1} {2})", s.Localidade, s.Latitude, s.Longitude)
+                })
+                .ToList();
+            ViewData["LocalCapturaIdLocalCaptura"] = new SelectList(locais, "LocalId", "Description").Prepend(new SelectListItem() { Text = "---Selecione um Local de Captura---", Value = "" });
+            ViewData["TOrigem"] = new List<TOrigem>(_context.TOrigem);
+            ViewData["TipoEstatutoGenetico"] = new List<Tipoestatutogenetico>(_context.Tipoestatutogenetico);
             return View(regNovosAnimais);
         }
 
@@ -180,5 +220,6 @@ namespace Bioterio.Controllers
         {
             return _context.RegNovosAnimais.Any(e => e.IdRegAnimal == id);
         }
+
     }
 }

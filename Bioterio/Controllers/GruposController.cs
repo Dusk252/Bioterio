@@ -58,16 +58,11 @@ namespace Bioterio.Controllers
         public async Task<IActionResult> Create([Bind("IdGrupo,NomeGrupo")] Grupo grupo)
         {
             //validation
-            if (grupo.NomeGrupo == null)
-            {
-                ModelState.AddModelError("NomeGrupo", "O nome é um campo requirido.");
-            }
-
             var val_nome = await _context.Grupo
                 .SingleOrDefaultAsync(m => m.NomeGrupo == grupo.NomeGrupo);
             if (val_nome != null)
             {
-                ModelState.AddModelError("NomeGrupo", "Não podem existir dois grupos com o mesmo nome.");
+                ModelState.AddModelError("NomeGrupo", string.Format("Já existe um grupo com o nome {0}.", grupo.NomeGrupo));
             }
 
             if (ModelState.IsValid)
@@ -108,16 +103,11 @@ namespace Bioterio.Controllers
             }
 
             //validation
-            if (grupo.NomeGrupo == null)
-            {
-                ModelState.AddModelError("NomeGrupo", "O nome é um campo requirido.");
-            }
-
             var val_nome = await _context.Grupo
                 .SingleOrDefaultAsync(m => m.NomeGrupo == grupo.NomeGrupo);
             if (val_nome != null && val_nome.IdGrupo != grupo.IdGrupo)
             {
-                ModelState.AddModelError("NomeGrupo", "Não podem existir dois grupos com o mesmo nome.");
+                ModelState.AddModelError("NomeGrupo", string.Format("Já existe um grupo com o nome {0}.", grupo.NomeGrupo));
             }
 
             if (ModelState.IsValid)
@@ -224,6 +214,14 @@ namespace Bioterio.Controllers
             }
             Console.WriteLine(result);
             return result;
+        }
+
+        public async Task<ActionResult> ValidateGroupName(string NomeGrupo, int IdGrupo)
+        {
+            var val_nomegrupo = await _context.Grupo
+            .SingleOrDefaultAsync(m => m.NomeGrupo == NomeGrupo);
+            if (val_nomegrupo == null | val_nomegrupo.IdGrupo == IdGrupo) return Json(true);
+            else return Json(string.Format("Já existe um grupo com o nome {0}.", NomeGrupo));
         }
     }
 }

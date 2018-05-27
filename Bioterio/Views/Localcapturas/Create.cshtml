@@ -13,11 +13,6 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="IdLocalCaptura" class="control-label">Id local captura</label>
-                <input asp-for="IdLocalCaptura" class="form-control" />
-                <span asp-validation-for="IdLocalCaptura" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Localidade" class="control-label"></label>
                 <input asp-for="Localidade" class="form-control" />
                 <span asp-validation-for="Localidade" class="text-danger"></span>
@@ -33,13 +28,12 @@
                 <span asp-validation-for="Longitude" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ConcelhoId" class="control-label">Id Concelho</label>
+                <label asp-for="ConcelhoId" class="control-label"></label>
                 <select asp-for="ConcelhoId" class ="form-control" asp-items="ViewBag.ConcelhoId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="ConcelhoDistritoId" class="control-label">Id Distrito</label>
-                <input asp-for="ConcelhoDistritoId" class="form-control" />
-                <span asp-validation-for="ConcelhoDistritoId" class="text-danger"></span>
+                <label asp-for="DistritoId" class="control-label"></label>
+                <select asp-for="DistritoId" class ="form-control" asp-items="ViewBag.DistritoId"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -52,6 +46,3 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

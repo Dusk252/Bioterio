@@ -64,45 +64,10 @@ namespace Bioterio.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdFornColect,Tipo,Nome,Nif,NroLicenca,Morada,Telefone")] Fornecedorcolector fornecedorcolector)
         {
-
             //validation
-            if (fornecedorcolector.Tipo == null)
+            if (!validateNIF(fornecedorcolector.Nif))
             {
-                ModelState.AddModelError("Tipo", "Por favor escolha um tipo.");
-            }
-            if (fornecedorcolector.Nome == null)
-            {
-                ModelState.AddModelError("Nome", "O nome é um campo requirido.");
-            }
-            if (fornecedorcolector.Nif == null)
-            {
-                ModelState.AddModelError("Nif", "O NIF é um campo requirido.");
-            }
-            else if (!validateNIF(fornecedorcolector.Nif)) {
                 ModelState.AddModelError("Nif", "Insira um NIF válido.");
-            }
-            if (fornecedorcolector.NroLicenca == null)
-            {
-                ModelState.AddModelError("NroLicenca", "O número de licença é um campo requirido.");
-            }
-            /*if (Regex.IsMatch(fornecedorcolector.NroLicenca.ToString(), @"\D"))
-            {
-                ModelState.AddModelError("Licença", "Insira um número de licença válido.");
-            }
-            if (!int.TryParse(fornecedorcolector.NroLicenca.ToString(), out int i))
-            {
-                ModelState.AddModelError("Licença", "Insira um número de licença válido.");
-            }*/
-            if (fornecedorcolector.Morada == null)
-            {
-                ModelState.AddModelError("Morada", "A morada é um campo requirido.");
-            }
-            if (fornecedorcolector.Telefone == null)
-            {
-                ModelState.AddModelError("Telefone", "O telefone é um campo requirido.");
-            }
-            else if (!Regex.IsMatch(fornecedorcolector.Telefone, @"^\+?[\s\d]*$")) {
-                ModelState.AddModelError("Telefone", "Insira um número de telefone válido.");
             }
 
             if (ModelState.IsValid)
@@ -147,38 +112,9 @@ namespace Bioterio.Controllers
             }
 
             //validation
-            if (fornecedorcolector.Tipo == null)
-            {
-                ModelState.AddModelError("Tipo", "Por favor escolha um tipo.");
-            }
-            if (fornecedorcolector.Nome == null)
-            {
-                ModelState.AddModelError("Nome", "O nome é um campo requirido.");
-            }
-            if (fornecedorcolector.Nif == null)
-            {
-                ModelState.AddModelError("Nif", "O NIF é um campo requirido.");
-            }
-            else if (!validateNIF(fornecedorcolector.Nif))
+            if (!validateNIF(fornecedorcolector.Nif))
             {
                 ModelState.AddModelError("Nif", "Insira um NIF válido.");
-            }
-
-            if (fornecedorcolector.NroLicenca == null)
-            {
-                ModelState.AddModelError("NroLicenca", "O número de licença é um campo requirido.");
-            }
-            if (fornecedorcolector.Morada == null)
-            {
-                ModelState.AddModelError("Morada", "A morada é um campo requirido.");
-            }
-            if (fornecedorcolector.Telefone == null)
-            {
-                ModelState.AddModelError("Telefone", "O telefone é um campo requirido.");
-            }
-            else if (!Regex.IsMatch(fornecedorcolector.Telefone, @"^\+?[\s\d]*$"))
-            {
-                ModelState.AddModelError("Telefone", "Insira um número de telefone válido.");
             }
 
             if (ModelState.IsValid)
@@ -257,6 +193,12 @@ namespace Bioterio.Controllers
             if (checkbit >= 10) checkbit = 0;
             if (nif_array[8] == checkbit) return true;
             return false;
+        }
+
+        public ActionResult ValidateNIF(int NIF)
+        {
+            if(validateNIF(NIF)) return Json(true);
+            else return Json("Insira um NIF válido.");
         }
     }
 }

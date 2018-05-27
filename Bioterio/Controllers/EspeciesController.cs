@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bioterio.Models;
+using Bioterio.Validation;
 
 namespace Bioterio.Controllers
 {
@@ -63,19 +64,11 @@ namespace Bioterio.Controllers
         public async Task<IActionResult> Create([Bind("IdEspecie,NomeCient,NomeVulgar,FamiliaIdFamilia,GrupoIdGrupo")] Especie especie)
         {
             //validation
-            if (especie.NomeCient == null)
-            {
-                ModelState.AddModelError("NomeCient", "O nome científico é um campo requirido.");
-            }
-            if (especie.NomeVulgar == null)
-            {
-                ModelState.AddModelError("NomeVulgar", "O nome vulgar é um campo requirido.");
-            }
             var val_nomecient = await _context.Especie
                 .SingleOrDefaultAsync(m => m.NomeCient == especie.NomeCient);
             if (val_nomecient != null)
             {
-                ModelState.AddModelError("NomeCient", "Não podem existir duas espécies com o mesmo nome científico.");
+                ModelState.AddModelError("NomeCient", string.Format("Já existe uma espécie com o nome {0}.", especie.NomeCient));
             }
             var val_family_group = await _context.Familia
                 .SingleOrDefaultAsync(m => m.IdFamilia == especie.FamiliaIdFamilia);
@@ -91,7 +84,7 @@ namespace Bioterio.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FamiliaIdFamilia"] = new SelectList(_context.Familia, "IdFamilia", "NomeFamilia", especie.FamiliaIdFamilia).Prepend(new SelectListItem() {Text = "---Selecione uma Familia---", Value = ""});
+            ViewData["FamiliaIdFamilia"] = new SelectList(_context.Familia, "IdFamilia", "NomeFamilia", especie.FamiliaIdFamilia).Prepend(new SelectListItem() { Text = "---Selecione uma Familia---", Value = "" });
             ViewData["GrupoIdGrupo"] = new SelectList(_context.Grupo, "IdGrupo", "NomeGrupo", especie.GrupoIdGrupo).Prepend(new SelectListItem() { Text = "---Selecione um Grupo---", Value = "" });
             return View(especie);
         }
@@ -127,19 +120,11 @@ namespace Bioterio.Controllers
             }
 
             //validation
-            if (especie.NomeCient == null)
-            {
-                ModelState.AddModelError("NomeCient", "O nome científico é um campo requirido.");
-            }
-            if (especie.NomeVulgar == null)
-            {
-                ModelState.AddModelError("NomeVulgar", "O nome vulgar é um campo requirido.");
-            }
             var val_nomecient = await _context.Especie
                 .SingleOrDefaultAsync(m => m.NomeCient == especie.NomeCient);
             if (val_nomecient != null && val_nomecient.IdEspecie != especie.IdEspecie)
             {
-                ModelState.AddModelError("NomeCient", "Não podem existir duas espécies com o mesmo nome científico.");
+                ModelState.AddModelError("NomeCient", string.Format("Já existe uma espécie com o nome {0}.", especie.NomeCient));
             }
             var val_family_group = await _context.Familia
                 .SingleOrDefaultAsync(m => m.IdFamilia == especie.FamiliaIdFamilia);
@@ -226,6 +211,14 @@ namespace Bioterio.Controllers
         private bool EspecieExists(int id)
         {
             return _context.Especie.Any(e => e.IdEspecie == id);
+        }
+
+        public async Task<ActionResult> ValidateScientificName(string NomeCient, int IdEspecie)
+        {
+            var val_nomecient = await _context.Especie
+            .SingleOrDefaultAsync(m => m.NomeCient == NomeCient);
+            if (val_nomecient == null || val_nomecient.IdEspecie == IdEspecie) return Json(true);
+            else return Json(string.Format("Já existe uma espécie com o nome {0}.", NomeCient));
         }
     }
 }

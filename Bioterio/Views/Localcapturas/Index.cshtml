@@ -24,6 +24,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Concelho)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Distrito)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -43,9 +46,12 @@
                 @Html.DisplayFor(modelItem => item.Concelho.NomeConcelho)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.DisplayFor(modelItem => item.Distrito.Id)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdLocalCaptura">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdLocalCaptura">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdLocalCaptura">Delete</a>
             </td>
         </tr>
 }

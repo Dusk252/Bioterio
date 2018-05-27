@@ -33,15 +33,15 @@ namespace Bioterio.Controllers
                 return NotFound();
             }
 
-            var Concelho = await _context.Concelho
+            var concelho = await _context.Concelho
                 .Include(c => c.Distrito)
                 .SingleOrDefaultAsync(m => m.Id == id);
-            if (Concelho == null)
+            if (concelho == null)
             {
                 return NotFound();
             }
 
-            return View(Concelho);
+            return View(concelho);
         }
 
         // GET: Concelhos/Create
@@ -56,16 +56,16 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,NomeConcelho,DistritoId")] Concelho Concelho)
+        public async Task<IActionResult> Create([Bind("Id,NomeConcelho,DistritoId")] Concelho concelho)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(Concelho);
+                _context.Add(concelho);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DistritoId"] = new SelectList(_context.Distrito, "Id", "Id", Concelho.DistritoId);
-            return View(Concelho);
+            ViewData["DistritoId"] = new SelectList(_context.Distrito, "Id", "Id", concelho.DistritoId);
+            return View(concelho);
         }
 
         // GET: Concelhos/Edit/5
@@ -76,13 +76,13 @@ namespace Bioterio.Controllers
                 return NotFound();
             }
 
-            var Concelho = await _context.Concelho.SingleOrDefaultAsync(m => m.Id == id);
-            if (Concelho == null)
+            var concelho = await _context.Concelho.SingleOrDefaultAsync(m => m.Id == id);
+            if (concelho == null)
             {
                 return NotFound();
             }
-            ViewData["DistritoId"] = new SelectList(_context.Distrito, "Id", "Id", Concelho.DistritoId);
-            return View(Concelho);
+            ViewData["DistritoId"] = new SelectList(_context.Distrito, "Id", "Id", concelho.DistritoId);
+            return View(concelho);
         }
 
         // POST: Concelhos/Edit/5
@@ -90,9 +90,9 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,NomeConcelho,DistritoId")] Concelho Concelho)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,NomeConcelho,DistritoId")] Concelho concelho)
         {
-            if (id != Concelho.Id)
+            if (id != concelho.Id)
             {
                 return NotFound();
             }
@@ -101,12 +101,12 @@ namespace Bioterio.Controllers
             {
                 try
                 {
-                    _context.Update(Concelho);
+                    _context.Update(concelho);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ConcelhoExists(Concelho.Id))
+                    if (!ConcelhoExists(concelho.Id))
                     {
                         return NotFound();
                     }
@@ -117,8 +117,8 @@ namespace Bioterio.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DistritoId"] = new SelectList(_context.Distrito, "Id", "Id", Concelho.DistritoId);
-            return View(Concelho);
+            ViewData["DistritoId"] = new SelectList(_context.Distrito, "Id", "Id", concelho.DistritoId);
+            return View(concelho);
         }
 
         // GET: Concelhos/Delete/5
@@ -129,15 +129,15 @@ namespace Bioterio.Controllers
                 return NotFound();
             }
 
-            var Concelho = await _context.Concelho
+            var concelho = await _context.Concelho
                 .Include(c => c.Distrito)
                 .SingleOrDefaultAsync(m => m.Id == id);
-            if (Concelho == null)
+            if (concelho == null)
             {
                 return NotFound();
             }
 
-            return View(Concelho);
+            return View(concelho);
         }
 
         // POST: Concelhos/Delete/5
@@ -145,8 +145,8 @@ namespace Bioterio.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var Concelho = await _context.Concelho.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Concelho.Remove(Concelho);
+            var concelho = await _context.Concelho.SingleOrDefaultAsync(m => m.Id == id);
+            _context.Concelho.Remove(concelho);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

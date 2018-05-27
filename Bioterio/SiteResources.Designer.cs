@@ -61,11 +61,20 @@ namespace Bioterio {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Por favor insira um {0} válido..
+        ///   Looks up a localized string similar to O valor inserido não é um valor válido para {0}..
         /// </summary>
-        internal static string PropertyValueInvalid {
+        internal static string InvalidField {
             get {
-                return ResourceManager.GetString("PropertyValueInvalid", resourceCulture);
+                return ResourceManager.GetString("InvalidField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo {0} é obrigatório..
+        /// </summary>
+        internal static string RequiredField {
+            get {
+                return ResourceManager.GetString("RequiredField", resourceCulture);
             }
         }
     }

@@ -60,20 +60,11 @@ namespace Bioterio.Controllers
         public async Task<IActionResult> Create([Bind("IdFamilia,NomeFamilia,GrupoIdGrupo")] Familia familia)
         {
             //validation
-            if (familia.NomeFamilia == null)
-            {
-                ModelState.AddModelError("NomeFamilia", "O nome é um campo requirido.");
-            }
-            if (familia.GrupoIdGrupo == 0)
-            {
-                ModelState.AddModelError("GrupoIdGrupo", "É requirido que cada família pertença a um grupo.");
-            }
-
             var val_nome = await _context.Familia
                 .SingleOrDefaultAsync(m => m.NomeFamilia == familia.NomeFamilia);
             if (val_nome != null)
             {
-                ModelState.AddModelError("NomeFamilia", "Não podem existir duas familias com o mesmo nome.");
+                ModelState.AddModelError("NomeFamilia", string.Format("Já existe uma família com o nome {0}.", familia.NomeFamilia));
             }
 
             if (ModelState.IsValid)
@@ -116,20 +107,11 @@ namespace Bioterio.Controllers
             }
 
             //validation
-            if (familia.NomeFamilia == null)
-            {
-                ModelState.AddModelError("NomeFamilia", "O nome é um campo requirido.");
-            }
-            if (familia.GrupoIdGrupo == 0)
-            {
-                ModelState.AddModelError("GrupoIdGrupo", "É requirido que cada família pertença a um grupo.");
-            }
-
             var val_nome = await _context.Familia
                 .SingleOrDefaultAsync(m => m.NomeFamilia == familia.NomeFamilia);
             if (val_nome != null && val_nome.IdFamilia != familia.IdFamilia)
             {
-                ModelState.AddModelError("NomeFamilia", "Não podem existir duas familias com o mesmo nome.");
+                ModelState.AddModelError("NomeFamilia", string.Format("Já existe uma família com o nome {0}.", familia.NomeFamilia));
             }
 
             if (ModelState.IsValid)
@@ -223,6 +205,14 @@ namespace Bioterio.Controllers
         private bool FamiliaExists(int id)
         {
             return _context.Familia.Any(e => e.IdFamilia == id);
+        }
+
+        public async Task<ActionResult> ValidateFamilyName(string NomeFamilia, int IdFamilia)
+        {
+            var val_nomefamilia = await _context.Familia
+            .SingleOrDefaultAsync(m => m.NomeFamilia == NomeFamilia);
+            if (val_nomefamilia == null | val_nomefamilia.IdFamilia == IdFamilia) return Json(true);
+            else return Json(string.Format("Já existe uma família com o nome {0}.", NomeFamilia));
         }
     }
 }
