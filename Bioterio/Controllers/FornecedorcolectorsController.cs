@@ -45,8 +45,6 @@ namespace Bioterio.Controllers
                 return NotFound();
             }
 
-            string tipo = fornecedorcolector.Tipo.Equals("c") ? "Colector" : "Fornecedor";
-            ViewData["tipo_string"] = tipo;
             return View(fornecedorcolector);
         }
 
@@ -151,13 +149,24 @@ namespace Bioterio.Controllers
             }
 
             var fornecedorcolector = await _context.Fornecedorcolector
+                .Include(f => f.RegNovosAnimais)
+                    .ThenInclude(r => r.EspecieIdEspecieNavigation)
                 .SingleOrDefaultAsync(m => m.IdFornColect == id);
+
             if (fornecedorcolector == null)
             {
                 return NotFound();
             }
 
-            return View(fornecedorcolector);
+            //check if bound to register
+            if (fornecedorcolector.RegNovosAnimais.Count > 0)
+            {
+                return View("DeleteDenied", fornecedorcolector);
+            }
+            else
+            {
+                return View(fornecedorcolector);
+            }
         }
 
         // POST: Fornecedorcolectors/Delete/5

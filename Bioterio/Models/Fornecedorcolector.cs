@@ -16,6 +16,7 @@ namespace Bioterio.Models
         public int IdFornColect { get; set; }
 
         [DisplayName("Tipo")]
+        [UIHint("CollectorType")]
         [Required(ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "RequiredField")]
         public string Tipo { get; set; }
 

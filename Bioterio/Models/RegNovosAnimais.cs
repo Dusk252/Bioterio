@@ -59,7 +59,7 @@ namespace Bioterio.Models
         [RegularExpression(@"^[+-]?([0-9]*[.])?[0-9]+$", ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "InvalidField")]
         public float? CompMedio { get; set; }
 
-        [DisplayName("Data de Nascimento")]
+        [DisplayName("Duração do Transporte")]
         [DataType(DataType.Duration, ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "InvalidField")]
         public TimeSpan? DuracaoViagem { get; set; }
 
@@ -154,12 +154,19 @@ namespace Bioterio.Models
         [Required(ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "RequiredField")]
         public int? FuncionarioIdFuncionario1 { get; set; }
 
+        [DisplayName("Espécie")]
         public Especie EspecieIdEspecieNavigation { get; set; }
+        [DisplayName("Fornecedor / Colector")]
         public Fornecedorcolector FornecedorIdFornColectNavigation { get; set; }
-        public Funcionario FuncionarioIdFuncionario1Navigation { get; set; }
+        [DisplayName("Funcionário (recepção)")]
         public Funcionario FuncionarioIdFuncionarioNavigation { get; set; }
+        [DisplayName("Funcionário (registo)")]
+        public Funcionario FuncionarioIdFuncionario1Navigation { get; set; }
+        [DisplayName("Local de captura")]
         public Localcaptura LocalCapturaIdLocalCapturaNavigation { get; set; }
+        [DisplayName("Tipo de Origem")]
         public TOrigem TOrigemIdTOrigemNavigation { get; set; }
+        [DisplayName("Tipo de Estatuto Genético")]
         public Tipoestatutogenetico TipoEstatutoGeneticoIdTipoEstatutoGeneticoNavigation { get; set; }
         public ICollection<Lote> Lote { get; set; }
     }

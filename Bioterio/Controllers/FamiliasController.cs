@@ -160,13 +160,32 @@ namespace Bioterio.Controllers
                 return NotFound();
             }
 
+            //get species belonging to family
             var especies = await _context.Especie
+                .Include(e => e.RegNovosAnimais)
+                    .ThenInclude(r => r.FornecedorIdFornColectNavigation)
                 .Where(m => m.FamiliaIdFamilia == id)
                 .ToListAsync();
 
-            ViewData["especies"] = especies;
-
-            return View(familia);
+            //check if species are associated with registers (don't delete if so)
+            List<Especie> bound_species = new List<Especie>();
+            foreach (Especie e in especies)
+            {
+                if (e.RegNovosAnimais.Count > 0)
+                {
+                    bound_species.Add(e);
+                }
+            }
+            if (bound_species.Count > 0)
+            {
+                ViewData["especies"] = bound_species;
+                return View("DeleteDenied", familia);
+            }
+            else
+            {
+                ViewData["especies"] = especies;
+                return View(familia);
+            }
         }
 
         // POST: Familias/Delete/5
@@ -180,6 +199,7 @@ namespace Bioterio.Controllers
             var especies = await _context.Especie
                 .Where(m => m.FamiliaIdFamilia == id)
                 .ToArrayAsync();
+
             _context.Familia.Remove(familia);
             _context.Especie.RemoveRange(especies);
             await _context.SaveChangesAsync();
@@ -211,7 +231,7 @@ namespace Bioterio.Controllers
         {
             var val_nomefamilia = await _context.Familia
             .SingleOrDefaultAsync(m => m.NomeFamilia == NomeFamilia);
-            if (val_nomefamilia == null | val_nomefamilia.IdFamilia == IdFamilia) return Json(true);
+            if (val_nomefamilia == null || val_nomefamilia.IdFamilia == IdFamilia) return Json(true);
             else return Json(string.Format("Já existe uma família com o nome {0}.", NomeFamilia));
         }
     }

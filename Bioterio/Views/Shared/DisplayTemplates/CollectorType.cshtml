@@ -1,0 +1,4 @@
+﻿@model String
+
+@{string tipo = Model.ToString().Equals("c") ? "Colector" : "Fornecedor";}
+@tipo

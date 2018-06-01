@@ -56,6 +56,21 @@ body {
     line-height: 80px;
 }
 
+.navbar-nav {
+    overflow: hidden;
+    background-color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar-nav a {
+    float: left;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
 .navbar-toggle {
     /* (80px - button height 34px) / 2 = 23px */
     margin-top: 23px;
@@ -74,7 +89,7 @@ body {
 .logo {
     width: 250px;
     height: 80px;
-    background-image: url("https://static.wixstatic.com/media/16413d_54124a04be34478a94fa3917e2d07dfa~mv2.png/v1/fill/w_273,h_79,al_c,usm_0.66_1.00_0.01/16413d_54124a04be34478a94fa3917e2d07dfa~mv2.png");
+    background-image: url("/images/ccmar_logo.png");
     background-size: contain;
     background-repeat: no-repeat;
 }
@@ -99,7 +114,7 @@ footer {
     height: 160px;
     left: 0;
     width: 100%;
-    border: 1px solid #000;
+    border-top: 1px solid #000;
     background-color: #4fa8ae;
 }
 
@@ -137,4 +152,96 @@ dt {
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
     border: #c5c5c5 !important;
     background-color: #4fa8ae !important;
+}
+
+
+
+
+
+
+/* CSS Document */
+
+
+#container {
+    margin: 0 auto;
+}
+
+nav {
+    margin-bottom: 50px;
+    background-color: #E64A19;
+}
+
+nav ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    position: relative;
+    float: left;
+}
+
+nav ul li {
+    display: inline-block;
+    background-color: #4fa8ae;
+    margin-right: -3px;
+}
+
+nav a {
+    display: block;
+    padding: 0 10px;
+    color: #FFF;
+    font-size: 16px;
+    line-height: 80px;
+    text-decoration: none;
+    padding: 0 15px;
+}
+
+nav a:hover, nav a:visited {
+    background-color: #808080;
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Hide Dropdowns by Default */
+nav ul ul {
+    display: none;
+    position: absolute;
+    top: 80px; /* the height of the main nav */
+}
+
+/* Display Dropdowns on Hover */
+nav ul li:hover > ul {
+    display: inherit;
+}
+
+nav ul ul li a, nav ul ul ul li a{
+    font-size: 14px;
+    line-height: 50px;
+}
+
+/* Fisrt Tier Dropdown */
+nav ul ul li {
+    border-top: 2px solid white;
+    width: 200px;
+    font-size: 14px !important;
+    float: none;
+    display: list-item;
+    position: relative;
+}
+
+/* Second, Third and more Tiers	*/
+nav ul ul ul li {
+    border-top: 2px solid white;
+    position: relative;
+    top: -60px;
+    left: 200px;
+}
+
+
+/* Change this in order to change the Dropdown symbol */
+li > a:after {
+    content: ' +';
+}
+
+li > a:only-child:after {
+    content: '';
 }

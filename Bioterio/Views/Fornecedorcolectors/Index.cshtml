@@ -37,8 +37,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @{ string tipo = item.Tipo.Equals("c") ? "Colector" : "Fornecedor"; }
-                @tipo
+                @Html.DisplayFor(modelItem => item.Tipo)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nome)

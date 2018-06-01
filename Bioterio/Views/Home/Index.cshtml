@@ -1,214 +1,85 @@
-﻿@model Bioterio.Models.RegNovosAnimais
-
-@{
-    ViewData["Title"] = "Create";
+﻿@{
+    ViewData["Title"] = "Home Page";
 }
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-<h2>Create</h2>
+    <title>CCMAR</title>
+    <!--
 
-<h4>RegNovosAnimais</h4>
-<hr />
-<div class="row">
-    <form asp-action="Create">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        @using (Html.BeginForm("Index", "Home", FormMethod.Post))
-        {
-            <div id="tabs">
-                <ul>
-                    <li><a href="#t1"><span>Caracteristicas do lote</span></a></li>
-                    <li><a href="#t2"><span>Condições de transporte</span></a></li>
-                    <li><a href="#t3"><span>Fornecedor/Colector</span></a></li>
-                </ul>
-                <div id="t1" class="col-md-6">
-                    <div class="form-group">
-                        <label asp-for="EspecieIdEspecie" class="control-label"></label>
-                        <input asp-for="EspecieIdEspecie" class="form-control" />
-                        <span asp-validation-for="EspecieIdEspecie" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="NroExemplares" class="control-label"></label>
-                        <input asp-for="NroExemplares" class="form-control" />
-                        <span asp-validation-for="NroExemplares" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="NroMachos" class="control-label"></label>
-                        <input asp-for="NroMachos" class="form-control" />
-                        <span asp-validation-for="NroMachos" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="NroFemeas" class="control-label"></label>
-                        <input asp-for="NroFemeas" class="form-control" />
-                        <span asp-validation-for="NroFemeas" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Imaturos" class="control-label"></label>
-                        <input asp-for="Imaturos" class="form-control" />
-                        <span asp-validation-for="Imaturos" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Juvenis" class="control-label"></label>
-                        <input asp-for="Juvenis" class="form-control" />
-                        <span asp-validation-for="Juvenis" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Larvas" class="control-label"></label>
-                        <input asp-for="Larvas" class="form-control" />
-                        <span asp-validation-for="Larvas" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Ovos" class="control-label"></label>
-                        <input asp-for="Ovos" class="form-control" />
-                        <span asp-validation-for="Ovos" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="DataNasc" class="control-label"></label>
-                        <input asp-for="DataNasc" class="form-control" />
-                        <span asp-validation-for="DataNasc" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Idade" class="control-label"></label>
-                        <input asp-for="Idade" class="form-control" />
-                        <span asp-validation-for="Idade" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="PesoMedio" class="control-label"></label>
-                        <input asp-for="PesoMedio" class="form-control" />
-                        <span asp-validation-for="PesoMedio" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="CompMedio" class="control-label"></label>
-                        <input asp-for="CompMedio" class="form-control" />
-                        <span asp-validation-for="CompMedio" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="TipoEstatutoGeneticoIdTipoEstatutoGenetico" class="control-label"></label>
-                        <select asp-for="TipoEstatutoGeneticoIdTipoEstatutoGenetico" class="form-control" asp-items="ViewBag.TipoEstatutoGeneticoIdTipoEstatutoGenetico"></select>
-                    </div>
+    Template 2085 Neuron
+
+    http://www.tooplate.com/view/2085-neuron
+
+    -->
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="css/style.css" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Lora|Merriweather:300,400" rel="stylesheet">
+
+</head>
+<body>
+
+    <section id="home" class="main-home parallax-section">
+        <div class="overlay"></div>
+        <div id="particles-js"></div>
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-12 col-sm-12">
+                    <h1>CCMAR</h1>
+
+                    <a href="#blog" class="smoothScroll btn btn-default">Descubra mais!</a>
                 </div>
-                <div id="t2" class="col-md-6">
-                    <div class="form-group">
-                        <label asp-for="DuracaoViagem" class="control-label"></label>
-                        <input asp-for="DuracaoViagem" class="form-control" />
-                        <span asp-validation-for="DuracaoViagem" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="TempPartida" class="control-label"></label>
-                        <input asp-for="TempPartida" class="form-control" />
-                        <span asp-validation-for="TempPartida" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="TempChegada" class="control-label"></label>
-                        <input asp-for="TempChegada" class="form-control" />
-                        <span asp-validation-for="TempChegada" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="NroContentores" class="control-label"></label>
-                        <input asp-for="NroContentores" class="form-control" />
-                        <span asp-validation-for="NroContentores" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="TipoContentor" class="control-label"></label>
-                        <input asp-for="TipoContentor" class="form-control" />
-                        <span asp-validation-for="TipoContentor" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="VolContentor" class="control-label"></label>
-                        <input asp-for="VolContentor" class="form-control" />
-                        <span asp-validation-for="VolContentor" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="VolAgua" class="control-label"></label>
-                        <input asp-for="VolAgua" class="form-control" />
-                        <span asp-validation-for="VolAgua" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="NroCaixasIsoter" class="control-label"></label>
-                        <input asp-for="NroCaixasIsoter" class="form-control" />
-                        <span asp-validation-for="NroCaixasIsoter" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="NroMortosCheg" class="control-label"></label>
-                        <input asp-for="NroMortosCheg" class="form-control" />
-                        <span asp-validation-for="NroMortosCheg" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="SatO2transp" class="control-label"></label>
-                        <input asp-for="SatO2transp" class="form-control" />
-                        <span asp-validation-for="SatO2transp" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Anestesico" class="control-label"></label>
-                        <input asp-for="Anestesico" class="form-control" />
-                        <span asp-validation-for="Anestesico" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Gelo" class="control-label"></label>
-                        <input asp-for="Gelo" class="form-control" />
-                        <span asp-validation-for="Gelo" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="AdicaoO2" class="control-label"></label>
-                        <input asp-for="AdicaoO2" class="form-control" />
-                        <span asp-validation-for="AdicaoO2" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Arejamento" class="control-label"></label>
-                        <input asp-for="Arejamento" class="form-control" />
-                        <span asp-validation-for="Arejamento" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Refrigeracao" class="control-label"></label>
-                        <input asp-for="Refrigeracao" class="form-control" />
-                        <span asp-validation-for="Refrigeracao" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Sedação" class="control-label"></label>
-                        <input asp-for="Sedação" class="form-control" />
-                        <span asp-validation-for="Sedação" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="RespTransporte" class="control-label"></label>
-                        <input asp-for="RespTransporte" class="form-control" />
-                        <span asp-validation-for="RespTransporte" class="text-danger"></span>
-                    </div>
-                </div>
-                <div id="t3" class="col-md-6">
-                    <div class="form-group">
-                        <label asp-for="FornecedorIdFornColect" class="control-label"></label>
-                        <select asp-for="FornecedorIdFornColect" class="form-control" asp-items="ViewBag.FornecedorIdFornColect"></select>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="TOrigemIdTOrigem" class="control-label"></label>
-                        <select asp-for="TOrigemIdTOrigem" class="form-control" asp-items="ViewBag.TOrigemIdTOrigem"></select>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="LocalCapturaIdLocalCaptura" class="control-label"></label>
-                        <input asp-for="LocalCapturaIdLocalCaptura" class="form-control" />
-                        <span asp-validation-for="LocalCapturaIdLocalCaptura" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="FuncionarioIdFuncionario" class="control-label"></label>
-                        <select asp-for="FuncionarioIdFuncionario" class="form-control" asp-items="ViewBag.FuncionarioIdFuncionario"></select>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="FuncionarioIdFuncionario1" class="control-label"></label>
-                        <select asp-for="FuncionarioIdFuncionario1" class="form-control" asp-items="ViewBag.FuncionarioIdFuncionario1"></select>
-                    </div>
-                </div>
+
             </div>
-        }
-        <div class="form-group" class="col-md-6">
-            <input type="submit" value="Create" class="btn btn-default" />
         </div>
-    </form>
-</div>
-@section scripts {
-    <link href="~/css/jquery-ui.min.css" rel="stylesheet" />
-    <script src="~/js/jquery-3.3.1.min.js"></script>
-    <script src="~/js/jquery-ui.min.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            $("#tabs").tabs();
-        });
-    </script>
-}
+    </section>
+
+    <!-- Blog Section -->
+
+    <section id="blog">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-offset-1 col-md-10 col-sm-12">
+                    <div class="blog-post-thumb">
+                        <div class="blog-post-des">
+                            <p>O Centro do Ramalhete é uma infraestrutura da Universidade do Algarve gerida pelo Centro de Ciências do Mar do Algarve (CCMAR) desde  1994. Esta estação marítima, bastante versátil, possui tanques e aquários para a manutenção de organismos vivos, desde baterias de pequenos tanques até grandes mesocosmos ao ar livre. Acolhe maioritariamente projetos de investigação relacionados com organismos marinhos da sua área geográfica.</p>
+                            <p>De fácil acesso ao sistema único e extenso de lagoas e sapais da Ria Formosa e a zonas costeiras que facilitam os estudos in situ, a Estação Maritima do Ramalhete, está localizada em pleno coração da Ria, junto a um dos seus principais canais, combinando na perfeição a proximidade do Campus de Gambelas com um acesso privilegiado a este ecossistema e excecionais condições de cultivo de organismos aquáticos.</p>
+                            <p>
+                                O Centro do Ramalhete, através do CCMAR, está integrado na Association of European Marine Biological Laboratories (ASSEMBLE), uma parceria que tem facilitado à comunidade científica europeia o acesso às suas instalações e serviços.
+                                <br>O CCMAR serve como infraestrutura para os estudantes e cientistas de universidades e institutos de toda a Europa e integra algumas iniciativas europeias proporcionando o acesso do utilizador a instalações especiais e modelos biológicos, através de estruturas pan-europeias, como o EMBRC.
+                            </p>
+                            <!--<a href="single-post.html" class="btn btn-default">Continue Reading</a>-->
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Back top -->
+    <a href="#back-top" class="go-top"><i class="fa fa-angle-up"></i></a>
+
+    <!-- SCRIPTS -->
+
+    <script src="js/jquery.js"></script>
+    <script src="js/particles.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/jquery.parallax.js"></script>
+    <script src="js/smoothscroll.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
+</body>
+</html>

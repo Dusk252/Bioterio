@@ -1,0 +1,22 @@
+﻿@model Bioterio.Models.RegNovosAnimais
+
+@{
+    ViewData["Title"] = "Delete";
+}
+<h4 class="del">Não é possível apagar o registo seleccionado pois esta encontra-se associada aos seguintes lotes:</h4>
+<div>
+
+    @if (Model.Lote.Count() != 0)
+    {
+        <ul>
+            @foreach (var item in Model.Lote)
+            {
+                <li>
+                    @Html.DisplayNameFor(model => item.CodigoLote): @Html.DisplayFor(model => item.CodigoLote)
+                </li>
+            }
+        </ul>
+    }
+
+    <a asp-action="Index">Back to List</a>
+</div>

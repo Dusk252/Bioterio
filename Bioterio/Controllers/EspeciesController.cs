@@ -171,13 +171,21 @@ namespace Bioterio.Controllers
 
             var especie = await _context.Especie
                 .Include(e => e.FamiliaIdFamiliaNavigation)
+                .Include(e => e.RegNovosAnimais)
+                    .ThenInclude(r => r.FornecedorIdFornColectNavigation)
                 .SingleOrDefaultAsync(m => m.IdEspecie == id);
             if (especie == null)
             {
                 return NotFound();
             }
-
-            return View(especie);
+            if (especie.RegNovosAnimais.Count > 0)
+            {
+                return View("DeleteDenied", especie);
+            }
+            else
+            {
+                return View(especie);
+            }
         }
 
         // POST: Especies/Delete/5

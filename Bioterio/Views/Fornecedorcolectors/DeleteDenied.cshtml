@@ -1,0 +1,23 @@
+﻿@model Bioterio.Models.Fornecedorcolector
+
+@{
+    ViewData["Title"] = "Delete";
+}
+<h4 class="del">Não é possível apagar o @Html.DisplayFor(model => model.Tipo) @Html.DisplayFor(model => model.Nome) pois este encontra-se associado aos seguintes registros efectuados:</h4>
+<div>
+
+    @if (Model.RegNovosAnimais.Count() != 0)
+    {
+        <ul>
+            @foreach (var item in Model.RegNovosAnimais)
+            {
+            <li>
+                @Html.DisplayNameFor(model => item.EspecieIdEspecie): @Html.DisplayFor(model => item.EspecieIdEspecieNavigation.NomeCient) (@Html.DisplayFor(model => item.EspecieIdEspecieNavigation.NomeVulgar)) |
+                @Html.DisplayNameFor(model => item.NroExemplares): @Html.DisplayFor(model => item.NroExemplares)
+            </li>
+            }
+        </ul>
+    }
+
+    <a asp-action="Index">Back to List</a>
+</div>

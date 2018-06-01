@@ -82,14 +82,14 @@
                     <div class="form-group">
                         <label asp-for="TipoEstatutoGeneticoIdTipoEstatutoGenetico" class="control-label"></label>
                         @foreach (var a in (List<Tipoestatutogenetico>)ViewData["TipoEstatutoGenetico"])
-                        {
-                            <p>
-                                @Html.RadioButtonFor(b => b.TipoEstatutoGeneticoIdTipoEstatutoGenetico, a.IdTipoEstatutoGenetico)  @a.TipoEstatutoGeneticocol
-                            </p>
-                        }
+        {
+                <p>
+                    @Html.RadioButtonFor(b => b.TipoEstatutoGeneticoIdTipoEstatutoGenetico, a.IdTipoEstatutoGenetico)  @a.TipoEstatutoGeneticocol
+                </p>
+}
                         <span asp-validation-for="TipoEstatutoGeneticoIdTipoEstatutoGenetico" class="text-danger"></span>
                     </div>
-                    <div>
+                    <div class="form-group">
                         <a class="btn btn-default btnNext">Next</a>
                     </div>
                 </div>
@@ -189,7 +189,7 @@
                         <input asp-for="RespTransporte" class="form-control" />
                         <span asp-validation-for="RespTransporte" class="text-danger"></span>
                     </div>
-                    <div>
+                    <div class="form-group">
                         <a class="btn btn-default btnPrevious">Previous</a>
                         <a class="btn btn-default btnNext">Next</a>
                     </div>
@@ -229,6 +229,7 @@
                         <input type="submit" value="Submit" class="btn btn-default" />
                     </div>
                 </div>
+             </div>
         </form>
     </div>
     @section scripts {

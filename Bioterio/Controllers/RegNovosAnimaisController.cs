@@ -190,19 +190,30 @@ namespace Bioterio.Controllers
                 return NotFound();
             }
 
+            //TO DO: remove eager loading for unused properties
             var regNovosAnimais = await _context.RegNovosAnimais
                 .Include(r => r.FornecedorIdFornColectNavigation)
                 .Include(r => r.FuncionarioIdFuncionario1Navigation)
                 .Include(r => r.FuncionarioIdFuncionarioNavigation)
                 .Include(r => r.TOrigemIdTOrigemNavigation)
                 .Include(r => r.TipoEstatutoGeneticoIdTipoEstatutoGeneticoNavigation)
+                .Include(r => r.Lote)
                 .SingleOrDefaultAsync(m => m.IdRegAnimal == id);
+
             if (regNovosAnimais == null)
             {
                 return NotFound();
             }
 
-            return View(regNovosAnimais);
+            //check if bound to lot
+            if (regNovosAnimais.Lote.Count > 0)
+            {
+                return View("DeleteDenied", regNovosAnimais);
+            }
+            else
+            {
+                return View(regNovosAnimais);
+            }
         }
 
         // POST: RegNovosAnimais/Delete/5
@@ -210,10 +221,28 @@ namespace Bioterio.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var regNovosAnimais = await _context.RegNovosAnimais.SingleOrDefaultAsync(m => m.IdRegAnimal == id);
-            _context.RegNovosAnimais.Remove(regNovosAnimais);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var regNovosAnimais = await _context.RegNovosAnimais
+                .Include(e => e.EspecieIdEspecieNavigation)
+                .SingleOrDefaultAsync(m => m.IdRegAnimal == id);
+            var lotes_locked = await _context.Lote
+                .Where(m => m.RegNovosAnimaisIdRegAnimal == regNovosAnimais.IdRegAnimal)
+                .ToListAsync();
+            if (lotes_locked == null)
+            {
+                _context.RegNovosAnimais.Remove(regNovosAnimais);
+
+                TempData["deleted_name"] = regNovosAnimais.EspecieIdEspecieNavigation.NomeCient + "|" + regNovosAnimais.NroExemplares;
+                TempData["deleted_entity"] = "registo";
+                TempData["deleted"] = true;
+
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return RedirectToAction(nameof(Delete));
+            }
+
         }
 
         private bool RegNovosAnimaisExists(int id)

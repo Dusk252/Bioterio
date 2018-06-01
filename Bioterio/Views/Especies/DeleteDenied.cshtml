@@ -1,0 +1,23 @@
+﻿@model Bioterio.Models.Especie
+
+@{
+    ViewData["Title"] = "Delete";
+}
+<h4 class="del">Não é possível apagar a espécie @Html.DisplayFor(model => model.NomeCient) pois esta encontra-se associada aos seguintes registros efectuados:</h4>
+<div>
+
+    @if (Model.RegNovosAnimais.Count() != 0)
+    {
+        <ul>
+            @foreach (var item in Model.RegNovosAnimais)
+            {
+            <li>
+                @Html.DisplayNameFor(model => item.NroExemplares): @Html.DisplayFor(model => item.NroExemplares) | 
+                @Html.DisplayFor(model => item.FornecedorIdFornColectNavigation.Tipo): @Html.DisplayFor(model => item.FornecedorIdFornColectNavigation.Nome)
+            </li>
+            }
+        </ul>
+    }
+
+    <a asp-action="Index">Back to List</a>
+</div>

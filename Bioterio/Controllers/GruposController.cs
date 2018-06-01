@@ -150,8 +150,11 @@ namespace Bioterio.Controllers
                 return NotFound();
             }
 
+            //get families and species belonging to group
             var familias = await _context.Familia
                 .Include(f => f.Especie)
+                    .ThenInclude(e => e.RegNovosAnimais)
+                        .ThenInclude(r => r.FornecedorIdFornColectNavigation)
                 .Where(f => f.GrupoIdGrupo == id)
                 .ToListAsync();
             var especies = new List<Especie>();
@@ -159,9 +162,26 @@ namespace Bioterio.Controllers
                 especies.AddRange(f.Especie);
             }
             ViewData["familias"] = familias;
-            ViewData["especies"] = especies;
 
-            return View(grupo);
+            //check if species belonging to group have associations with registers
+            List<Especie> bound_species = new List<Especie>();
+            foreach (Especie e in especies)
+            {
+                if (e.RegNovosAnimais.Count > 0)
+                {
+                    bound_species.Add(e);
+                }
+            }
+            if (bound_species.Count > 0)
+            {
+                ViewData["especies"] = bound_species;
+                return View("DeleteDenied", grupo);
+            }
+            else
+            {
+                ViewData["especies"] = especies;
+                return View(grupo);
+            }
         }
 
         // POST: Grupos/Delete/5
@@ -220,7 +240,7 @@ namespace Bioterio.Controllers
         {
             var val_nomegrupo = await _context.Grupo
             .SingleOrDefaultAsync(m => m.NomeGrupo == NomeGrupo);
-            if (val_nomegrupo == null | val_nomegrupo.IdGrupo == IdGrupo) return Json(true);
+            if (val_nomegrupo == null || val_nomegrupo.IdGrupo == IdGrupo) return Json(true);
             else return Json(string.Format("Já existe um grupo com o nome {0}.", NomeGrupo));
         }
     }
