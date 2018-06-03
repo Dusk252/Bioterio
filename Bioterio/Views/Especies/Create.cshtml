@@ -44,6 +44,11 @@
 </div>
 
 @section scripts {
-    window.onload = getFamilyList();
+    <script type="text/javascript">
+        window.onload = function () {
+            var v = $("#familyDropDown").val();
+            getFamilyList(v);
+        };
+    </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

@@ -56,6 +56,9 @@
                                 </ul>
                             </li>
                             <li>
+                                <a asp-area="" asp-controller="Fornecedorcolectors" asp-action="Index">Fornecedores</a>
+                            </li>
+                            <li>
                                 <a>Registos</a>
                                 <ul>
                                     <li><a asp-area="" asp-controller="RegAlimentars" asp-action="Index">Registos alimentares</a></li>
@@ -80,14 +83,6 @@
                     </li>
                 </ul>
                 <div class="col-sm-3 nav navbar-nav pull-right">
-                    <form class="navbar-form" role="search">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
-                            <div class="input-group-btn">
-                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
 
@@ -104,9 +99,12 @@
             <script src="~/lib/jquery/dist/jquery.js"></script>
             <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
             <script src="~/js/site.min.js" asp-append-version="true"></script>
+            <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+            <script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
+            <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
         </environment>
 
-        @RenderSection("Scripts", required: false)
+        @RenderSection("scripts", required: false)
     </div>
 </body>
 </html>

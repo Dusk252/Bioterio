@@ -110,7 +110,7 @@ footer {
 
 .footer-container {
     position: absolute;
-    bottom: 0px;
+    bottom: 0;
     height: 160px;
     left: 0;
     width: 100%;
@@ -187,7 +187,6 @@ nav ul li {
 
 nav a {
     display: block;
-    padding: 0 10px;
     color: #FFF;
     font-size: 16px;
     line-height: 80px;

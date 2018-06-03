@@ -129,7 +129,7 @@ namespace Bioterio.Models
 
         [DisplayName("Espécie")]
         [Required(ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "RequiredField")]
-        public int EspecieIdEspecie { get; set; }
+        public int? EspecieIdEspecie { get; set; }
 
         [DisplayName("Fornecedor / Colector")]
         [Required(ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "RequiredField")]

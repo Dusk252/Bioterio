@@ -147,7 +147,7 @@ CREATE TABLE IF NOT EXISTS `BD-LES`.`FornecedorColector` (
   `NIF` INT(10) NULL,
   `nroLicenca` INT NULL,
   `Morada` VARCHAR(45) NULL,
-  `telefone` VARCHAR(10) NULL,
+  `telefone` VARCHAR(45) NULL,
   PRIMARY KEY (`idFornColect`))
 ENGINE = InnoDB;
 
