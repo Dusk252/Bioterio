@@ -13,7 +13,7 @@
 </head>
 <body>
     <div class="wrapper">
-        <nav class="navbar navbar-inverse navbar-fixed-top">
+        <nav class="navbar navbar-inverse navbar-fixed-top" id="right-side">
             <div class="container">
                 <div class="navbar-header">
                     <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">
@@ -71,6 +71,14 @@
                                 </ul>
                             </li>
                             <li>
+                                <a>Localização</a>
+                                <ul>
+                                    <li><a asp-area="" asp-controller="Concelhos" asp-action="Index">Concelhos</a></li>
+                                    <li><a asp-area="" asp-controller="Distritos" asp-action="Index">Distritos</a></li>
+                                    <li><a asp-area="" asp-controller="Localcapturas" asp-action="Index">Locais de Captura</a></li>
+                                </ul>
+                            </li>
+                            <li>
                                 <a>Funcionários</a>
                                 <ul>
                                     <li><a asp-area="" asp-controller="AgenteTrats" asp-action="Index">Agente de tratamento</a></li>
@@ -82,7 +90,8 @@
                         </ul>
                     </li>
                 </ul>
-                <div class="col-sm-3 nav navbar-nav pull-right">
+                <div>
+                    @await Html.PartialAsync("_LoginPartial")
                 </div>
             </div>
 

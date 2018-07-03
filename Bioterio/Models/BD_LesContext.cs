@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Bioterio.Models
 {
-    public partial class bd_lesContext : DbContext
+    public partial class bd_lesContext : IdentityDbContext
     {
         public virtual DbSet<AgenteTrat> AgenteTrat { get; set; }
+        public virtual DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public virtual DbSet<CircuitoTanque> CircuitoTanque { get; set; }
         public virtual DbSet<Concelho> Concelho { get; set; }
         public virtual DbSet<Distrito> Distrito { get; set; }
@@ -42,6 +43,30 @@ namespace Bioterio.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<IdentityUser>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.UserName)
+                    .IsRequired()
+                    .HasMaxLength(45);
+            });
+
+            modelBuilder.Entity<ApplicationUser>(entity =>
+            {
+                entity.Property(e => e.FuncionarioIdFuncionario)
+                    .HasColumnName("IdFuncionario")
+                    .HasColumnType("int(11)");
+
+                entity.HasOne(d => d.FuncionarioNavigation)
+                    .WithMany(p => p.User)
+                    .HasForeignKey(d => d.FuncionarioIdFuncionario)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_FuncionarioIdFuncionario");
+            });
+
             modelBuilder.Entity<AgenteTrat>(entity =>
             {
                 entity.HasKey(e => e.IdAgenTra);
@@ -151,8 +176,7 @@ namespace Bioterio.Models
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.FuncionarioIdFuncionario)
-                    .HasColumnName("Funcionario_idFuncionario")
-                    .HasColumnType("int(11)");
+                    .HasColumnName("Funcionario_idFuncionario");
 
                 entity.Property(e => e.Função)
                     .IsRequired()
@@ -358,23 +382,9 @@ namespace Bioterio.Models
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.NomeCompleto)
-                    .IsRequired()
-                    .HasColumnName("nomeCompleto")
-                    .HasMaxLength(45);
-
-                entity.Property(e => e.NomeUtilizador)
-                    .IsRequired()
-                    .HasColumnName("nomeUtilizador")
-                    .HasMaxLength(45);
-
-                entity.Property(e => e.Password)
-                    .IsRequired()
-                    .HasColumnName("password")
-                    .HasMaxLength(45);
-
-                entity.Property(e => e.Telefone)
-                    .HasColumnName("telefone")
-                    .HasMaxLength(45);
+                        .IsRequired()
+                        .HasColumnName("nomeCompleto")
+                        .HasMaxLength(45);
             });
 
             modelBuilder.Entity<Grupo>(entity =>
@@ -463,8 +473,7 @@ namespace Bioterio.Models
                     .HasColumnType("datetime");
 
                 entity.Property(e => e.FuncionarioIdFuncionario)
-                    .HasColumnName("Funcionario_idFuncionario")
-                    .HasColumnType("int(11)");
+                    .HasColumnName("Funcionario_idFuncionario");
 
                 entity.Property(e => e.Observacoes).HasMaxLength(45);
 
@@ -810,12 +819,10 @@ namespace Bioterio.Models
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.FuncionarioIdFuncionario)
-                    .HasColumnName("Funcionario_idFuncionario")
-                    .HasColumnType("int(11)");
+                    .HasColumnName("Funcionario_idFuncionario");
 
                 entity.Property(e => e.FuncionarioIdFuncionario1)
-                    .HasColumnName("Funcionario_idFuncionario1")
-                    .HasColumnType("int(11)");
+                    .HasColumnName("Funcionario_idFuncionario1");
 
                 entity.Property(e => e.Gelo).HasColumnType("tinyint(1)");
 

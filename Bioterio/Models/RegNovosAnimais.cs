@@ -148,11 +148,11 @@ namespace Bioterio.Models
 
         [DisplayName("Funcionário (recepção)")]
         [Required(ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "RequiredField")]
-        public int? FuncionarioIdFuncionario { get; set; }
+        public int FuncionarioIdFuncionario { get; set; }
 
         [DisplayName("Funcionário (registo)")]
         [Required(ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "RequiredField")]
-        public int? FuncionarioIdFuncionario1 { get; set; }
+        public int FuncionarioIdFuncionario1 { get; set; }
 
         [DisplayName("Espécie")]
         public Especie EspecieIdEspecieNavigation { get; set; }

@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bioterio.Models;
 using Bioterio.Validation;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bioterio.Controllers
 {
+    [Authorize(Policy = "AdminRights")]
     public class EspeciesController : Controller
     {
         private readonly bd_lesContext _context;

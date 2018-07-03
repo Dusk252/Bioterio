@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Bioterio.Data;
 using Bioterio.Models;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
@@ -21,9 +22,12 @@ namespace Bioterio
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
+
+                var testUserPw = "rootrootroot";
                 try
                 {
                     var context = services.GetRequiredService<bd_lesContext>();
+                    SeedData.Initialize(services, testUserPw).Wait();
                 }
                 catch (Exception ex)
                 {
@@ -31,7 +35,7 @@ namespace Bioterio
                     logger.LogError(ex, "An error occurred while seeding the database.");
                 }
             }
-
+            
             host.Run();
         }
 

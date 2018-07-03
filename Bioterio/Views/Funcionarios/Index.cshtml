@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Bioterio.Models.Funcionario>
+﻿@model IEnumerable<Bioterio.Models.UserViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -12,19 +12,18 @@
 <table class="table">
     <thead>
         <tr>
-                <th>ID</th>
-                <th>
-                    @Html.DisplayNameFor(model => model.NomeCompleto)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.NomeUtilizador)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Password)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Telefone)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NomeCompleto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Permissions)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -32,19 +31,16 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.IdFuncionario)
+                @Html.DisplayFor(modelItem => item.UserName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NomeCompleto)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NomeUtilizador)
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefone)
+                @Html.DisplayFor(model => item.Permissions)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdFuncionario">Edit</a> |

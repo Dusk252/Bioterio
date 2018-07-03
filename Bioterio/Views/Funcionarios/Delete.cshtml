@@ -1,4 +1,4 @@
-﻿@model Bioterio.Models.Funcionario
+﻿@model Bioterio.Models.UserViewModel
 
 @{
     ViewData["Title"] = "Delete";
@@ -18,22 +18,22 @@
             @Html.DisplayFor(model => model.NomeCompleto)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.NomeUtilizador)
+            @Html.DisplayNameFor(model => model.UserName)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.NomeUtilizador)
+            @Html.DisplayFor(model => model.UserName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Password)
+            @Html.DisplayNameFor(model => model.PhoneNumber)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Password)
+            @Html.DisplayFor(model => model.PhoneNumber)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Telefone)
+            @Html.DisplayNameFor(model => model.Permissions)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Telefone)
+            @Html.DisplayFor(model => model.Permissions)
         </dd>
     </dl>
     

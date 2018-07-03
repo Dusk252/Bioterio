@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bioterio.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bioterio.Controllers
 {
@@ -48,6 +49,7 @@ namespace Bioterio.Controllers
             return View(regNovosAnimais);
         }
 
+        [Authorize(Policy = "ElevatedRights")]
         // GET: RegNovosAnimais/Create
         public IActionResult Create()
         {
@@ -74,6 +76,7 @@ namespace Bioterio.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Policy = "ElevatedRights")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdRegAnimal,NroExemplares,NroMachos,NroFemeas,Imaturos,Juvenis,Larvas,Ovos,DataNasc,Idade,PesoMedio,CompMedio,DuracaoViagem,TempPartida,TempChegada,NroContentores,TipoContentor,VolContentor,VolAgua,NroCaixasIsoter,NroMortosCheg,SatO2transp,Anestesico,Gelo,AdicaoO2,Arejamento,Refrigeracao,Sedação,RespTransporte,EspecieIdEspecie,FornecedorIdFornColect,TOrigemIdTOrigem,LocalCapturaIdLocalCaptura,TipoEstatutoGeneticoIdTipoEstatutoGenetico,FuncionarioIdFuncionario,FuncionarioIdFuncionario1")] RegNovosAnimais regNovosAnimais)
         {
@@ -103,6 +106,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: RegNovosAnimais/Edit/5
+        [Authorize(Policy = "ElevatedRights")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -137,6 +141,7 @@ namespace Bioterio.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Policy = "ElevatedRights")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("IdRegAnimal,NroExemplares,NroMachos,NroFemeas,Imaturos,Juvenis,Larvas,Ovos,DataNasc,Idade,PesoMedio,CompMedio,DuracaoViagem,TempPartida,TempChegada,NroContentores,TipoContentor,VolContentor,VolAgua,NroCaixasIsoter,NroMortosCheg,SatO2transp,Anestesico,Gelo,AdicaoO2,Arejamento,Refrigeracao,Sedação,RespTransporte,EspecieIdEspecie,FornecedorIdFornColect,TOrigemIdTOrigem,LocalCapturaIdLocalCaptura,TipoEstatutoGeneticoIdTipoEstatutoGenetico,FuncionarioIdFuncionario,FuncionarioIdFuncionario1")] RegNovosAnimais regNovosAnimais)
         {
@@ -183,6 +188,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: RegNovosAnimais/Delete/5
+        [Authorize(Policy = "ElevatedRights")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -218,6 +224,7 @@ namespace Bioterio.Controllers
 
         // POST: RegNovosAnimais/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize(Policy = "ElevatedRights")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

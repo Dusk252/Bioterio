@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bioterio.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bioterio.Controllers
 {
+    [Authorize(Policy = "AdminRights")]
     public class ConcelhosController : Controller
     {
         private readonly bd_lesContext _context;
@@ -47,7 +49,7 @@ namespace Bioterio.Controllers
         // GET: Concelhos/Create
         public IActionResult Create()
         {
-            ViewData["DistritoId"] = new SelectList(_context.Distrito, "Id", "Id");
+            ViewData["DistritoId"] = new SelectList(_context.Distrito, "Id", "NomeDistrito");
             return View();
         }
 

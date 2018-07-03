@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Bioterio.Models
 {
@@ -14,14 +16,37 @@ namespace Bioterio.Models
         }
 
         public int IdLote { get; set; }
+
+        [DisplayName("Código do Lote")]
+        [Required(ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "RequiredField")]
         public string CodigoLote { get; set; }
+
+        [DisplayName("Data de Início")]
+        [Required(ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "RequiredField")]
+        [DataType(DataType.Date, ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "InvalidField")]
         public DateTime DataInicio { get; set; }
+
+        [DisplayName("Data de Fim")]
+        [DataType(DataType.Date, ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "InvalidField")]
         public DateTime? DataFim { get; set; }
+
+        [DisplayName("Observações")]
+        [Required(ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "RequiredField")]
         public string Observacoes { get; set; }
+
+        [DisplayName("Registo Associado")]
+        [Required(ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "RequiredField")]
+        [RegularExpression(@"^\d*$", ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "InvalidField")]
         public int RegNovosAnimaisIdRegAnimal { get; set; }
+
+        [DisplayName("Funcionário")]
+        [Required(ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "RequiredField")]
+        [RegularExpression(@"^\d*$", ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "InvalidField")]
         public int FuncionarioIdFuncionario { get; set; }
 
+        [DisplayName("Funcionário")]
         public Funcionario FuncionarioIdFuncionarioNavigation { get; set; }
+        [DisplayName("Registo Associado")]
         public RegNovosAnimais RegNovosAnimaisIdRegAnimalNavigation { get; set; }
         public ICollection<Ensaio> Ensaio { get; set; }
         public ICollection<LoteSubLote> LoteSubLoteLoteIdLoteAtualNavigation { get; set; }

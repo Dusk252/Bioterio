@@ -1,4 +1,4 @@
-﻿@model Bioterio.Models.Funcionario
+﻿@model Bioterio.Models.AccountViewModels.RegisterViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -12,16 +12,16 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
+
             <div class="form-group">
                 <label asp-for="NomeCompleto" class="control-label">Nome Completo</label>
                 <input asp-for="NomeCompleto" class="form-control" />
                 <span asp-validation-for="NomeCompleto" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="NomeUtilizador" class="control-label">Nome Utilizador</label>
-                <input asp-for="NomeUtilizador" class="form-control" />
-                <span asp-validation-for="NomeUtilizador" class="text-danger"></span>
+                <label asp-for="UserName" class="control-label">Nome Utilizador</label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
 
             <div class="form-group">
@@ -30,9 +30,22 @@
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Telefone" class="control-label"></label>
-                <input asp-for="Telefone" class="form-control" />
-                <span asp-validation-for="Telefone" class="text-danger"></span>
+                <label asp-for="ConfirmPassword"></label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label"></label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Permissions" class="control-label"></label>
+                <br />
+                @Html.RadioButtonFor(b => b.Permissions, Bioterio.Authorization.ApplicationUserManager.Constants.AdministratorsRole) Administradores 
+                @Html.RadioButtonFor(b => b.Permissions, Bioterio.Authorization.ApplicationUserManager.Constants.ManagersRole) Gestores 
+                @Html.RadioButtonFor(b => b.Permissions, "user") Utilizadores
+                <span asp-validation-for="Permissions" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />

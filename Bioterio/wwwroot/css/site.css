@@ -96,7 +96,10 @@ body {
 
 .navbar-nav {
     position: relative;
-    left: 50px;
+}
+
+.navbar-right {
+    margin-right:0;
 }
 
 .navbar-form {
@@ -160,8 +163,6 @@ dt {
 
 
 /* CSS Document */
-
-
 #container {
     margin: 0 auto;
 }
@@ -171,70 +172,70 @@ nav {
     background-color: #E64A19;
 }
 
-nav ul {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    position: relative;
-    float: left;
-}
+    nav ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        position: relative;
+        float: left;
+    }
 
-nav ul li {
-    display: inline-block;
-    background-color: #4fa8ae;
-    margin-right: -3px;
-}
+        nav ul li {
+            display: inline-block;
+            background-color: #4fa8ae;
+            margin-right: -3px;
+        }
 
-nav a {
-    display: block;
-    color: #FFF;
-    font-size: 16px;
-    line-height: 80px;
-    text-decoration: none;
-    padding: 0 15px;
-}
+    nav a {
+        display: block;
+        color: #FFF;
+        font-size: 16px;
+        line-height: 80px;
+        text-decoration: none;
+        padding: 0 15px;
+    }
 
-nav a:hover, nav a:visited {
-    background-color: #808080;
-    color: #fff;
-    text-decoration: none;
-}
+        nav a:hover, nav a:visited {
+            background-color: #808080;
+            color: #fff;
+            text-decoration: none;
+        }
 
-/* Hide Dropdowns by Default */
-nav ul ul {
-    display: none;
-    position: absolute;
-    top: 80px; /* the height of the main nav */
-}
+    /* Hide Dropdowns by Default */
+    nav ul ul {
+        display: none;
+        position: absolute;
+        top: 80px; /* the height of the main nav */
+    }
 
-/* Display Dropdowns on Hover */
-nav ul li:hover > ul {
-    display: inherit;
-}
+    /* Display Dropdowns on Hover */
+    nav ul li:hover > ul {
+        display: inherit;
+    }
 
-nav ul ul li a, nav ul ul ul li a{
-    font-size: 14px;
-    line-height: 20px;
-    padding: 20px 15px;
-}
+    nav ul ul li a, nav ul ul ul li a {
+        font-size: 14px;
+        line-height: 20px;
+        padding: 20px 15px;
+    }
 
-/* Fisrt Tier Dropdown */
-nav ul ul li {
-    border-top: 2px solid white;
-    width: 200px;
-    font-size: 14px !important;
-    float: none;
-    display: list-item;
-    position: relative;
-}
+    /* Fisrt Tier Dropdown */
+    nav ul ul li {
+        border-top: 2px solid white;
+        width: 200px;
+        font-size: 14px !important;
+        float: none;
+        display: list-item;
+        position: relative;
+    }
 
-/* Second, Third and more Tiers	*/
-nav ul ul ul li {
-    border-top: 2px solid white;
-    position: relative;
-    top: -60px;
-    left: 200px;
-}
+    /* Second, Third and more Tiers	*/
+    nav ul ul ul li {
+        border-top: 2px solid white;
+        position: relative;
+        top: -60px;
+        left: 200px;
+    }
 
 
 /* Change this in order to change the Dropdown symbol */
@@ -244,4 +245,37 @@ li > a:after {
 
 li > a:only-child:after {
     content: '';
+}
+
+#right-side .navbar-nav > li:nth-child(1) > a:nth-child(1) {
+    margin-right: 2px;
+    border-right: solid 2px #fff;
+    color: #fff;
+}
+
+#right-side button.btn {
+    color: #fff;
+    line-height: 50px;
+}
+
+#right-side .nav > li:nth-child(2) > a:nth-child(1) {
+    color:#fff;
+}
+/* Change this in order to change the Dropdown symbol */
+li > a:after {
+    content: ' +';
+}
+
+li > a:only-child:after {
+    content: '';
+}
+
+.fluid-wrapper {
+    position: absolute;
+    width: 100vw;
+    left: 0;
+}
+
+#blog {
+    margin-top: 100vh;
 }

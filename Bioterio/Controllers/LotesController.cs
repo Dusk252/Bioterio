@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bioterio.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bioterio.Controllers
 {
@@ -45,6 +46,7 @@ namespace Bioterio.Controllers
             return View(lote);
         }
 
+        [Authorize(Policy = "ElevatedRights")]
         // GET: Lotes/Create
         public IActionResult Create()
         {
@@ -53,6 +55,7 @@ namespace Bioterio.Controllers
             return View();
         }
 
+        [Authorize(Policy = "ElevatedRights")]
         // POST: Lotes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -71,6 +74,7 @@ namespace Bioterio.Controllers
             return View(lote);
         }
 
+        [Authorize(Policy = "ElevatedRights")]
         // GET: Lotes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -89,6 +93,7 @@ namespace Bioterio.Controllers
             return View(lote);
         }
 
+        [Authorize(Policy = "ElevatedRights")]
         // POST: Lotes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -126,6 +131,7 @@ namespace Bioterio.Controllers
             return View(lote);
         }
 
+        [Authorize(Policy = "ElevatedRights")]
         // GET: Lotes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -146,6 +152,7 @@ namespace Bioterio.Controllers
             return View(lote);
         }
 
+        [Authorize(Policy = "ElevatedRights")]
         // POST: Lotes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
