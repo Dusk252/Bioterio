@@ -1,0 +1,57 @@
+﻿@model Bioterio.RegAlimentar
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Página Inicial</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Projetoes" asp-action="Index">Projetos</a></li>
+        <li class="breadcrumb-item"><a asp-controller="CircuitoTanques" asp-action="Index">Circuito de Tanques</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Tanques" asp-action="Index">Tanques</a></li>
+        <li class="breadcrumb-item"><a asp-action="Index">Registo Alimentar</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Detalhes</li>
+    </ol>
+</nav>
+<div class="col-md-12">
+    <h2>Detalhes do Registo Alimentar</h2>
+</div>
+<div class="col-md-4">
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Data)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.data)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Peso)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Peso)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Sobras)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Sobras)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PlanoAlimentarIdPlanAlimNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PlanoAlimentarIdPlanAlimNavigation.Nome)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TanqueIdTanqueNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TanqueIdTanqueNavigation.codidenttanque)
+        </dd>
+    </dl>
+    <div class="form-group">
+        <a type="button" class="btn btn-success" asp-action="Edit" asp-route-id="@Model.IdRegAlim">Editar</a>
+        <a type="button" class="btn btn-danger pull-right" asp-action="Delete" asp-route-id="@Model.IdRegAlim">Eliminar</a>
+        <a type="button" class="btn btn-info" asp-action="Index">Cancelar</a>
+    </div>
+</div>

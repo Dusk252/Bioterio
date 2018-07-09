@@ -61,7 +61,7 @@ namespace Bioterio {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O valor inserido não é um valor válido para {0}..
+        ///   Looks up a localized string similar to O valor inserido nao é um valor válido para {0}..
         /// </summary>
         internal static string InvalidField {
             get {

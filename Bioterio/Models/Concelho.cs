@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -12,10 +13,11 @@ namespace Bioterio.Models
             Localcaptura = new HashSet<Localcaptura>();
         }
 
-        public int Id { get; set; }
+        public int IdConcelho { get; set; }
 
         [DisplayName("Nome Concelho")]
         [Required(ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "RequiredField")]
+        [Remote("ValidateConcelhoName", "Concelhos", AdditionalFields = "IdConcelho")]
         public string NomeConcelho { get; set; }
 
         [DisplayName("Distrito")]

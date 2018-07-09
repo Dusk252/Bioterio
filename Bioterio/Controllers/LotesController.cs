@@ -63,6 +63,19 @@ namespace Bioterio.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdLote,CodigoLote,DataInicio,DataFim,Observacoes,RegNovosAnimaisIdRegAnimal,FuncionarioIdFuncionario")] Lote lote)
         {
+            //validation
+            var val_code = await _context.Lote
+                .SingleOrDefaultAsync(m => m.CodigoLote == lote.CodigoLote);
+            if (val_code != null)
+            {
+                ModelState.AddModelError("CodigoLote", string.Format("Já existe um lote com o código {0}.", lote.CodigoLote));
+            }
+            if (lote.DataFim < lote.DataInicio)
+            {
+                ModelState.AddModelError("DataFim", "A Data de Fim é menor que a Data de Inicio.");
+                ModelState.AddModelError("DataInicio", "A Data de Fim é menor que a Data de Inicio.");
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(lote);
@@ -104,6 +117,14 @@ namespace Bioterio.Controllers
             if (id != lote.IdLote)
             {
                 return NotFound();
+            }
+
+            //validation
+            var val_code = await _context.Lote
+                .SingleOrDefaultAsync(m => m.CodigoLote == lote.CodigoLote);
+            if (val_code != null && val_code.IdLote != lote.IdLote)
+            {
+                ModelState.AddModelError("CodigoLote", string.Format("Já existe um lote com o código {0}.", lote.CodigoLote));
             }
 
             if (ModelState.IsValid)
@@ -167,6 +188,20 @@ namespace Bioterio.Controllers
         private bool LoteExists(int id)
         {
             return _context.Lote.Any(e => e.IdLote == id);
+        }
+
+        public async Task<ActionResult> ValidateCodigoLote(string CodigoLote, int IdLote)
+        {
+            var val_codigolote = await _context.Lote
+            .SingleOrDefaultAsync(m => m.CodigoLote == CodigoLote);
+            if (val_codigolote == null || val_codigolote.IdLote == IdLote) return Json(true);
+            else return Json(string.Format("Já existe um lote com o código {0}.", CodigoLote));
+        }
+
+        public async Task<ActionResult> ValidateDates(DateTime DataInicio, DateTime DataFim)
+        {
+            if (DataInicio <= DataFim) return Json(true);
+            else return Json("A Data de Fim é menor que a Data de Inicio.");
         }
     }
 }

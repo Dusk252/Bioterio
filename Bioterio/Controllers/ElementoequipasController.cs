@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Bioterio;
 using Bioterio.Models;
 
 namespace Bioterio.Controllers
@@ -36,7 +37,7 @@ namespace Bioterio.Controllers
             var elementoequipa = await _context.Elementoequipa
                 .Include(e => e.FuncionarioIdFuncionarioNavigation)
                 .Include(e => e.ProjetoIdProjetoNavigation)
-                .SingleOrDefaultAsync(m => m.ProjetoIdProjeto == id);
+                .SingleOrDefaultAsync(m => m.IdElementoEquipa == id);
             if (elementoequipa == null)
             {
                 return NotFound();
@@ -49,7 +50,7 @@ namespace Bioterio.Controllers
         public IActionResult Create()
         {
             ViewData["FuncionarioIdFuncionario"] = new SelectList(_context.Funcionario, "IdFuncionario", "NomeCompleto");
-            ViewData["ProjetoIdProjeto"] = new SelectList(_context.Projeto, "IdProjeto", "Nome");
+            ViewData["ProjetoIdProjeto"] = new SelectList(_context.Projeto.Where(p => p.isarchived == 0), "IdProjeto", "Nome");
             return View();
         }
 
@@ -58,8 +59,14 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Função,ProjetoIdProjeto,FuncionarioIdFuncionario")] Elementoequipa elementoequipa)
+        public async Task<IActionResult> Create([Bind("IdElementoEquipa,Nome,Funcao,ProjetoIdProjeto,FuncionarioIdFuncionario")] Elementoequipa elementoequipa)
         {
+            var cTCodefindany = _context.Elementoequipa.Where(b => EF.Property<string>(b, "Nome").Equals(elementoequipa.Nome)).Where(b => EF.Property<int>(b, "ProjetoIdProjeto")==elementoequipa.ProjetoIdProjeto);
+            if (cTCodefindany.Any())
+            {
+                ModelState.AddModelError("Nome", string.Format("Este Elemento de Equipa já se encontra associado a este Projeto!", elementoequipa.ProjetoIdProjeto));
+            }
+            elementoequipa.FuncionarioIdFuncionario = 1;
             if (ModelState.IsValid)
             {
                 _context.Add(elementoequipa);
@@ -67,7 +74,7 @@ namespace Bioterio.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["FuncionarioIdFuncionario"] = new SelectList(_context.Funcionario, "IdFuncionario", "NomeCompleto", elementoequipa.FuncionarioIdFuncionario);
-            ViewData["ProjetoIdProjeto"] = new SelectList(_context.Projeto, "IdProjeto", "Nome", elementoequipa.ProjetoIdProjeto);
+            ViewData["ProjetoIdProjeto"] = new SelectList(_context.Projeto.Where(p => p.isarchived == 0), "IdProjeto", "Nome", elementoequipa.ProjetoIdProjeto);
             return View(elementoequipa);
         }
 
@@ -79,13 +86,13 @@ namespace Bioterio.Controllers
                 return NotFound();
             }
 
-            var elementoequipa = await _context.Elementoequipa.SingleOrDefaultAsync(m => m.ProjetoIdProjeto == id);
-            if (elementoequipa == null)
+            var elementoequipa = await _context.Elementoequipa.SingleOrDefaultAsync(m => m.IdElementoEquipa == id);
+            if (elementoequipa == null || elementoequipa.isarchived == 1)
             {
                 return NotFound();
             }
             ViewData["FuncionarioIdFuncionario"] = new SelectList(_context.Funcionario, "IdFuncionario", "NomeCompleto", elementoequipa.FuncionarioIdFuncionario);
-            ViewData["ProjetoIdProjeto"] = new SelectList(_context.Projeto, "IdProjeto", "Nome", elementoequipa.ProjetoIdProjeto);
+            ViewData["ProjetoIdProjeto"] = new SelectList(_context.Projeto.Where(p => p.isarchived == 0), "IdProjeto", "Nome", elementoequipa.ProjetoIdProjeto);
             return View(elementoequipa);
         }
 
@@ -94,12 +101,18 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Função,ProjetoIdProjeto,FuncionarioIdFuncionario")] Elementoequipa elementoequipa)
+        public async Task<IActionResult> Edit(int id, [Bind("IdElementoEquipa,Nome,Funcao,ProjetoIdProjeto,FuncionarioIdFuncionario")] Elementoequipa elementoequipa)
         {
-            if (id != elementoequipa.ProjetoIdProjeto)
+            if (id != elementoequipa.IdElementoEquipa)
             {
                 return NotFound();
             }
+            var cTCodefindany = _context.Elementoequipa.Where(b => EF.Property<string>(b, "Nome").Equals(elementoequipa.Nome)).Where(b => EF.Property<int>(b, "ProjetoIdProjeto") == elementoequipa.ProjetoIdProjeto).Where(b => EF.Property<int>(b, "IdElementoEquipa") != b.IdElementoEquipa);
+            if (cTCodefindany.Any())
+            {
+                ModelState.AddModelError("Nome", string.Format("Este Elemento de Equipa já se encontra associado a este Projeto!", elementoequipa.ProjetoIdProjeto));
+            }
+            elementoequipa.FuncionarioIdFuncionario = 1;
 
             if (ModelState.IsValid)
             {
@@ -110,7 +123,7 @@ namespace Bioterio.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ElementoequipaExists(elementoequipa.ProjetoIdProjeto))
+                    if (!ElementoequipaExists(elementoequipa.IdElementoEquipa))
                     {
                         return NotFound();
                     }
@@ -122,7 +135,7 @@ namespace Bioterio.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["FuncionarioIdFuncionario"] = new SelectList(_context.Funcionario, "IdFuncionario", "NomeCompleto", elementoequipa.FuncionarioIdFuncionario);
-            ViewData["ProjetoIdProjeto"] = new SelectList(_context.Projeto, "IdProjeto", "Nome", elementoequipa.ProjetoIdProjeto);
+            ViewData["ProjetoIdProjeto"] = new SelectList(_context.Projeto.Where(p => p.isarchived == 0), "IdProjeto", "Nome", elementoequipa.ProjetoIdProjeto);
             return View(elementoequipa);
         }
 
@@ -137,8 +150,8 @@ namespace Bioterio.Controllers
             var elementoequipa = await _context.Elementoequipa
                 .Include(e => e.FuncionarioIdFuncionarioNavigation)
                 .Include(e => e.ProjetoIdProjetoNavigation)
-                .SingleOrDefaultAsync(m => m.ProjetoIdProjeto == id);
-            if (elementoequipa == null)
+                .SingleOrDefaultAsync(m => m.IdElementoEquipa == id);
+            if (elementoequipa == null || elementoequipa.isarchived == 1)
             {
                 return NotFound();
             }
@@ -151,7 +164,7 @@ namespace Bioterio.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var elementoequipa = await _context.Elementoequipa.SingleOrDefaultAsync(m => m.ProjetoIdProjeto == id);
+            var elementoequipa = await _context.Elementoequipa.SingleOrDefaultAsync(m => m.IdElementoEquipa == id);
             _context.Elementoequipa.Remove(elementoequipa);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -159,7 +172,7 @@ namespace Bioterio.Controllers
 
         private bool ElementoequipaExists(int id)
         {
-            return _context.Elementoequipa.Any(e => e.ProjetoIdProjeto == id);
+            return _context.Elementoequipa.Any(e => e.IdElementoEquipa == id);
         }
     }
 }

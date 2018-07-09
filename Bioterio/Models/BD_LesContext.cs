@@ -112,6 +112,10 @@ namespace Bioterio.Models
                     .HasColumnName("Projeto_idProjeto")
                     .HasColumnType("int(11)");
 
+                entity.Property(e => e.isarchived)
+                    .HasColumnName("isarchived")
+                    .HasColumnType("int(1)");
+
                 entity.HasOne(d => d.ProjetoIdProjetoNavigation)
                     .WithMany(p => p.CircuitoTanque)
                     .HasForeignKey(d => d.ProjetoIdProjeto)
@@ -121,12 +125,14 @@ namespace Bioterio.Models
 
             modelBuilder.Entity<Concelho>(entity =>
             {
+                entity.HasKey(e => e.IdConcelho);
+
                 entity.ToTable("concelho");
 
                 entity.HasIndex(e => e.DistritoId)
                     .HasName("fk_Concelho_Distrito1_idx");
 
-                entity.Property(e => e.Id)
+                entity.Property(e => e.IdConcelho)
                     .HasColumnName("id")
                     .HasColumnType("int(11)");
 
@@ -148,9 +154,11 @@ namespace Bioterio.Models
 
             modelBuilder.Entity<Distrito>(entity =>
             {
+                entity.HasKey(e => e.IdDistrito);
+
                 entity.ToTable("distrito");
 
-                entity.Property(e => e.Id)
+                entity.Property(e => e.IdDistrito)
                     .HasColumnName("id")
                     .HasColumnType("int(11)");
 
@@ -176,12 +184,18 @@ namespace Bioterio.Models
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.FuncionarioIdFuncionario)
-                    .HasColumnName("Funcionario_idFuncionario");
+                    .HasColumnName("Funcionario_idFuncionario")
+                    .HasColumnType("int(11)");
 
-                entity.Property(e => e.Função)
+                entity.Property(e => e.Funcao)
                     .IsRequired()
-                    .HasColumnName("função")
+                    .HasColumnName("funcao")
                     .HasMaxLength(40);
+
+                entity.Property(e => e.Nome)
+                    .IsRequired()
+                    .HasColumnName("Nome")
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.ProjetoIdProjeto)
                     .HasColumnName("Projeto_idProjeto")
@@ -198,6 +212,10 @@ namespace Bioterio.Models
                     .HasForeignKey(d => d.ProjetoIdProjeto)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_equipaProjeto_Projeto1");
+
+                entity.Property(e => e.isarchived)
+                    .HasColumnName("isarchived")
+                    .HasColumnType("int(1)");
             });
 
             modelBuilder.Entity<Ensaio>(entity =>
@@ -237,10 +255,6 @@ namespace Bioterio.Models
                     .HasColumnName("Lote_idLote")
                     .HasColumnType("int(11)");
 
-                entity.Property(e => e.MembroEquipaIdEquipa)
-                    .HasColumnName("membroEquipa_idEquipa")
-                    .HasColumnType("int(11)");
-
                 entity.Property(e => e.ProjetoIdProjeto)
                     .HasColumnName("Projeto_idProjeto")
                     .HasColumnType("int(11)");
@@ -256,6 +270,14 @@ namespace Bioterio.Models
                     .HasForeignKey(d => d.ProjetoIdProjeto)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Ensaio_Projeto1");
+
+                entity.Property(e => e.isarchived)
+                   .HasColumnName("isarchived")
+                   .HasColumnType("int(1)");
+
+                entity.Property(e => e.NroAnimaisAutoriz)
+                    .HasColumnName("nroAnimaisAutoriz")
+                    .HasColumnType("int(11)");
             });
 
             modelBuilder.Entity<Especie>(entity =>
@@ -607,6 +629,10 @@ namespace Bioterio.Models
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.SubmisInsEurop).HasColumnType("tinyint(1)");
+
+                entity.Property(e => e.isarchived)
+                   .HasColumnName("isarchived")
+                   .HasColumnType("int(1)");
             });
 
             modelBuilder.Entity<RegAlimentar>(entity =>
@@ -648,6 +674,9 @@ namespace Bioterio.Models
                     .HasForeignKey(d => d.TanqueIdTanque)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Reg_Alimentar_Tanque1");
+                entity.Property(e => e.isarchived)
+                   .HasColumnName("isarchived")
+                   .HasColumnType("int(1)");
             });
 
             modelBuilder.Entity<RegAmostragens>(entity =>
@@ -684,6 +713,9 @@ namespace Bioterio.Models
                     .HasForeignKey(d => d.TanqueIdTanque)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Reg_Amostragens_Tanque1");
+                entity.Property(e => e.isarchived)
+                   .HasColumnName("isarchived")
+                   .HasColumnType("int(1)");
             });
 
             modelBuilder.Entity<RegCondAmb>(entity =>
@@ -720,6 +752,9 @@ namespace Bioterio.Models
                     .HasForeignKey(d => d.CircuitoTanqueIdCircuito)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Reg_Cond_Amb_Circuito_Tanque1");
+                entity.Property(e => e.isarchived)
+                   .HasColumnName("isarchived")
+                   .HasColumnType("int(1)");
             });
 
             modelBuilder.Entity<RegManutencao>(entity =>
@@ -761,6 +796,10 @@ namespace Bioterio.Models
                     .HasForeignKey(d => d.TipoManuntecaoIdTManutencao)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Reg_Manutencao_Tipo_Manuntecao1");
+
+                entity.Property(e => e.isarchived)
+                   .HasColumnName("isarchived")
+                   .HasColumnType("int(1)");
             });
 
             modelBuilder.Entity<RegNovosAnimais>(entity =>
@@ -878,8 +917,8 @@ namespace Bioterio.Models
 
                 entity.Property(e => e.SatO2transp).HasColumnName("satO2Transp");
 
-                entity.Property(e => e.Sedação)
-                    .HasColumnName("sedação")
+                entity.Property(e => e.sedacao)
+                    .HasColumnName("sedacao")
                     .HasColumnType("tinyint(1)");
 
                 entity.Property(e => e.TOrigemIdTOrigem)
@@ -976,8 +1015,8 @@ namespace Bioterio.Models
                     .HasColumnName("Motivo_idMotivo")
                     .HasColumnType("int(11)");
 
-                entity.Property(e => e.NroRemoções)
-                    .HasColumnName("nroRemoções")
+                entity.Property(e => e.NroRemocoes)
+                    .HasColumnName("nroremocoes")
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.TanqueIdTanque)
@@ -995,6 +1034,10 @@ namespace Bioterio.Models
                     .HasForeignKey(d => d.TanqueIdTanque)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Reg_Remocoes_Tanque1");
+
+                entity.Property(e => e.isarchived)
+                   .HasColumnName("isarchived")
+                   .HasColumnType("int(1)");
             });
 
             modelBuilder.Entity<RegTratamento>(entity =>
@@ -1055,6 +1098,9 @@ namespace Bioterio.Models
                     .HasForeignKey(d => d.TanqueIdTanque)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Reg_Tratamento_Tanque1");
+                entity.Property(e => e.isarchived)
+                   .HasColumnName("isarchived")
+                   .HasColumnType("int(1)");
             });
 
             modelBuilder.Entity<Tanque>(entity =>
@@ -1072,6 +1118,10 @@ namespace Bioterio.Models
                 entity.Property(e => e.IdTanque)
                     .HasColumnName("idTanque")
                     .HasColumnType("int(11)");
+                //codidenttanque
+                entity.Property(e => e.codidenttanque)
+                   .HasColumnName("codidenttanque")
+                   .HasMaxLength(255);
 
                 entity.Property(e => e.CircuitoTanqueIdCircuito)
                     .HasColumnName("Circuito_Tanque_idCircuito")
@@ -1105,6 +1155,9 @@ namespace Bioterio.Models
                     .HasForeignKey(d => d.LoteIdLote)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Tanque_Lote1");
+                entity.Property(e => e.isarchived)
+                   .HasColumnName("isarchived")
+                   .HasColumnType("int(1)");
             });
 
             modelBuilder.Entity<Tipoestatutogenetico>(entity =>
@@ -1145,7 +1198,7 @@ namespace Bioterio.Models
                     .HasColumnName("idT_Origem")
                     .HasColumnType("int(11)");
 
-                entity.Property(e => e.Descrição).HasMaxLength(45);
+                entity.Property(e => e.descricao).HasMaxLength(45);
             });
         }
     }

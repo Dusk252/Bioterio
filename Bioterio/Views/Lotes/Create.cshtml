@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
+<h2>Criar</h2>
 
 <h4>Lote</h4>
 <hr />
@@ -41,13 +41,13 @@
                 <select asp-for="FuncionarioIdFuncionario" class ="form-control" asp-items="ViewBag.FuncionarioIdFuncionario"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Criar" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a type="button" class="btn btn-info" asp-action="Index">Voltar à listagem</a>
 </div>
 

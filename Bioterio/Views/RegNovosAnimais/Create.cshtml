@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
+<h2>Criar</h2>
 
 <h4>RegNovosAnimais</h4>
 <hr />
@@ -13,7 +13,7 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <ul class="nav nav-tabs hidden">
             <li class="active"><a href="#t1" data-toggle="tab"><span>Caracteristicas do lote</span></a></li>
-            <li><a href="#t2" data-toggle="tab"><span>Condições de transporte</span></a></li>
+            <li><a href="#t2" data-toggle="tab"><span>Condicoes de transporte</span></a></li>
             <li><a href="#t3" data-toggle="tab"><span>Fornecedor/Colector</span></a></li>
         </ul>
         <div class="tab-content">
@@ -152,36 +152,36 @@
                     <label asp-for="Gelo" class="control-label"></label>
                     <br />
                     @Html.RadioButtonFor(b => b.Gelo, 1) Sim
-                    @Html.RadioButtonFor(b => b.Gelo, 0) Não
+                    @Html.RadioButtonFor(b => b.Gelo, 0) Nao
                     <span asp-validation-for="Gelo" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="AdicaoO2" class="control-label"></label>
                     <br />
                     @Html.RadioButtonFor(b => b.AdicaoO2, 1) Sim
-                    @Html.RadioButtonFor(b => b.AdicaoO2, 0) Não
+                    @Html.RadioButtonFor(b => b.AdicaoO2, 0) Nao
                     <span asp-validation-for="AdicaoO2" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Arejamento" class="control-label"></label>
                     <br />
                     @Html.RadioButtonFor(b => b.Arejamento, 1) Sim
-                    @Html.RadioButtonFor(b => b.Arejamento, 0) Não
+                    @Html.RadioButtonFor(b => b.Arejamento, 0) Nao
                     <span asp-validation-for="Arejamento" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Refrigeracao" class="control-label"></label>
                     <br />
                     @Html.RadioButtonFor(b => b.Refrigeracao, 1) Sim
-                    @Html.RadioButtonFor(b => b.Refrigeracao, 0) Não
+                    @Html.RadioButtonFor(b => b.Refrigeracao, 0) Nao
                     <span asp-validation-for="Refrigeracao" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Sedação" class="control-label"></label>
+                    <label asp-for="sedacao" class="control-label"></label>
                     <br />
-                    @Html.RadioButtonFor(b => b.Sedação, 1) Sim
-                    @Html.RadioButtonFor(b => b.Sedação, 0) Não
-                    <span asp-validation-for="Sedação" class="text-danger"></span>
+                    @Html.RadioButtonFor(b => b.sedacao, 1) Sim
+                    @Html.RadioButtonFor(b => b.sedacao, 0) Nao
+                    <span asp-validation-for="sedacao" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="RespTransporte" class="control-label"></label>
@@ -203,7 +203,7 @@
                     @foreach (var a in (List<TOrigem>)ViewData["TOrigem"])
                 {
                     <p>
-                        @Html.RadioButtonFor(b => b.TOrigemIdTOrigem, a.IdTOrigem)  @a.Descrição
+                        @Html.RadioButtonFor(b => b.TOrigemIdTOrigem, a.IdTOrigem)  @a.descricao
                     </p>
                 }
                     <span asp-validation-for="TOrigemIdTOrigem" class="text-danger"></span>
@@ -225,7 +225,7 @@
                 </div>
                 <div class="form-group">
                     <a class="btn btn-default btnPrevious hidden">Previous</a>
-                    <input type="submit" value="Create" class="btn btn-default" />
+                    <input type="submit" value="Criar" class="btn btn-default" />
                 </div>
             </div>
         </div>
@@ -252,5 +252,5 @@
 }
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a type="button" class="btn btn-info" asp-action="Index">Voltar à listagem</a>
 </div>

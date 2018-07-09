@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Bioterio.RegManutencao>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Página Inicial</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Projetoes" asp-action="Index">Projetos</a></li>
+        <li class="breadcrumb-item"><a asp-controller="CircuitoTanques" asp-action="Index">Circuito de Tanques</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Tanques" asp-action="Index">Tanques</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Registo de Manutencao</li>
+    </ol>
+</nav>
+<h2>Listagem de Manutenções</h2>
+<p>
+    <a class="btn btn-info" asp-action="Create">Criar Manutencao</a>
+</p>
+<div class="col-md-10">
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Data)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TanqueIdTanqueNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TipoManuntecaoIdTManutencaoNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            item.data = item.Data.Day + "/" + item.Data.Month + "/" + item.Data.Year;
+            if (item.isarchived == 0)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.data)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TanqueIdTanqueNavigation.Sala)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoManuntecaoIdTManutencaoNavigation.TManutencao)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.IdRegMan"><span class="glyphicon glyphicon-pencil"></span></a> |
+                        <a asp-action="Details" asp-route-id="@item.IdRegMan"><span class="glyphicon glyphicon-eye-open"></span></a> |
+                        <a asp-action="Delete" asp-route-id="@item.IdRegMan"><span class="glyphicon glyphicon-trash"></span></a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+</div>
+<div class="col-md-2">
+
+    <ul class="list-group">
+        <li class="list-group-item active"><b>Opções:</b></li>
+        <li class="list-group-item"><a asp-area=""  asp-controller="TipoManuntecaos" asp-action="Index">Tipos de Manut(...)</a></li>
+    </ul>
+</div>
+<div class="col-md-12">
+    <a type="button" class="btn btn-info pull-right" asp-controller="Tanques" asp-action="Index">Voltar Para Tanques</a>
+</div>

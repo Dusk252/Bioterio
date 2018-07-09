@@ -70,7 +70,7 @@
 
         @if (lotes.Count() != 0)
     {
-        <h4 class="del">Não é possível apagar este registo pois ele encontra-se presente nos seguintes lotes:</h4>
+        <h4 class="del">Nao é possível apagar este registo pois ele encontra-se presente nos seguintes lotes:</h4>
         <ul>
             @foreach (var item in lotes)
     {
@@ -85,6 +85,6 @@
             {
         <input type="submit" value="Delete" class="btn btn-default" /> <span>|</span>
             }
-        <a asp-action="Index">Back to List</a>
+        <a type="button" class="btn btn-info" asp-action="Index">Voltar à listagem</a>
         </form>
     </div>

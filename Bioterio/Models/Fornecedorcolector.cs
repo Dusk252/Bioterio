@@ -29,7 +29,7 @@ namespace Bioterio.Models
         [Remote("ValidateNIF", "Fornecedorcolectors")]
         public int? Nif { get; set; }
 
-        [DisplayName("Nº Licença")]
+        [DisplayName("Nº Licenca")]
         [Required(ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "RequiredField")]
         [RegularExpression(@"^\d*$", ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "InvalidField")]
         public int? NroLicenca { get; set; }

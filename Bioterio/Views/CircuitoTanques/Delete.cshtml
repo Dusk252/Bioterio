@@ -1,0 +1,61 @@
+﻿@model Bioterio.CircuitoTanque
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Página Inicial</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Projetoes" asp-action="Index">Projetos</a></li>
+        <li class="breadcrumb-item"><a asp-action="Index">Circuito de Tanques</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Arquivar</li>
+    </ol>
+</nav>
+
+    <h3 class="alert alert-danger">
+        <ul>
+            <li> Ao Arquivar este Circuito estará Tambem arquivar os registos e Tanques associados ao mesmo</li>
+            <li> Poderá consultar os dados do Circuito, dos Tanques e Registos associados ao mesmo posteriosrmente</li>
+            <li> <b>Não é Possivel Editar os dados após esta acao</b></li>
+        </ul>
+    </h3>
+
+<div class="col-md-4">
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CodigoCircuito)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CodigoCircuito)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DataCriacao)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.dateCriacao)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DataFinal)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.dateFinal)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ProjetoIdProjetoNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProjetoIdProjetoNavigation.Nome)
+        </dd>
+    </dl>
+
+
+ 
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="IdCircuito" />
+            <input type="submit" value="Arquivar" class="btn btn-danger" />
+            <a type="button" class="btn btn-info pull-right" asp-action="Index">Cancelar</a>
+        </form>
+  
+    
+</div>

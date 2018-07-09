@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
+<h2>Criar</h2>
 
 <h4>Localcaptura</h4>
 <hr />
@@ -28,21 +28,32 @@
                 <span asp-validation-for="Longitude" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ConcelhoId" class="control-label"></label>
-                <select asp-for="ConcelhoId" class ="form-control" asp-items="ViewBag.ConcelhoId"></select>
-            </div>
-            <div class="form-group">
                 <label asp-for="DistritoId" class="control-label"></label>
-                <select asp-for="DistritoId" class ="form-control" asp-items="ViewBag.DistritoId"></select>
+                <select asp-for="DistritoId" class="form-control" id="distritoDropDown" asp-items="ViewBag.DistritoId" onchange="getConcelhosList()"></select>
+                <span asp-validation-for="DistritoId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <label asp-for="ConcelhoId" class="control-label"></label>
+                <select asp-for="ConcelhoId" class="form-control" id="concelhoDropDown" asp-items="ViewBag.ConcelhoId"></select>
+                <span asp-validation-for="ConcelhoId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Criar" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a type="button" class="btn btn-info" asp-action="Index">Voltar à listagem</a>
 </div>
 
+@section scripts {
+    <script type="text/javascript">
+        window.onload = function () {
+            var v = $("#distritoDropDown").val();
+            getConcelhosList(v);
+        };
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

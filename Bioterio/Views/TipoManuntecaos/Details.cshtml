@@ -1,0 +1,38 @@
+﻿@model Bioterio.TipoManuntecao
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Página Inicial</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Projetoes" asp-action="Index">Projetos</a></li>
+        <li class="breadcrumb-item"><a asp-controller="CircuitoTanques" asp-action="Index">Circuito de Tanques</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Tanques" asp-action="Index">Tanques</a></li>
+        <li class="breadcrumb-item"><a asp-controller="RegManutencaos" asp-action="Index">Registo de Manutencao</a></li>
+        <li class="breadcrumb-item"><a asp-controller="TipoManuntecaos" asp-action="Index">Tipos de Manutencao</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Detalhes</li>
+    </ol>
+</nav>
+
+<h2>Detalhes</h2>
+
+<div>
+    <h4>Tipo de Manuntecao</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TManutencao)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TManutencao)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a type="button" class="btn btn-success" asp-action="Edit" asp-route-id="@Model.IdTManutencao">Editar</a>
+    <a type="button" class="btn btn-danger pull-right" asp-action="Delete" asp-route-id="@Model.IdTManutencao">Eliminar</a>
+    <a type="button" class="btn btn-info" asp-action="Index">Cancelar</a>
+</div>

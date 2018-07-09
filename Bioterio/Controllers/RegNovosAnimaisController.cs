@@ -78,7 +78,7 @@ namespace Bioterio.Controllers
         [HttpPost]
         [Authorize(Policy = "ElevatedRights")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdRegAnimal,NroExemplares,NroMachos,NroFemeas,Imaturos,Juvenis,Larvas,Ovos,DataNasc,Idade,PesoMedio,CompMedio,DuracaoViagem,TempPartida,TempChegada,NroContentores,TipoContentor,VolContentor,VolAgua,NroCaixasIsoter,NroMortosCheg,SatO2transp,Anestesico,Gelo,AdicaoO2,Arejamento,Refrigeracao,Sedação,RespTransporte,EspecieIdEspecie,FornecedorIdFornColect,TOrigemIdTOrigem,LocalCapturaIdLocalCaptura,TipoEstatutoGeneticoIdTipoEstatutoGenetico,FuncionarioIdFuncionario,FuncionarioIdFuncionario1")] RegNovosAnimais regNovosAnimais)
+        public async Task<IActionResult> Create([Bind("IdRegAnimal,NroExemplares,NroMachos,NroFemeas,Imaturos,Juvenis,Larvas,Ovos,DataNasc,Idade,PesoMedio,CompMedio,DuracaoViagem,TempPartida,TempChegada,NroContentores,TipoContentor,VolContentor,VolAgua,NroCaixasIsoter,NroMortosCheg,SatO2transp,Anestesico,Gelo,AdicaoO2,Arejamento,Refrigeracao,sedacao,RespTransporte,EspecieIdEspecie,FornecedorIdFornColect,TOrigemIdTOrigem,LocalCapturaIdLocalCaptura,TipoEstatutoGeneticoIdTipoEstatutoGenetico,FuncionarioIdFuncionario,FuncionarioIdFuncionario1")] RegNovosAnimais regNovosAnimais)
         {
             if (ModelState.IsValid)
             {
@@ -143,7 +143,7 @@ namespace Bioterio.Controllers
         [HttpPost]
         [Authorize(Policy = "ElevatedRights")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdRegAnimal,NroExemplares,NroMachos,NroFemeas,Imaturos,Juvenis,Larvas,Ovos,DataNasc,Idade,PesoMedio,CompMedio,DuracaoViagem,TempPartida,TempChegada,NroContentores,TipoContentor,VolContentor,VolAgua,NroCaixasIsoter,NroMortosCheg,SatO2transp,Anestesico,Gelo,AdicaoO2,Arejamento,Refrigeracao,Sedação,RespTransporte,EspecieIdEspecie,FornecedorIdFornColect,TOrigemIdTOrigem,LocalCapturaIdLocalCaptura,TipoEstatutoGeneticoIdTipoEstatutoGenetico,FuncionarioIdFuncionario,FuncionarioIdFuncionario1")] RegNovosAnimais regNovosAnimais)
+        public async Task<IActionResult> Edit(int id, [Bind("IdRegAnimal,NroExemplares,NroMachos,NroFemeas,Imaturos,Juvenis,Larvas,Ovos,DataNasc,Idade,PesoMedio,CompMedio,DuracaoViagem,TempPartida,TempChegada,NroContentores,TipoContentor,VolContentor,VolAgua,NroCaixasIsoter,NroMortosCheg,SatO2transp,Anestesico,Gelo,AdicaoO2,Arejamento,Refrigeracao,sedacao,RespTransporte,EspecieIdEspecie,FornecedorIdFornColect,TOrigemIdTOrigem,LocalCapturaIdLocalCaptura,TipoEstatutoGeneticoIdTipoEstatutoGenetico,FuncionarioIdFuncionario,FuncionarioIdFuncionario1")] RegNovosAnimais regNovosAnimais)
         {
             if (id != regNovosAnimais.IdRegAnimal)
             {

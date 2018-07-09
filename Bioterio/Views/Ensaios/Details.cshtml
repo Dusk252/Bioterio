@@ -1,0 +1,74 @@
+﻿@model Bioterio.Ensaio
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Página Inicial</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Projetoes" asp-action="Index">Projetos</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Ensaios" asp-action="Index">Ensaios</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Detalhes</li>
+    </ol>
+</nav>
+@if (Model.isarchived == 1)
+{
+    <h3 class="alert alert-danger">
+        <ul>
+            <li> Este Ensaio encontra-se <b>Arquivado</b> </li>
+        </ul>
+    </h3>
+}
+<div>
+    <h4>Ensaio</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DataInicio)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.data)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DataFim)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.data2)
+        </dd>
+        <dt>
+            @*@Html.DisplayNameFor(model => model.DescTratamento)*@Descricao do Ensaio
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DescTratamento)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.GrauSeveridade)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GrauSeveridade)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LoteIdLoteNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LoteIdLoteNavigation.CodigoLote)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ProjetoIdProjetoNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProjetoIdProjetoNavigation.Nome)
+        </dd>
+    </dl>
+</div>
+<div>
+    @if (Model.isarchived == 0)
+    {
+        <a type="button" class="btn btn-success" asp-action="Edit" asp-route-id="@Model.IdEnsaio">Editar</a>}
+    <a type="button" class="btn btn-primary" asp-action="Index">Retornar</a>
+    @if (Model.isarchived == 0)
+    {
+        <a type="button" class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.IdEnsaio">Apagar Ensaio</a>}
+    </div>

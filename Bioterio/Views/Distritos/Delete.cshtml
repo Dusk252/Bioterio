@@ -18,10 +18,61 @@
             @Html.DisplayFor(model => model.NomeDistrito)
         </dd>
     </dl>
-    
+
+    @{
+        var concelhos = (List<Concelho>)ViewData["concelhos"];
+    }
+    @if (concelhos.Count() != 0)
+    {
+        <p class="del">Ao apagar este distrito irá também apagar os seguintes concelhos a ele pertencentes:</p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => concelhos.FirstOrDefault<Concelho>().NomeConcelho)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in concelhos)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NomeConcelho)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    @if (Model.Localcaptura.Count() != 0)
+    {
+        <p class="del">Ao apagar este distrito irá também apagar os seguintes locais de captura:</p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Localcaptura)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Localcaptura)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => item.Localidade) @HtmlEncoder.Encode("(") @Html.DisplayFor(model => item.Latitude) @Html.DisplayFor(model => item.Longitude) @HtmlEncoder.Encode(")")
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
     <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="IdDistrito" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <a type="button" class="btn btn-info" asp-action="Index">Voltar à listagem</a>
     </form>
 </div>

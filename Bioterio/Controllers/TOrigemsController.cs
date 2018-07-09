@@ -55,7 +55,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdTOrigem,Descrição")] TOrigem tOrigem)
+        public async Task<IActionResult> Create([Bind("IdTOrigem,descricao")] TOrigem tOrigem)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdTOrigem,Descrição")] TOrigem tOrigem)
+        public async Task<IActionResult> Edit(int id, [Bind("IdTOrigem,descricao")] TOrigem tOrigem)
         {
             if (id != tOrigem.IdTOrigem)
             {

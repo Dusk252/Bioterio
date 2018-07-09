@@ -1,0 +1,70 @@
+﻿@model Bioterio.RegTratamento
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Página Inicial</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Projetoes" asp-action="Index">Projetos</a></li>
+        <li class="breadcrumb-item"><a asp-controller="CircuitoTanques" asp-action="Index">Circuito de Tanques</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Tanques" asp-action="Index">Tanques</a></li>
+        <li class="breadcrumb-item"><a asp-action="Index">Registo de Tratamentos</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Criar</li>
+    </ol>
+</nav>
+
+<h2>Registar Tratamento</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input type="date" asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <a href="#" data-toggle="popover" title="Tempo" data-content="Duracao do tratamento em minutos"><span class="glyphicon glyphicon-question-sign"></span></a>
+                <label asp-for="Tempo" class="control-label"></label>
+                <input asp-for="Tempo" class="form-control" />
+                <span asp-validation-for="Tempo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <a href="#" data-toggle="popover" title="Concentracao" data-content="Concentracao do Agente usado No Tratamento medido em ppm"><span class="glyphicon glyphicon-question-sign"></span></a>
+                <label asp-for="Concentracao" class="control-label"></label>
+                <input asp-for="Concentracao" class="form-control" />
+                <span asp-validation-for="Concentracao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <a href="#" data-toggle="popover" title="Finalidade" data-content="Consiste na Finalidade do Tratamento"><span class="glyphicon glyphicon-question-sign"></span></a>
+                <label asp-for="FinalidadeIdFinalidade" class="control-label"></label>
+                <select asp-for="FinalidadeIdFinalidade" class="form-control" asp-items="ViewBag.FinalidadeIdFinalidade"></select>
+            </div>
+            <div class="form-group">
+                <a href="#" data-toggle="popover" title="Agente de Tratamento" data-content="O Agente utilizado no tratamento"><span class="glyphicon glyphicon-question-sign"></span></a>
+                <label asp-for="AgenteTratIdAgenTra" class="control-label"></label>
+                <select asp-for="AgenteTratIdAgenTra" class="form-control" asp-items="ViewBag.AgenteTratIdAgenTra"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="TanqueIdTanque" class="control-label"></label>
+                <select asp-for="TanqueIdTanque" class ="form-control" asp-items="ViewBag.TanqueIdTanque"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Registar" class="btn btn-success" />
+                <a type="button" class="btn btn-info" asp-action="Index">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();
+    });
+</script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

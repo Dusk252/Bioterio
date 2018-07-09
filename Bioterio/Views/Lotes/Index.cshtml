@@ -7,11 +7,12 @@
 <h2>Index</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a type="button" class="btn btn-info" asp-action="Create">Criar Novo Lote</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
+<div class="col-md-10">
+    <table class="table">
+        <thead>
+            <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.CodigoLote)
                 </th>
@@ -24,42 +25,51 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Observacoes)
                 </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FuncionarioIdFuncionarioNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RegNovosAnimaisIdRegAnimalNavigation)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CodigoLote)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataInicio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataFim)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Observacoes)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FuncionarioIdFuncionarioNavigation.NomeCompleto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RegNovosAnimaisIdRegAnimalNavigation.RespTransporte)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdLote">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdLote">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdLote">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                <th>
+                    @Html.DisplayNameFor(model => model.FuncionarioIdFuncionarioNavigation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RegNovosAnimaisIdRegAnimalNavigation)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CodigoLote)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataInicio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataFim)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Observacoes)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FuncionarioIdFuncionarioNavigation.NomeCompleto)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RegNovosAnimaisIdRegAnimalNavigation.RespTransporte)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.IdLote">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.IdLote">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.IdLote">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="col-md-2">
+    <ul class="list-group">
+        <li class="list-group-item active"><b>Lotes:</b></li>
+        <li class="list-group-item"><a asp-area="" asp-controller="Lotes" asp-action="Index">Lotes</a></li>
+        <li class="list-group-item"><a asp-area="" asp-controller="RegNovosAnimais" asp-action="Index">Registos de novos animais</a></li>
+    </ul>
+</div>

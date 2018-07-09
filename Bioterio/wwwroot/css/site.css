@@ -186,7 +186,7 @@ nav {
             margin-right: -3px;
         }
 
-    nav a {
+#top-menu nav a {
         display: block;
         color: #FFF;
         font-size: 16px;
@@ -195,47 +195,47 @@ nav {
         padding: 0 15px;
     }
 
-        nav a:hover, nav a:visited {
+#top-menu nav a:hover, #top-menu nav a:visited {
             background-color: #808080;
             color: #fff;
             text-decoration: none;
         }
 
     /* Hide Dropdowns by Default */
-    nav ul ul {
-        display: none;
-        position: absolute;
-        top: 80px; /* the height of the main nav */
-    }
+#top-menu nav ul ul {
+    display: none;
+    position: absolute;
+    top: 80px; /* the height of the main nav */
+}
 
     /* Display Dropdowns on Hover */
-    nav ul li:hover > ul {
-        display: inherit;
-    }
+#top-menu nav ul li:hover > ul {
+    display: inherit;
+}
 
-    nav ul ul li a, nav ul ul ul li a {
-        font-size: 14px;
-        line-height: 20px;
-        padding: 20px 15px;
-    }
+#top-menu nav ul ul li a, nav ul ul ul li a {
+    font-size: 14px;
+    line-height: 20px;
+    padding: 20px 15px;
+}
 
     /* Fisrt Tier Dropdown */
-    nav ul ul li {
-        border-top: 2px solid white;
-        width: 200px;
-        font-size: 14px !important;
-        float: none;
-        display: list-item;
-        position: relative;
-    }
+#top-menu nav ul ul li {
+    border-top: 2px solid white;
+    width: 200px;
+    font-size: 14px !important;
+    float: none;
+    display: list-item;
+    position: relative;
+}
 
     /* Second, Third and more Tiers	*/
-    nav ul ul ul li {
-        border-top: 2px solid white;
-        position: relative;
-        top: -60px;
-        left: 200px;
-    }
+#top-menu nav ul ul ul li {
+    border-top: 2px solid white;
+    position: relative;
+    top: -60px;
+    left: 200px;
+}
 
 
 /* Change this in order to change the Dropdown symbol */
@@ -278,4 +278,8 @@ li > a:only-child:after {
 
 #blog {
     margin-top: 100vh;
+}
+
+.navbar-brand, .navbar-brand:hover {
+    background-color: transparent !important;
 }

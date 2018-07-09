@@ -1,0 +1,62 @@
+﻿@model Bioterio.RegCondAmb
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Página Inicial</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Projetoes" asp-action="Index">Projetos</a></li>
+        <li class="breadcrumb-item"><a asp-controller="CircuitoTanques" asp-action="Index">Circuito de Tanques</a></li>
+        <li class="breadcrumb-item"><a asp-action="Index">Registo Condicao Ambiental</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Detalhes</li>
+    </ol>
+</nav>
+<div class="col-md-12">
+    <h2>Detalhes do Registo Condicao Ambiental</h2>
+</div>
+<div class="col-md-4">
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Data)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.data)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Temperatura)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Temperatura)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.VolAgua)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.VolAgua)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SalinidadeAgua)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SalinidadeAgua)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NivelO2)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NivelO2)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CircuitoTanqueIdCircuitoNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CircuitoTanqueIdCircuitoNavigation.CodigoCircuito)
+        </dd>
+    </dl>
+    <div class="form-group">
+        <a type="button" class="btn btn-success" asp-action="Edit" asp-route-id="@Model.IdRegCondAmb">Editar</a>
+        <a type="button" class="btn btn-danger pull-right" asp-action="Delete" asp-route-id="@Model.IdRegCondAmb">Eliminar</a>
+        <a type="button" class="btn btn-info" asp-action="Index">Cancelar</a>
+    </div>
+</div>

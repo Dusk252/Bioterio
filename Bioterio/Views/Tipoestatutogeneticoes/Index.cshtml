@@ -7,14 +7,12 @@
 <h2>Index</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a type="button" class="btn btn-info" asp-action="Create">Criar Novo Tipo de Estatuto Genético</a>
 </p>
+<div class="col-md-10">
 <table class="table">
     <thead>
         <tr>
-            <th>
-                ID
-            </th>
             <th>
                 OGNM
             </th>
@@ -25,9 +23,6 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdTipoEstatutoGenetico)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TipoEstatutoGeneticocol)
             </td>
@@ -41,3 +36,11 @@
 }
     </tbody>
 </table>
+    </div>
+<div class="col-md-2">
+    <ul class="list-group">
+        <li class="list-group-item active"><b>Outras Configurações:</b></li>
+        <li class="list-group-item"><a asp-area="" asp-controller="TOrigems" asp-action="Index">Tipo de Origem</a></li>
+        <li class="list-group-item"><a asp-area="" asp-controller="Tipoestatutogeneticos" asp-action="Index">Tipo de Estatutos Genéticos</a></li>
+    </ul>
+</div>

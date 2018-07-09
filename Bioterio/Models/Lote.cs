@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -19,6 +20,7 @@ namespace Bioterio.Models
 
         [DisplayName("Código do Lote")]
         [Required(ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "RequiredField")]
+        [Remote("ValidateCodigoLote", "Lotes", AdditionalFields = "IdLote")]
         public string CodigoLote { get; set; }
 
         [DisplayName("Data de Início")]
@@ -28,9 +30,10 @@ namespace Bioterio.Models
 
         [DisplayName("Data de Fim")]
         [DataType(DataType.Date, ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "InvalidField")]
+        [Remote("ValidateDates", "Lotes", AdditionalFields = "DataInicio")]
         public DateTime? DataFim { get; set; }
 
-        [DisplayName("Observações")]
+        [DisplayName("Observacoes")]
         [Required(ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "RequiredField")]
         public string Observacoes { get; set; }
 

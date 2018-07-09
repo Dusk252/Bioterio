@@ -1,0 +1,51 @@
+﻿@model Bioterio.RegManutencao
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Página Inicial</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Projetoes" asp-action="Index">Projetos</a></li>
+        <li class="breadcrumb-item"><a asp-controller="CircuitoTanques" asp-action="Index">Circuito de Tanques</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Tanques" asp-action="Index">Tanques</a></li>
+        <li class="breadcrumb-item"><a asp-action="Index">Registo de Manutencao</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Eliminar</li>
+    </ol>
+</nav>
+
+<h3 class="alert alert-danger">
+    <ul>
+        <li> Tem a certeza que pretende Eliminar este Registo de Manutencao?</li>
+    </ul>
+</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Data)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.data)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TanqueIdTanqueNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TanqueIdTanqueNavigation.codidenttanque)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoManuntecaoIdTManutencaoNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TipoManuntecaoIdTManutencaoNavigation.IdTManutencao)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="IdRegMan" />
+         <input type="submit" value="Eliminar" class="btn btn-danger" />
+        <a type="button" class="btn btn-info pull-right" asp-action="Index">Cancelar</a>
+    </form>
+</div>

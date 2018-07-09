@@ -141,7 +141,7 @@ namespace Bioterio.Data
             //        AdicaoO2 = 0,
             //        Arejamento = 0,
             //        Refrigeracao = 1,
-            //        Sedação = 0,
+            //        sedacao = 0,
             //        RespTransporte = "DHL",
             //        EspecieIdEspecie = 1,
             //        FornecedorIdFornColect = 1,

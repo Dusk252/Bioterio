@@ -1,0 +1,82 @@
+﻿@model Bioterio.Projeto
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Página Inicial</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Projetoes" asp-action="Index">Projetos</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Criar</li>
+    </ol>
+</nav>
+<h2>Criar</h2>
+
+<h4>Projeto</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <a href="#" data-toggle="popover" title="Nome do Projeto" data-content="Nome do Projeto ou Referência FCT"><span class="glyphicon glyphicon-question-sign"></span></a>
+                <label asp-for="Nome" class="control-label"></label>
+                <input asp-for="Nome" class="form-control" required />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <a href="#" data-toggle="popover" title="Data de Inicio" data-content="Data apartir da qual o Projeto se irá Inicializar"><span class="glyphicon glyphicon-question-sign"></span></a>
+                <label asp-for="DataInicio" class="control-label"></label>
+                <input type="date" asp-for="DataInicio" class="form-control" />
+                <span asp-validation-for="DataInicio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <a href="#" data-toggle="popover" title="Data de Fim" data-content="Data de término planeado para o Projeto"><span class="glyphicon glyphicon-question-sign"></span></a>
+                <label asp-for="DataFim" class="control-label"></label>
+                <input type="date" asp-for="DataFim" class="form-control" />
+                <span asp-validation-for="DataFim" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <a href="#" data-toggle="popover" title="Autorizacao DGVA" data-content="Código da Autorizacao DGVA para o Projeto"><span class="glyphicon glyphicon-question-sign"></span></a>
+                <label asp-for="AutorizacaoDgva" class="control-label"></label>
+                <input asp-for="AutorizacaoDgva" class="form-control" required />
+                <span asp-validation-for="AutorizacaoDgva" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <a href="#" data-toggle="popover" title="Referência ORBEA" data-content="Referência ORBEA do Projeto"><span class="glyphicon glyphicon-question-sign"></span></a>
+                <label asp-for="RefOrbea" class="control-label"></label>
+                <input asp-for="RefOrbea" class="form-control" required />
+                <span asp-validation-for="RefOrbea" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <a href="#" data-toggle="popover" title="Instãncias Europeias" data-content="Submissão a Instâncias Europeias"><span class="glyphicon glyphicon-question-sign"></span></a>
+                <label asp-for="SubmisInsEurop" class="control-label"></label>
+                <select required class="form-control" type="text" id="SubmisInsEurop" name="SubmisInsEurop">
+                    <option value="">Escolha uma opcao</option>
+                    <option value="True">Sim</option>
+                    <option value="False">Não</option>
+                </select>
+                <span asp-validation-for="SubmisInsEurop" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <a href="#" data-toggle="popover" title="Animais autorizados" data-content="Número de animais autorizados para o Projeto"><span class="glyphicon glyphicon-question-sign"></span></a>
+                <label asp-for="NroAnimaisAutoriz" class="control-label"></label>
+                <input asp-for="NroAnimaisAutoriz" class="form-control" required />
+                <span asp-validation-for="NroAnimaisAutoriz" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Confirmar" class="btn btn-success" />
+                <a class="btn btn-info" asp-action="Index">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();
+    });</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

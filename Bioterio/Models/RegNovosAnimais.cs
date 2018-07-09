@@ -59,7 +59,7 @@ namespace Bioterio.Models
         [RegularExpression(@"^[+-]?([0-9]*[.])?[0-9]+$", ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "InvalidField")]
         public float? CompMedio { get; set; }
 
-        [DisplayName("Duração do Transporte")]
+        [DisplayName("Duracao do Transporte")]
         [DataType(DataType.Duration, ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "InvalidField")]
         public TimeSpan? DuracaoViagem { get; set; }
 
@@ -95,7 +95,7 @@ namespace Bioterio.Models
         [RegularExpression(@"^\d*$", ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "InvalidField")]
         public int? NroMortosCheg { get; set; }
 
-        [DisplayName("Saturação de O2")]
+        [DisplayName("Saturacao de O2")]
         [RegularExpression(@"^[+-]?([0-9]*[.])?[0-9]+$", ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "InvalidField")]
         public float? SatO2transp { get; set; }
 
@@ -107,7 +107,7 @@ namespace Bioterio.Models
         [Required(ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "RequiredField")]
         public sbyte? Gelo { get; set; }
 
-        [DisplayName("Adição de O2")]
+        [DisplayName("Adicao de O2")]
         [Required(ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "RequiredField")]
         public sbyte? AdicaoO2 { get; set; }
 
@@ -115,13 +115,13 @@ namespace Bioterio.Models
         [Required(ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "RequiredField")]
         public sbyte? Arejamento { get; set; }
 
-        [DisplayName("Refrigeração")]
+        [DisplayName("Refrigeracao")]
         [Required(ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "RequiredField")]
         public sbyte? Refrigeracao { get; set; }
 
-        [DisplayName("Sedação")]
+        [DisplayName("sedacao")]
         [Required(ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "RequiredField")]
-        public sbyte? Sedação { get; set; }
+        public sbyte? sedacao { get; set; }
 
         [DisplayName("Responsável pelo Transporte")]
         [Required(ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "RequiredField")]
@@ -146,7 +146,7 @@ namespace Bioterio.Models
         [Required(ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "RequiredField")]
         public int? TipoEstatutoGeneticoIdTipoEstatutoGenetico { get; set; }
 
-        [DisplayName("Funcionário (recepção)")]
+        [DisplayName("Funcionário (recepcao)")]
         [Required(ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "RequiredField")]
         public int FuncionarioIdFuncionario { get; set; }
 
@@ -158,7 +158,7 @@ namespace Bioterio.Models
         public Especie EspecieIdEspecieNavigation { get; set; }
         [DisplayName("Fornecedor / Colector")]
         public Fornecedorcolector FornecedorIdFornColectNavigation { get; set; }
-        [DisplayName("Funcionário (recepção)")]
+        [DisplayName("Funcionário (recepcao)")]
         public Funcionario FuncionarioIdFuncionarioNavigation { get; set; }
         [DisplayName("Funcionário (registo)")]
         public Funcionario FuncionarioIdFuncionario1Navigation { get; set; }

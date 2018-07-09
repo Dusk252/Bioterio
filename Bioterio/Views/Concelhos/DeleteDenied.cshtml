@@ -1,0 +1,35 @@
+﻿@model Bioterio.Models.Concelho
+
+@{
+    ViewData["Title"] = "Delete";
+}
+<h4 class="del">Não é possível apagar o conselho @Html.DisplayFor(model => model.NomeConcelho) pois este encontra-se associado a locais de captura já em utilização:</h4>
+<div>
+
+    @if (Model.Localcaptura.Count() != 0)
+    {
+        <ul>
+            @foreach (var item in Model.Localcaptura)
+            {
+            <li>
+                @if (item.RegNovosAnimais.Count > 0)
+                {
+                        @Html.DisplayNameFor(model => item.IdLocalCaptura)
+                        @Html.DisplayFor(model => item.Localidade) @HtmlEncoder.Encode("(") @Html.DisplayFor(model => item.Latitude) @Html.DisplayFor(model => item.Longitude) @HtmlEncoder.Encode(")")
+                    <ul>
+                        @foreach (var item2 in item.RegNovosAnimais)
+                        {
+                        <li>
+                            @Html.DisplayNameFor(model => item2.NroExemplares) @HtmlEncoder.Encode(":") @Html.DisplayFor(model => item2.NroExemplares) |
+                            @Html.DisplayFor(model => item2.FornecedorIdFornColectNavigation.Tipo): @Html.DisplayFor(model => item2.FornecedorIdFornColectNavigation.Nome)
+                        </li>
+                        }
+                    </ul>
+                }
+            </li>
+            }
+        </ul>
+    }
+
+    <a type="button" class="btn btn-info" asp-action="Index">Voltar à listagem</a>
+</div>

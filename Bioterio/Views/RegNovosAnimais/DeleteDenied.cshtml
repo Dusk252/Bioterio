@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Delete";
 }
-<h4 class="del">Não é possível apagar o registo seleccionado pois esta encontra-se associada aos seguintes lotes:</h4>
+<h4 class="del">Nao é possível apagar o registo seleccionado pois esta encontra-se associada aos seguintes lotes:</h4>
 <div>
 
     @if (Model.Lote.Count() != 0)
@@ -18,5 +18,5 @@
         </ul>
     }
 
-    <a asp-action="Index">Back to List</a>
+    <a type="button" class="btn btn-info" asp-action="Index">Voltar à listagem</a>
 </div>

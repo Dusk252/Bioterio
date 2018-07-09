@@ -1,0 +1,51 @@
+﻿@model Bioterio.AgenteTrat
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Página Inicial</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Projetoes" asp-action="Index">Projetos</a></li>
+        <li class="breadcrumb-item"><a asp-controller="CircuitoTanques" asp-action="Index">Circuito de Tanques</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Tanques" asp-action="Index">Tanques</a></li>
+        <li class="breadcrumb-item"><a asp-controller="RegTratamentoes" asp-action="Index">Registo de Tratamentos</a></li>
+        <li class="breadcrumb-item"><a asp-action="Index">Agentes de Tratamento</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Criar</li>
+    </ol>
+</nav>
+
+<h2>Criar Novo</h2>
+<h4>Agente de Tratamento</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <a href="#" data-toggle="popover" title="Nome" data-content="Agente de Tratamento que irá utilizar no tratamento"><span class="glyphicon glyphicon-question-sign"></span></a>
+                <label asp-for="NomeAgenTra" class="control-label"></label>
+                <input asp-for="NomeAgenTra" class="form-control" />
+                <span asp-validation-for="NomeAgenTra" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Criar" class="btn btn-success" />
+                <a type="button" class="btn btn-info" asp-action="Index">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+<!--
+<div>
+    <a type="button" class="btn btn-info" asp-action="Index">Voltar à listagem</a>
+</div>-->
+<script>
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();
+    });
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

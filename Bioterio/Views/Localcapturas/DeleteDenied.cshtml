@@ -1,0 +1,23 @@
+﻿@model Bioterio.Models.Localcaptura
+
+@{
+    ViewData["Title"] = "Delete";
+}
+<h4 class="del">Nao é possível apagar o local de captura @Html.DisplayFor(model => model.Localidade) @HtmlEncoder.Encode("(") @Html.DisplayFor(model => model.Latitude) @Html.DisplayFor(model => model.Longitude) @HtmlEncoder.Encode(")") pois este encontra-se associado aos seguintes registros efectuados:</h4>
+<div>
+
+    @if (Model.RegNovosAnimais.Count > 0)
+    {
+        <ul>
+            @foreach (var item in Model.RegNovosAnimais)
+            {
+                <li>
+                    @Html.DisplayNameFor(model => item.NroExemplares): @Html.DisplayFor(model => item.NroExemplares) |
+                    @Html.DisplayFor(model => item.FornecedorIdFornColectNavigation.Tipo): @Html.DisplayFor(model => item.FornecedorIdFornColectNavigation.Nome)
+                </li>
+            }
+        </ul>
+    }
+
+    <a type="button" class="btn btn-info" asp-action="Index">Voltar à listagem</a>
+</div>

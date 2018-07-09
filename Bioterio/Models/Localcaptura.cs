@@ -19,9 +19,11 @@ namespace Bioterio.Models
         public string Localidade { get; set; }
 
         [DisplayName("Latitude")]
+        [RegularExpression(@"^\d*$", ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "InvalidField")]
         public float? Latitude { get; set; }
 
         [DisplayName("Longitude")]
+        [RegularExpression(@"^\d*$", ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "InvalidField")]
         public float? Longitude { get; set; }
 
         [DisplayName("Concelho")]

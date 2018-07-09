@@ -1,0 +1,64 @@
+﻿@model Bioterio.RegTratamento
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Página Inicial</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Projetoes" asp-action="Index">Projetos</a></li>
+        <li class="breadcrumb-item"><a asp-controller="CircuitoTanques" asp-action="Index">Circuito de Tanques</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Tanques" asp-action="Index">Tanques</a></li>
+        <li class="breadcrumb-item"><a asp-action="Index">Registo de Tratamentos</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Detalhes</li>
+    </ol>
+</nav>
+<div class="col-md-12">
+    <h2>Detalhes do Tratamento</h2>
+</div>
+<div class="col-md-4">
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.data)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Tempo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Tempo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Concentracao)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Concentracao)
+        </dd>
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.AgenteTratIdAgenTraNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AgenteTratIdAgenTraNavigation.NomeAgenTra)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FinalidadeIdFinalidadeNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FinalidadeIdFinalidadeNavigation.TFinalidade)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TanqueIdTanqueNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TanqueIdTanqueNavigation.codidenttanque)
+        </dd>
+    </dl>
+    <div class="form-group">
+        <a type="button" class="btn btn-success" asp-action="Edit" asp-route-id="@Model.IdRegTra">Editar</a>
+        <a type="button" class="btn btn-danger pull-right" asp-action="Delete" asp-route-id="@Model.IdRegTra">Eliminar</a>
+        <a type="button" class="btn btn-info" asp-action="Index">Cancelar</a>
+    </div>
+</div>

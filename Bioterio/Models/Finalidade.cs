@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
-namespace Bioterio.Models
+namespace Bioterio
 {
     public partial class Finalidade
     {
@@ -11,8 +13,12 @@ namespace Bioterio.Models
         }
 
         public int IdFinalidade { get; set; }
+        [Required(ErrorMessage = "É necessário preencher este campo para prosseguir.")]
+        [Display(Name = "Finalidade")]
         public string TFinalidade { get; set; }
 
         public ICollection<RegTratamento> RegTratamento { get; set; }
+        public Boolean isDeletable;
+        internal IQueryable<RegTratamento> regFinalidade;
     }
 }

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="InvalidField" xml:space="preserve">
-    <value>O valor inserido não é um valor válido para {0}.</value>
+    <value>O valor inserido nao é um valor válido para {0}.</value>
   </data>
   <data name="RequiredField" xml:space="preserve">
     <value>O campo {0} é obrigatório.</value>

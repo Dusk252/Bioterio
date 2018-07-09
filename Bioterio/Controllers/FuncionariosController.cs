@@ -189,7 +189,15 @@ namespace Bioterio.Controllers
             }
 
             var funcionario = await _context.Funcionario
+                .Include(l => l.Lote)
+                .Include(r => r.RegNovosAnimaisFuncionarioIdFuncionarioNavigation)
+                .Include(r2 => r2.RegNovosAnimaisFuncionarioIdFuncionario1Navigation)
                 .SingleOrDefaultAsync(m => m.IdFuncionario == id);
+
+            if (funcionario.RegNovosAnimaisFuncionarioIdFuncionario1Navigation.Count() > 0 || funcionario.RegNovosAnimaisFuncionarioIdFuncionarioNavigation.Count() > 0)
+            {
+                return View("DeleteDenied", funcionario);
+            }
 
             var user = await _context.ApplicationUsers
                 .SingleOrDefaultAsync(u => u.FuncionarioIdFuncionario == id);

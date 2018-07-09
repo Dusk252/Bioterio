@@ -115,9 +115,9 @@ namespace Bioterio.Migrations
                     b.Property<int>("FuncionarioIdFuncionario")
                         .HasColumnName("Funcionario_idFuncionario");
 
-                    b.Property<string>("Função")
+                    b.Property<string>("funcao")
                         .IsRequired()
-                        .HasColumnName("função")
+                        .HasColumnName("funcao")
                         .HasMaxLength(40);
 
                     b.Property<int>("ProjetoIdProjeto")
@@ -763,9 +763,9 @@ namespace Bioterio.Migrations
                     b.Property<float?>("SatO2transp")
                         .HasColumnName("satO2Transp");
 
-                    b.Property<sbyte?>("Sedação")
+                    b.Property<sbyte?>("sedacao")
                         .IsRequired()
-                        .HasColumnName("sedação")
+                        .HasColumnName("sedacao")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<int?>("TOrigemIdTOrigem")
@@ -842,8 +842,8 @@ namespace Bioterio.Migrations
                         .HasColumnName("Motivo_idMotivo")
                         .HasColumnType("int(11)");
 
-                    b.Property<int?>("NroRemoções")
-                        .HasColumnName("nroRemoções")
+                    b.Property<int?>("Nroremocoes")
+                        .HasColumnName("nroremocoes")
                         .HasColumnType("int(11)");
 
                     b.Property<int>("TanqueIdTanque")
@@ -984,7 +984,7 @@ namespace Bioterio.Migrations
                         .HasColumnName("idT_Origem")
                         .HasColumnType("int(11)");
 
-                    b.Property<string>("Descrição")
+                    b.Property<string>("descricao")
                         .HasMaxLength(45);
 
                     b.HasKey("IdTOrigem");

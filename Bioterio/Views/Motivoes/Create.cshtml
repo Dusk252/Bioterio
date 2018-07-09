@@ -1,0 +1,53 @@
+﻿@model Bioterio.Motivo
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Página Inicial</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Projetoes" asp-action="Index">Projetos</a></li>
+        <li class="breadcrumb-item"><a asp-controller="CircuitoTanques" asp-action="Index">Circuito de Tanques</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Tanques" asp-action="Index">Tanques</a></li>
+        <li class="breadcrumb-item"><a asp-controller="RegRemocoes" asp-action="Index">Registo de Remoções</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Motivoes" asp-action="Index">Motivos de Remocao</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Criar</li>
+    </ol>
+</nav>
+
+<h2>Criar</h2>
+<h4>Motivo</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <a href="#" data-toggle="popover" title="Tipo de Motivo" data-content="Tipo de Motivo de Remocao de Individuos"><span class="glyphicon glyphicon-question-sign"></span></a>
+                <label asp-for="TipoMotivo" class="control-label"></label>
+                <input asp-for="TipoMotivo" class="form-control" />
+                <span asp-validation-for="TipoMotivo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <a href="#" data-toggle="popover" title="Designacao do Motivo" data-content="Designacao do Motivo que leva à remocao de Individuos"><span class="glyphicon glyphicon-question-sign"></span></a>
+                <label asp-for="NomeMotivo" class="control-label"></label>
+                <input asp-for="NomeMotivo" class="form-control" />
+                <span asp-validation-for="NomeMotivo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Criar" class="btn btn-success" />
+                <a type="button" class="btn btn-info" asp-action="Index">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover();
+    });</script>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -16,7 +16,7 @@ namespace Bioterio.Models
 
         [DisplayName("Tipo de Origem")]
         [Required(ErrorMessageResourceType = typeof(SiteResources), ErrorMessageResourceName = "RequiredField")]
-        public string Descrição { get; set; }
+        public string descricao { get; set; }
 
         public ICollection<RegNovosAnimais> RegNovosAnimais { get; set; }
     }

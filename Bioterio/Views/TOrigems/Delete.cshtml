@@ -12,16 +12,16 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Descrição)
+            @Html.DisplayNameFor(model => model.descricao)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Descrição)
+            @Html.DisplayFor(model => model.descricao)
         </dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="IdTOrigem" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <a type="button" class="btn btn-info" asp-action="Index">Voltar à listagem</a>
     </form>
 </div>

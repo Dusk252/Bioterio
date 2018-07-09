@@ -11,9 +11,9 @@
         <ul>
             @foreach (var item in Model.Lote)
             {
-                <li>
-                    @Html.DisplayNameFor(model => item.RegNovosAnimaisIdRegAnimal): @Html.DisplayFor(model => item.RegNovosAnimaisIdRegAnimal)
-                </li>
+            <li>
+                @Html.DisplayNameFor(model => item.CodigoLote): @Html.DisplayFor(model => item.CodigoLote)
+            </li>
             }
         </ul>
     }
@@ -22,12 +22,12 @@
         <ul>
             @foreach (var item in Model.Lote)
             {
-                <li>
-                    @Html.DisplayNameFor(model => item.CodigoLote): @Html.DisplayFor(model => item.CodigoLote)
-                </li>
+            <li>
+                @Html.DisplayNameFor(model => item.CodigoLote): @Html.DisplayFor(model => item.CodigoLote)
+            </li>
             }
         </ul>
     }
 
-    <a asp-action="Index">Back to List</a>
+    <a type="button" class="btn btn-info" asp-action="Index">Voltar à listagem</a>
 </div>

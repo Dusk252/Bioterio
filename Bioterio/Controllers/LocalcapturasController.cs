@@ -50,8 +50,8 @@ namespace Bioterio.Controllers
         // GET: Localcapturas/Create
         public IActionResult Create()
         {
-            ViewData["ConcelhoId"] = new SelectList(_context.Concelho, "Id", "NomeConcelho");
-            ViewData["DistritoId"] = new SelectList(_context.Distrito, "Id", "Id");
+            ViewData["DistritoId"] = new SelectList(_context.Distrito, "IdDistrito", "NomeDistrito").Prepend(new SelectListItem() { Text = "---Selecione um Distrito---", Value = "" });
+            ViewData["ConcelhoId"] = new SelectList(_context.Concelho, "IdConcelho", "NomeConcelho").Prepend(new SelectListItem() { Text = "---Selecione um Concelho---", Value = "" });
             return View();
         }
 
@@ -62,14 +62,24 @@ namespace Bioterio.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdLocalCaptura,Localidade,Latitude,Longitude,ConcelhoId,DistritoId")] Localcaptura localcaptura)
         {
+
+            //validation
+            var val_concelho_distrito = await _context.Concelho
+                .SingleOrDefaultAsync(m => m.IdConcelho == localcaptura.ConcelhoId);
+            if (val_concelho_distrito.DistritoId != localcaptura.DistritoId)
+            {
+                ModelState.AddModelError("DistritoId", "O distrito selecionado não contém o concelho selecionado.");
+                ModelState.AddModelError("ConcelhoId", "O concelho selecionado não pertence ao distrito selecionado.");
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(localcaptura);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ConcelhoId"] = new SelectList(_context.Concelho, "Id", "NomeConcelho", localcaptura.ConcelhoId);
-            ViewData["DistritoId"] = new SelectList(_context.Distrito, "Id", "Id", localcaptura.DistritoId);
+            ViewData["DistritoId"] = new SelectList(_context.Distrito, "IdDistrito", "NomeDistrito").Prepend(new SelectListItem() { Text = "---Selecione um Distrito---", Value = "" });
+            ViewData["ConcelhoId"] = new SelectList(_context.Concelho, "IdConcelho", "NomeConcelho").Prepend(new SelectListItem() { Text = "---Selecione um Concelho---", Value = "" });
             return View(localcaptura);
         }
 
@@ -86,8 +96,8 @@ namespace Bioterio.Controllers
             {
                 return NotFound();
             }
-            ViewData["ConcelhoId"] = new SelectList(_context.Concelho, "Id", "NomeConcelho", localcaptura.ConcelhoId);
-            ViewData["DistritoId"] = new SelectList(_context.Distrito, "Id", "Id", localcaptura.DistritoId);
+            ViewData["DistritoId"] = new SelectList(_context.Distrito, "IdDistrito", "NomeDistrito").Prepend(new SelectListItem() { Text = "---Selecione um Distrito---", Value = "" });
+            ViewData["ConcelhoId"] = new SelectList(_context.Concelho, "IdConcelho", "NomeConcelho").Prepend(new SelectListItem() { Text = "---Selecione um Concelho---", Value = "" });
             return View(localcaptura);
         }
 
@@ -101,6 +111,15 @@ namespace Bioterio.Controllers
             if (id != localcaptura.IdLocalCaptura)
             {
                 return NotFound();
+            }
+
+            //validation
+            var val_concelho_distrito = await _context.Concelho
+                .SingleOrDefaultAsync(m => m.IdConcelho == localcaptura.ConcelhoId);
+            if (val_concelho_distrito.DistritoId != localcaptura.DistritoId)
+            {
+                ModelState.AddModelError("DistritoId", "O distrito selecionado não contém o concelho selecionado.");
+                ModelState.AddModelError("ConcelhoId", "O concelho selecionado não pertence ao distrito selecionado.");
             }
 
             if (ModelState.IsValid)
@@ -123,8 +142,8 @@ namespace Bioterio.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ConcelhoId"] = new SelectList(_context.Concelho, "Id", "NomeConcelho", localcaptura.ConcelhoId);
-            ViewData["DistritoId"] = new SelectList(_context.Distrito, "Id", "Id", localcaptura.DistritoId);
+            ViewData["DistritoId"] = new SelectList(_context.Distrito, "IdDistrito", "NomeDistrito").Prepend(new SelectListItem() { Text = "---Selecione um Distrito---", Value = "" });
+            ViewData["ConcelhoId"] = new SelectList(_context.Concelho, "IdConcelho", "NomeConcelho").Prepend(new SelectListItem() { Text = "---Selecione um Concelho---", Value = "" });
             return View(localcaptura);
         }
 
@@ -137,8 +156,6 @@ namespace Bioterio.Controllers
             }
 
             var localcaptura = await _context.Localcaptura
-                .Include(l => l.Concelho)
-                .Include(l => l.Distrito)
                 .SingleOrDefaultAsync(m => m.IdLocalCaptura == id);
             if (localcaptura == null)
             {

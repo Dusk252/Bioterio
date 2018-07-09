@@ -21,13 +21,13 @@
             @Html.DisplayNameFor(model => model.Distrito)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Distrito.Id)
+            @Html.DisplayFor(model => model.Distrito.IdDistrito)
         </dd>
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="IdConcelho" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <a type="button" class="btn btn-info" asp-action="Index">Voltar à listagem</a>
     </form>
 </div>

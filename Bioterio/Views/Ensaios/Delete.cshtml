@@ -1,0 +1,72 @@
+﻿@model Bioterio.Ensaio
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Página Inicial</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Projetoes" asp-action="Index">Projetos</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Ensaios" asp-action="Index">Ensaios</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Apagar</li>
+    </ol>
+</nav>
+<h2>Eliminar</h2>
+
+<h3 class="alert alert-danger">
+    <ul>
+        <li> Tem a certeza que pretende Eliminar este Ensaio?</li>
+        <li>Ao Eliminar este Ensaio estará a Eliminar todos as  evidências do ensaio ter ocorrido!</li>
+       
+    </ul>
+</h3>
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DataInicio)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.data)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DataFim)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.data2)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DescTratamento)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DescTratamento)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.GrauSeveridade)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GrauSeveridade)
+        </dd>
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.LoteIdLoteNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LoteIdLoteNavigation.CodigoLote)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ProjetoIdProjetoNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProjetoIdProjetoNavigation.Nome)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="IdEnsaio" />
+        <input type="submit" value="Apagar" class="btn btn-danger" /> 
+        <a type="button" class="btn btn-primary" asp-action="Index">Cancelar</a>
+    </form>
+</div>

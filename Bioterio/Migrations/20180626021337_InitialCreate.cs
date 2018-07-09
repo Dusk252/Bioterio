@@ -164,7 +164,7 @@ namespace Bioterio.Migrations
                 {
                     idT_Origem = table.Column<int>(type: "int(11)", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Descrição = table.Column<string>(maxLength: 45, nullable: true)
+                    descricao = table.Column<string>(maxLength: 45, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -319,7 +319,7 @@ namespace Bioterio.Migrations
                 {
                     idElementoEquipa = table.Column<int>(type: "int(11)", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    função = table.Column<string>(maxLength: 40, nullable: false),
+                    funcao = table.Column<string>(maxLength: 40, nullable: false),
                     Projeto_idProjeto = table.Column<int>(type: "int(11)", nullable: false),
                     Funcionario_idFuncionario = table.Column<int>(nullable: false)
                 },
@@ -538,7 +538,7 @@ namespace Bioterio.Migrations
                     Adicao_O2 = table.Column<sbyte>(type: "tinyint(1)", nullable: false),
                     Arejamento = table.Column<sbyte>(type: "tinyint(1)", nullable: false),
                     refrigeracao = table.Column<sbyte>(type: "tinyint(1)", nullable: false),
-                    sedação = table.Column<sbyte>(type: "tinyint(1)", nullable: false),
+                    sedacao = table.Column<sbyte>(type: "tinyint(1)", nullable: false),
                     respTransporte = table.Column<string>(maxLength: 45, nullable: false),
                     Especie_idEspecie = table.Column<int>(type: "int(11)", nullable: false),
                     Fornecedor_idFornColect = table.Column<int>(type: "int(11)", nullable: false),
@@ -796,7 +796,7 @@ namespace Bioterio.Migrations
                     idRegRemo = table.Column<int>(type: "int(11)", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     date = table.Column<DateTime>(type: "datetime", nullable: false),
-                    nroRemoções = table.Column<int>(type: "int(11)", nullable: true),
+                    nroremocoes = table.Column<int>(type: "int(11)", nullable: true),
                     Motivo_idMotivo = table.Column<int>(type: "int(11)", nullable: false),
                     causaMorte = table.Column<string>(type: "char(1)", nullable: true),
                     Tanque_idTanque = table.Column<int>(type: "int(11)", nullable: false)
