@@ -283,3 +283,10 @@ li > a:only-child:after {
 .navbar-brand, .navbar-brand:hover {
     background-color: transparent !important;
 }
+
+/*Permission Checkboxes*/
+
+.level2checkbox {
+    position:relative;
+    left: 20px;
+}

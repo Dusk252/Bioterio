@@ -17,7 +17,7 @@ namespace Bioterio.Migrations
                 .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Bioterio.Models.AgenteTrat", b =>
+            modelBuilder.Entity("Bioterio.AgenteTrat", b =>
                 {
                     b.Property<int>("IdAgenTra")
                         .ValueGeneratedOnAdd()
@@ -34,7 +34,7 @@ namespace Bioterio.Migrations
                     b.ToTable("agente_trat");
                 });
 
-            modelBuilder.Entity("Bioterio.Models.CircuitoTanque", b =>
+            modelBuilder.Entity("Bioterio.CircuitoTanque", b =>
                 {
                     b.Property<int>("IdCircuito")
                         .ValueGeneratedOnAdd()
@@ -42,6 +42,7 @@ namespace Bioterio.Migrations
                         .HasColumnType("int(11)");
 
                     b.Property<string>("CodigoCircuito")
+                        .IsRequired()
                         .HasColumnName("codigoCircuito")
                         .HasMaxLength(15);
 
@@ -57,6 +58,10 @@ namespace Bioterio.Migrations
                         .HasColumnName("Projeto_idProjeto")
                         .HasColumnType("int(11)");
 
+                    b.Property<int>("isarchived")
+                        .HasColumnName("isarchived")
+                        .HasColumnType("int(1)");
+
                     b.HasKey("IdCircuito");
 
                     b.HasIndex("ProjetoIdProjeto")
@@ -65,64 +70,34 @@ namespace Bioterio.Migrations
                     b.ToTable("circuito_tanque");
                 });
 
-            modelBuilder.Entity("Bioterio.Models.Concelho", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasColumnType("int(11)");
-
-                    b.Property<int>("DistritoId")
-                        .HasColumnName("Distrito_id")
-                        .HasColumnType("int(11)");
-
-                    b.Property<string>("NomeConcelho")
-                        .IsRequired()
-                        .HasColumnName("nomeConcelho")
-                        .HasMaxLength(45);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DistritoId")
-                        .HasName("fk_Concelho_Distrito1_idx");
-
-                    b.ToTable("concelho");
-                });
-
-            modelBuilder.Entity("Bioterio.Models.Distrito", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasColumnType("int(11)");
-
-                    b.Property<string>("NomeDistrito")
-                        .HasColumnName("nomeDistrito")
-                        .HasMaxLength(45);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("distrito");
-                });
-
-            modelBuilder.Entity("Bioterio.Models.Elementoequipa", b =>
+            modelBuilder.Entity("Bioterio.Elementoequipa", b =>
                 {
                     b.Property<int>("IdElementoEquipa")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("idElementoEquipa")
                         .HasColumnType("int(11)");
 
-                    b.Property<int>("FuncionarioIdFuncionario")
-                        .HasColumnName("Funcionario_idFuncionario");
-
-                    b.Property<string>("funcao")
+                    b.Property<string>("Funcao")
                         .IsRequired()
                         .HasColumnName("funcao")
                         .HasMaxLength(40);
 
+                    b.Property<int>("FuncionarioIdFuncionario")
+                        .HasColumnName("Funcionario_idFuncionario")
+                        .HasColumnType("int(11)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnName("Nome")
+                        .HasMaxLength(50);
+
                     b.Property<int>("ProjetoIdProjeto")
                         .HasColumnName("Projeto_idProjeto")
                         .HasColumnType("int(11)");
+
+                    b.Property<int>("isarchived")
+                        .HasColumnName("isarchived")
+                        .HasColumnType("int(1)");
 
                     b.HasKey("IdElementoEquipa");
 
@@ -135,7 +110,7 @@ namespace Bioterio.Migrations
                     b.ToTable("elementoequipa");
                 });
 
-            modelBuilder.Entity("Bioterio.Models.Ensaio", b =>
+            modelBuilder.Entity("Bioterio.Ensaio", b =>
                 {
                     b.Property<int>("IdEnsaio")
                         .ValueGeneratedOnAdd()
@@ -163,13 +138,18 @@ namespace Bioterio.Migrations
                         .HasColumnName("Lote_idLote")
                         .HasColumnType("int(11)");
 
-                    b.Property<int>("MembroEquipaIdEquipa")
-                        .HasColumnName("membroEquipa_idEquipa")
+                    b.Property<int?>("NroAnimaisAutoriz")
+                        .IsRequired()
+                        .HasColumnName("nroAnimaisAutoriz")
                         .HasColumnType("int(11)");
 
                     b.Property<int>("ProjetoIdProjeto")
                         .HasColumnName("Projeto_idProjeto")
                         .HasColumnType("int(11)");
+
+                    b.Property<int>("isarchived")
+                        .HasColumnName("isarchived")
+                        .HasColumnType("int(1)");
 
                     b.HasKey("IdEnsaio");
 
@@ -180,6 +160,64 @@ namespace Bioterio.Migrations
                         .HasName("fk_Ensaio_Projeto1");
 
                     b.ToTable("ensaio");
+                });
+
+            modelBuilder.Entity("Bioterio.Finalidade", b =>
+                {
+                    b.Property<int>("IdFinalidade")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("idFinalidade")
+                        .HasColumnType("int(11)");
+
+                    b.Property<string>("TFinalidade")
+                        .IsRequired()
+                        .HasColumnName("T_Finalidade")
+                        .HasMaxLength(45);
+
+                    b.HasKey("IdFinalidade");
+
+                    b.ToTable("finalidade");
+                });
+
+            modelBuilder.Entity("Bioterio.Models.Concelho", b =>
+                {
+                    b.Property<int>("IdConcelho")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
+                        .HasColumnType("int(11)");
+
+                    b.Property<int>("DistritoId")
+                        .HasColumnName("Distrito_id")
+                        .HasColumnType("int(11)");
+
+                    b.Property<string>("NomeConcelho")
+                        .IsRequired()
+                        .HasColumnName("nomeConcelho")
+                        .HasMaxLength(45);
+
+                    b.HasKey("IdConcelho");
+
+                    b.HasIndex("DistritoId")
+                        .HasName("fk_Concelho_Distrito1_idx");
+
+                    b.ToTable("concelho");
+                });
+
+            modelBuilder.Entity("Bioterio.Models.Distrito", b =>
+                {
+                    b.Property<int>("IdDistrito")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
+                        .HasColumnType("int(11)");
+
+                    b.Property<string>("NomeDistrito")
+                        .IsRequired()
+                        .HasColumnName("nomeDistrito")
+                        .HasMaxLength(45);
+
+                    b.HasKey("IdDistrito");
+
+                    b.ToTable("distrito");
                 });
 
             modelBuilder.Entity("Bioterio.Models.Especie", b =>
@@ -240,22 +278,6 @@ namespace Bioterio.Migrations
                         .HasName("fk_Familia_Grupo1_idx");
 
                     b.ToTable("familia");
-                });
-
-            modelBuilder.Entity("Bioterio.Models.Finalidade", b =>
-                {
-                    b.Property<int>("IdFinalidade")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("idFinalidade")
-                        .HasColumnType("int(11)");
-
-                    b.Property<string>("TFinalidade")
-                        .HasColumnName("T_Finalidade")
-                        .HasMaxLength(45);
-
-                    b.HasKey("IdFinalidade");
-
-                    b.ToTable("finalidade");
                 });
 
             modelBuilder.Entity("Bioterio.Models.Fornecedorcolector", b =>
@@ -349,6 +371,7 @@ namespace Bioterio.Migrations
                         .HasColumnType("float(10,6)");
 
                     b.Property<string>("Localidade")
+                        .IsRequired()
                         .HasMaxLength(45);
 
                     b.Property<float?>("Longitude")
@@ -389,6 +412,7 @@ namespace Bioterio.Migrations
                         .HasColumnName("Funcionario_idFuncionario");
 
                     b.Property<string>("Observacoes")
+                        .IsRequired()
                         .HasMaxLength(45);
 
                     b.Property<int>("RegNovosAnimaisIdRegAnimal")
@@ -432,225 +456,46 @@ namespace Bioterio.Migrations
                     b.ToTable("lote_sub_lote");
                 });
 
-            modelBuilder.Entity("Bioterio.Models.Motivo", b =>
+            modelBuilder.Entity("Bioterio.Models.Perfil", b =>
                 {
-                    b.Property<int>("IdMotivo")
+                    b.Property<int>("IdPerfil")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("idMotivo")
+                        .HasColumnName("IdPerfil")
                         .HasColumnType("int(11)");
 
-                    b.Property<string>("NomeMotivo")
+                    b.Property<int?>("IsDefault")
+                        .HasColumnName("IsDefault")
+                        .HasColumnType("int(1)");
+
+                    b.Property<string>("NomePerfil")
                         .IsRequired()
-                        .HasColumnName("nomeMotivo")
+                        .HasColumnName("nomePerfil")
                         .HasMaxLength(45);
 
-                    b.Property<string>("TipoMotivo")
-                        .IsRequired()
-                        .HasColumnName("tipoMotivo")
-                        .HasMaxLength(45);
+                    b.HasKey("IdPerfil");
 
-                    b.HasKey("IdMotivo");
-
-                    b.ToTable("motivo");
+                    b.ToTable("perfil");
                 });
 
-            modelBuilder.Entity("Bioterio.Models.PlanoAlimentar", b =>
+            modelBuilder.Entity("Bioterio.Models.ProfileRole", b =>
                 {
-                    b.Property<int>("IdPlanAlim")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("idPlanAlim")
+                    b.Property<int>("IdPerfil")
+                        .HasColumnName("IdPerfil")
                         .HasColumnType("int(11)");
 
-                    b.Property<string>("MarcaAlim")
-                        .HasMaxLength(45);
+                    b.Property<string>("RoleId")
+                        .HasColumnName("RoleId")
+                        .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(45);
+                    b.HasKey("IdPerfil", "RoleId");
 
-                    b.Property<float?>("Racao");
+                    b.HasIndex("IdPerfil")
+                        .HasName("fk_ProfileRole_Profile_idx");
 
-                    b.Property<float>("RacaoDia");
+                    b.HasIndex("RoleId")
+                        .HasName("fk_ProfileRole_Role_idx");
 
-                    b.Property<float>("Temperatura");
-
-                    b.Property<int>("Tipo")
-                        .HasColumnType("int(11)");
-
-                    b.HasKey("IdPlanAlim");
-
-                    b.ToTable("plano_alimentar");
-                });
-
-            modelBuilder.Entity("Bioterio.Models.Projeto", b =>
-                {
-                    b.Property<int>("IdProjeto")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("idProjeto")
-                        .HasColumnType("int(11)");
-
-                    b.Property<string>("AutorizacaoDgva")
-                        .HasColumnName("AutorizacaoDGVA")
-                        .HasMaxLength(45);
-
-                    b.Property<DateTime>("DataFim")
-                        .HasColumnName("dataFim")
-                        .HasColumnType("datetime");
-
-                    b.Property<DateTime>("DataInicio")
-                        .HasColumnName("dataInicio")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(45);
-
-                    b.Property<int?>("NroAnimaisAutoriz")
-                        .HasColumnName("nroAnimaisAutoriz")
-                        .HasColumnType("int(11)");
-
-                    b.Property<int?>("RefOrbea")
-                        .HasColumnName("RefORBEA")
-                        .HasColumnType("int(11)");
-
-                    b.Property<sbyte?>("SubmisInsEurop")
-                        .HasColumnType("tinyint(1)");
-
-                    b.HasKey("IdProjeto");
-
-                    b.ToTable("projeto");
-                });
-
-            modelBuilder.Entity("Bioterio.Models.RegAlimentar", b =>
-                {
-                    b.Property<int>("IdRegAlim")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("idRegAlim")
-                        .HasColumnType("int(11)");
-
-                    b.Property<DateTime>("Data")
-                        .HasColumnName("data")
-                        .HasColumnType("datetime");
-
-                    b.Property<float>("Peso");
-
-                    b.Property<int>("PlanoAlimentarIdPlanAlim")
-                        .HasColumnName("Plano_Alimentar_idPlanAlim")
-                        .HasColumnType("int(11)");
-
-                    b.Property<float?>("Sobras");
-
-                    b.Property<int>("TanqueIdTanque")
-                        .HasColumnName("Tanque_idTanque")
-                        .HasColumnType("int(11)");
-
-                    b.HasKey("IdRegAlim");
-
-                    b.HasIndex("PlanoAlimentarIdPlanAlim")
-                        .HasName("fk_Reg_Alimentar_Plano_Alimentar1");
-
-                    b.HasIndex("TanqueIdTanque")
-                        .HasName("fk_Reg_Alimentar_Tanque1");
-
-                    b.ToTable("reg_alimentar");
-                });
-
-            modelBuilder.Entity("Bioterio.Models.RegAmostragens", b =>
-                {
-                    b.Property<int>("IdRegAmo")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("idRegAmo")
-                        .HasColumnType("int(11)");
-
-                    b.Property<DateTime>("Data")
-                        .HasColumnName("data")
-                        .HasColumnType("datetime");
-
-                    b.Property<int>("NroIndividuos")
-                        .HasColumnName("nroIndividuos")
-                        .HasColumnType("int(11)");
-
-                    b.Property<float>("PesoMedio")
-                        .HasColumnName("pesoMedio");
-
-                    b.Property<float>("PesoTotal")
-                        .HasColumnName("pesoTotal");
-
-                    b.Property<int>("TanqueIdTanque")
-                        .HasColumnName("Tanque_idTanque")
-                        .HasColumnType("int(11)");
-
-                    b.HasKey("IdRegAmo");
-
-                    b.HasIndex("TanqueIdTanque")
-                        .HasName("fk_Reg_Amostragens_Tanque1");
-
-                    b.ToTable("reg_amostragens");
-                });
-
-            modelBuilder.Entity("Bioterio.Models.RegCondAmb", b =>
-                {
-                    b.Property<int>("IdRegCondAmb")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("idRegCondAmb")
-                        .HasColumnType("int(11)");
-
-                    b.Property<int>("CircuitoTanqueIdCircuito")
-                        .HasColumnName("Circuito_Tanque_idCircuito")
-                        .HasColumnType("int(11)");
-
-                    b.Property<DateTime>("Data")
-                        .HasColumnName("data")
-                        .HasColumnType("datetime");
-
-                    b.Property<float?>("NivelO2")
-                        .HasColumnName("nivelO2");
-
-                    b.Property<float?>("SalinidadeAgua")
-                        .HasColumnName("salinidadeAgua");
-
-                    b.Property<float?>("Temperatura")
-                        .HasColumnName("temperatura");
-
-                    b.Property<float?>("VolAgua")
-                        .HasColumnName("volAgua");
-
-                    b.HasKey("IdRegCondAmb");
-
-                    b.HasIndex("CircuitoTanqueIdCircuito")
-                        .HasName("fk_Reg_Cond_Amb_Circuito_Tanque1");
-
-                    b.ToTable("reg_cond_amb");
-                });
-
-            modelBuilder.Entity("Bioterio.Models.RegManutencao", b =>
-                {
-                    b.Property<int>("IdRegMan")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("idRegMan")
-                        .HasColumnType("int(11)");
-
-                    b.Property<DateTime>("Data")
-                        .HasColumnName("data")
-                        .HasColumnType("datetime");
-
-                    b.Property<int>("TanqueIdTanque")
-                        .HasColumnName("Tanque_idTanque")
-                        .HasColumnType("int(11)");
-
-                    b.Property<int>("TipoManuntecaoIdTManutencao")
-                        .HasColumnName("Tipo_Manuntecao_idT_Manutencao")
-                        .HasColumnType("int(11)");
-
-                    b.HasKey("IdRegMan");
-
-                    b.HasIndex("TanqueIdTanque")
-                        .HasName("fk_Reg_Manutencao_Tanque1");
-
-                    b.HasIndex("TipoManuntecaoIdTManutencao")
-                        .HasName("fk_Reg_Manutencao_Tipo_Manuntecao1");
-
-                    b.ToTable("reg_manutencao");
+                    b.ToTable("profilerole");
                 });
 
             modelBuilder.Entity("Bioterio.Models.RegNovosAnimais", b =>
@@ -763,11 +608,6 @@ namespace Bioterio.Migrations
                     b.Property<float?>("SatO2transp")
                         .HasColumnName("satO2Transp");
 
-                    b.Property<sbyte?>("sedacao")
-                        .IsRequired()
-                        .HasColumnName("sedacao")
-                        .HasColumnType("tinyint(1)");
-
                     b.Property<int?>("TOrigemIdTOrigem")
                         .IsRequired()
                         .HasColumnName("T_Origem_idT_Origem")
@@ -797,6 +637,11 @@ namespace Bioterio.Migrations
                     b.Property<float?>("VolContentor")
                         .HasColumnName("volContentor");
 
+                    b.Property<sbyte?>("sedacao")
+                        .IsRequired()
+                        .HasColumnName("sedacao")
+                        .HasColumnType("tinyint(1)");
+
                     b.HasKey("IdRegAnimal");
 
                     b.HasIndex("EspecieIdEspecie")
@@ -823,7 +668,290 @@ namespace Bioterio.Migrations
                     b.ToTable("reg_novos_animais");
                 });
 
-            modelBuilder.Entity("Bioterio.Models.RegRemocoes", b =>
+            modelBuilder.Entity("Bioterio.Models.Tipoestatutogenetico", b =>
+                {
+                    b.Property<int>("IdTipoEstatutoGenetico")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("idTipoEstatutoGenetico")
+                        .HasColumnType("int(11)");
+
+                    b.Property<string>("TipoEstatutoGeneticocol")
+                        .IsRequired()
+                        .HasMaxLength(45);
+
+                    b.HasKey("IdTipoEstatutoGenetico");
+
+                    b.ToTable("tipoestatutogenetico");
+                });
+
+            modelBuilder.Entity("Bioterio.Models.TOrigem", b =>
+                {
+                    b.Property<int>("IdTOrigem")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("idT_Origem")
+                        .HasColumnType("int(11)");
+
+                    b.Property<string>("descricao")
+                        .IsRequired()
+                        .HasMaxLength(45);
+
+                    b.HasKey("IdTOrigem");
+
+                    b.ToTable("t_origem");
+                });
+
+            modelBuilder.Entity("Bioterio.Motivo", b =>
+                {
+                    b.Property<int>("IdMotivo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("idMotivo")
+                        .HasColumnType("int(11)");
+
+                    b.Property<string>("NomeMotivo")
+                        .IsRequired()
+                        .HasColumnName("nomeMotivo")
+                        .HasMaxLength(45);
+
+                    b.Property<string>("TipoMotivo")
+                        .IsRequired()
+                        .HasColumnName("tipoMotivo")
+                        .HasMaxLength(45);
+
+                    b.HasKey("IdMotivo");
+
+                    b.ToTable("motivo");
+                });
+
+            modelBuilder.Entity("Bioterio.PlanoAlimentar", b =>
+                {
+                    b.Property<int>("IdPlanAlim")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("idPlanAlim")
+                        .HasColumnType("int(11)");
+
+                    b.Property<string>("MarcaAlim")
+                        .IsRequired()
+                        .HasMaxLength(45);
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(45);
+
+                    b.Property<float?>("Racao")
+                        .IsRequired();
+
+                    b.Property<float>("RacaoDia");
+
+                    b.Property<float>("Temperatura");
+
+                    b.Property<int>("Tipo")
+                        .HasColumnType("int(11)");
+
+                    b.HasKey("IdPlanAlim");
+
+                    b.ToTable("plano_alimentar");
+                });
+
+            modelBuilder.Entity("Bioterio.Projeto", b =>
+                {
+                    b.Property<int>("IdProjeto")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("idProjeto")
+                        .HasColumnType("int(11)");
+
+                    b.Property<string>("AutorizacaoDgva")
+                        .IsRequired()
+                        .HasColumnName("AutorizacaoDGVA")
+                        .HasMaxLength(45);
+
+                    b.Property<DateTime>("DataFim")
+                        .HasColumnName("dataFim")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("DataInicio")
+                        .HasColumnName("dataInicio")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(45);
+
+                    b.Property<int?>("NroAnimaisAutoriz")
+                        .IsRequired()
+                        .HasColumnName("nroAnimaisAutoriz")
+                        .HasColumnType("int(11)");
+
+                    b.Property<int?>("RefOrbea")
+                        .IsRequired()
+                        .HasColumnName("RefORBEA")
+                        .HasColumnType("int(11)");
+
+                    b.Property<sbyte>("SubmisInsEurop")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<int>("isarchived")
+                        .HasColumnName("isarchived")
+                        .HasColumnType("int(1)");
+
+                    b.HasKey("IdProjeto");
+
+                    b.ToTable("projeto");
+                });
+
+            modelBuilder.Entity("Bioterio.RegAlimentar", b =>
+                {
+                    b.Property<int>("IdRegAlim")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("idRegAlim")
+                        .HasColumnType("int(11)");
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnName("data")
+                        .HasColumnType("datetime");
+
+                    b.Property<float>("Peso");
+
+                    b.Property<int>("PlanoAlimentarIdPlanAlim")
+                        .HasColumnName("Plano_Alimentar_idPlanAlim")
+                        .HasColumnType("int(11)");
+
+                    b.Property<float?>("Sobras")
+                        .IsRequired();
+
+                    b.Property<int>("TanqueIdTanque")
+                        .HasColumnName("Tanque_idTanque")
+                        .HasColumnType("int(11)");
+
+                    b.Property<int>("isarchived")
+                        .HasColumnName("isarchived")
+                        .HasColumnType("int(1)");
+
+                    b.HasKey("IdRegAlim");
+
+                    b.HasIndex("PlanoAlimentarIdPlanAlim")
+                        .HasName("fk_Reg_Alimentar_Plano_Alimentar1");
+
+                    b.HasIndex("TanqueIdTanque")
+                        .HasName("fk_Reg_Alimentar_Tanque1");
+
+                    b.ToTable("reg_alimentar");
+                });
+
+            modelBuilder.Entity("Bioterio.RegAmostragens", b =>
+                {
+                    b.Property<int>("IdRegAmo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("idRegAmo")
+                        .HasColumnType("int(11)");
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnName("data")
+                        .HasColumnType("datetime");
+
+                    b.Property<int>("NroIndividuos")
+                        .HasColumnName("nroIndividuos")
+                        .HasColumnType("int(11)");
+
+                    b.Property<float>("PesoMedio")
+                        .HasColumnName("pesoMedio");
+
+                    b.Property<float>("PesoTotal")
+                        .HasColumnName("pesoTotal");
+
+                    b.Property<int>("TanqueIdTanque")
+                        .HasColumnName("Tanque_idTanque")
+                        .HasColumnType("int(11)");
+
+                    b.Property<int>("isarchived")
+                        .HasColumnName("isarchived")
+                        .HasColumnType("int(1)");
+
+                    b.HasKey("IdRegAmo");
+
+                    b.HasIndex("TanqueIdTanque")
+                        .HasName("fk_Reg_Amostragens_Tanque1");
+
+                    b.ToTable("reg_amostragens");
+                });
+
+            modelBuilder.Entity("Bioterio.RegCondAmb", b =>
+                {
+                    b.Property<int>("IdRegCondAmb")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("idRegCondAmb")
+                        .HasColumnType("int(11)");
+
+                    b.Property<int>("CircuitoTanqueIdCircuito")
+                        .HasColumnName("Circuito_Tanque_idCircuito")
+                        .HasColumnType("int(11)");
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnName("data")
+                        .HasColumnType("datetime");
+
+                    b.Property<float?>("NivelO2")
+                        .IsRequired()
+                        .HasColumnName("nivelO2");
+
+                    b.Property<float?>("SalinidadeAgua")
+                        .IsRequired()
+                        .HasColumnName("salinidadeAgua");
+
+                    b.Property<float?>("Temperatura")
+                        .IsRequired()
+                        .HasColumnName("temperatura");
+
+                    b.Property<float?>("VolAgua")
+                        .IsRequired()
+                        .HasColumnName("volAgua");
+
+                    b.Property<int>("isarchived")
+                        .HasColumnName("isarchived")
+                        .HasColumnType("int(1)");
+
+                    b.HasKey("IdRegCondAmb");
+
+                    b.HasIndex("CircuitoTanqueIdCircuito")
+                        .HasName("fk_Reg_Cond_Amb_Circuito_Tanque1");
+
+                    b.ToTable("reg_cond_amb");
+                });
+
+            modelBuilder.Entity("Bioterio.RegManutencao", b =>
+                {
+                    b.Property<int>("IdRegMan")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("idRegMan")
+                        .HasColumnType("int(11)");
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnName("data")
+                        .HasColumnType("datetime");
+
+                    b.Property<int>("TanqueIdTanque")
+                        .HasColumnName("Tanque_idTanque")
+                        .HasColumnType("int(11)");
+
+                    b.Property<int>("TipoManuntecaoIdTManutencao")
+                        .HasColumnName("Tipo_Manuntecao_idT_Manutencao")
+                        .HasColumnType("int(11)");
+
+                    b.Property<int>("isarchived")
+                        .HasColumnName("isarchived")
+                        .HasColumnType("int(1)");
+
+                    b.HasKey("IdRegMan");
+
+                    b.HasIndex("TanqueIdTanque")
+                        .HasName("fk_Reg_Manutencao_Tanque1");
+
+                    b.HasIndex("TipoManuntecaoIdTManutencao")
+                        .HasName("fk_Reg_Manutencao_Tipo_Manuntecao1");
+
+                    b.ToTable("reg_manutencao");
+                });
+
+            modelBuilder.Entity("Bioterio.RegRemocoes", b =>
                 {
                     b.Property<int>("IdRegRemo")
                         .ValueGeneratedOnAdd()
@@ -831,6 +959,7 @@ namespace Bioterio.Migrations
                         .HasColumnType("int(11)");
 
                     b.Property<string>("CausaMorte")
+                        .IsRequired()
                         .HasColumnName("causaMorte")
                         .HasColumnType("char(1)");
 
@@ -842,13 +971,18 @@ namespace Bioterio.Migrations
                         .HasColumnName("Motivo_idMotivo")
                         .HasColumnType("int(11)");
 
-                    b.Property<int?>("Nroremocoes")
+                    b.Property<int?>("NroRemocoes")
+                        .IsRequired()
                         .HasColumnName("nroremocoes")
                         .HasColumnType("int(11)");
 
                     b.Property<int>("TanqueIdTanque")
                         .HasColumnName("Tanque_idTanque")
                         .HasColumnType("int(11)");
+
+                    b.Property<int>("isarchived")
+                        .HasColumnName("isarchived")
+                        .HasColumnType("int(1)");
 
                     b.HasKey("IdRegRemo");
 
@@ -861,7 +995,7 @@ namespace Bioterio.Migrations
                     b.ToTable("reg_remocoes");
                 });
 
-            modelBuilder.Entity("Bioterio.Models.RegTratamento", b =>
+            modelBuilder.Entity("Bioterio.RegTratamento", b =>
                 {
                     b.Property<int>("IdRegTra")
                         .ValueGeneratedOnAdd()
@@ -893,6 +1027,10 @@ namespace Bioterio.Migrations
                     b.Property<int>("Tempo")
                         .HasColumnType("int(11)");
 
+                    b.Property<int>("isarchived")
+                        .HasColumnName("isarchived")
+                        .HasColumnType("int(1)");
+
                     b.HasKey("IdRegTra");
 
                     b.HasIndex("AgenteTratIdAgenTra")
@@ -907,7 +1045,7 @@ namespace Bioterio.Migrations
                     b.ToTable("reg_tratamento");
                 });
 
-            modelBuilder.Entity("Bioterio.Models.Tanque", b =>
+            modelBuilder.Entity("Bioterio.Tanque", b =>
                 {
                     b.Property<int>("IdTanque")
                         .ValueGeneratedOnAdd()
@@ -935,6 +1073,15 @@ namespace Bioterio.Migrations
                         .HasColumnName("sala")
                         .HasMaxLength(15);
 
+                    b.Property<string>("codidenttanque")
+                        .IsRequired()
+                        .HasColumnName("codidenttanque")
+                        .HasMaxLength(255);
+
+                    b.Property<int>("isarchived")
+                        .HasColumnName("isarchived")
+                        .HasColumnType("int(1)");
+
                     b.HasKey("IdTanque");
 
                     b.HasIndex("CircuitoTanqueIdCircuito")
@@ -946,22 +1093,7 @@ namespace Bioterio.Migrations
                     b.ToTable("tanque");
                 });
 
-            modelBuilder.Entity("Bioterio.Models.Tipoestatutogenetico", b =>
-                {
-                    b.Property<int>("IdTipoEstatutoGenetico")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("idTipoEstatutoGenetico")
-                        .HasColumnType("int(11)");
-
-                    b.Property<string>("TipoEstatutoGeneticocol")
-                        .HasMaxLength(45);
-
-                    b.HasKey("IdTipoEstatutoGenetico");
-
-                    b.ToTable("tipoestatutogenetico");
-                });
-
-            modelBuilder.Entity("Bioterio.Models.TipoManuntecao", b =>
+            modelBuilder.Entity("Bioterio.TipoManuntecao", b =>
                 {
                     b.Property<int>("IdTManutencao")
                         .ValueGeneratedOnAdd()
@@ -969,27 +1101,13 @@ namespace Bioterio.Migrations
                         .HasColumnType("int(11)");
 
                     b.Property<string>("TManutencao")
+                        .IsRequired()
                         .HasColumnName("T_Manutencao")
                         .HasMaxLength(45);
 
                     b.HasKey("IdTManutencao");
 
                     b.ToTable("tipo_manuntecao");
-                });
-
-            modelBuilder.Entity("Bioterio.Models.TOrigem", b =>
-                {
-                    b.Property<int>("IdTOrigem")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("idT_Origem")
-                        .HasColumnType("int(11)");
-
-                    b.Property<string>("descricao")
-                        .HasMaxLength(45);
-
-                    b.HasKey("IdTOrigem");
-
-                    b.ToTable("t_origem");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -1155,7 +1273,7 @@ namespace Bioterio.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Bioterio.Models.ApplicationUser", b =>
+            modelBuilder.Entity("Bioterio.Models.ApplicationUsers", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
@@ -1163,19 +1281,51 @@ namespace Bioterio.Migrations
                         .HasColumnName("IdFuncionario")
                         .HasColumnType("int(11)");
 
+                    b.Property<int>("IdPerfil")
+                        .HasColumnName("IdPerfil")
+                        .HasColumnType("int(11)");
+
                     b.HasIndex("FuncionarioIdFuncionario");
 
-                    b.ToTable("ApplicationUser");
+                    b.HasIndex("IdPerfil");
 
-                    b.HasDiscriminator().HasValue("ApplicationUser");
+                    b.ToTable("ApplicationUsers");
+
+                    b.HasDiscriminator().HasValue("ApplicationUsers");
                 });
 
-            modelBuilder.Entity("Bioterio.Models.CircuitoTanque", b =>
+            modelBuilder.Entity("Bioterio.CircuitoTanque", b =>
                 {
-                    b.HasOne("Bioterio.Models.Projeto", "ProjetoIdProjetoNavigation")
+                    b.HasOne("Bioterio.Projeto", "ProjetoIdProjetoNavigation")
                         .WithMany("CircuitoTanque")
                         .HasForeignKey("ProjetoIdProjeto")
                         .HasConstraintName("fk_Circuito_Tanque_Projeto1");
+                });
+
+            modelBuilder.Entity("Bioterio.Elementoequipa", b =>
+                {
+                    b.HasOne("Bioterio.Models.Funcionario", "FuncionarioIdFuncionarioNavigation")
+                        .WithMany("Elementoequipa")
+                        .HasForeignKey("FuncionarioIdFuncionario")
+                        .HasConstraintName("fk_equipaProjeto_Funcionario1");
+
+                    b.HasOne("Bioterio.Projeto", "ProjetoIdProjetoNavigation")
+                        .WithMany("Elementoequipa")
+                        .HasForeignKey("ProjetoIdProjeto")
+                        .HasConstraintName("fk_equipaProjeto_Projeto1");
+                });
+
+            modelBuilder.Entity("Bioterio.Ensaio", b =>
+                {
+                    b.HasOne("Bioterio.Models.Lote", "LoteIdLoteNavigation")
+                        .WithMany("Ensaio")
+                        .HasForeignKey("LoteIdLote")
+                        .HasConstraintName("fk_Ensaio_Lote1");
+
+                    b.HasOne("Bioterio.Projeto", "ProjetoIdProjetoNavigation")
+                        .WithMany("Ensaio")
+                        .HasForeignKey("ProjetoIdProjeto")
+                        .HasConstraintName("fk_Ensaio_Projeto1");
                 });
 
             modelBuilder.Entity("Bioterio.Models.Concelho", b =>
@@ -1184,32 +1334,6 @@ namespace Bioterio.Migrations
                         .WithMany("Concelho")
                         .HasForeignKey("DistritoId")
                         .HasConstraintName("fk_Concelho_Distrito1");
-                });
-
-            modelBuilder.Entity("Bioterio.Models.Elementoequipa", b =>
-                {
-                    b.HasOne("Bioterio.Models.Funcionario", "FuncionarioIdFuncionarioNavigation")
-                        .WithMany("Elementoequipa")
-                        .HasForeignKey("FuncionarioIdFuncionario")
-                        .HasConstraintName("fk_equipaProjeto_Funcionario1");
-
-                    b.HasOne("Bioterio.Models.Projeto", "ProjetoIdProjetoNavigation")
-                        .WithMany("Elementoequipa")
-                        .HasForeignKey("ProjetoIdProjeto")
-                        .HasConstraintName("fk_equipaProjeto_Projeto1");
-                });
-
-            modelBuilder.Entity("Bioterio.Models.Ensaio", b =>
-                {
-                    b.HasOne("Bioterio.Models.Lote", "LoteIdLoteNavigation")
-                        .WithMany("Ensaio")
-                        .HasForeignKey("LoteIdLote")
-                        .HasConstraintName("fk_Ensaio_Lote1");
-
-                    b.HasOne("Bioterio.Models.Projeto", "ProjetoIdProjetoNavigation")
-                        .WithMany("Ensaio")
-                        .HasForeignKey("ProjetoIdProjeto")
-                        .HasConstraintName("fk_Ensaio_Projeto1");
                 });
 
             modelBuilder.Entity("Bioterio.Models.Especie", b =>
@@ -1272,46 +1396,12 @@ namespace Bioterio.Migrations
                         .HasConstraintName("fk_Sub_Lote_Lote1");
                 });
 
-            modelBuilder.Entity("Bioterio.Models.RegAlimentar", b =>
+            modelBuilder.Entity("Bioterio.Models.ProfileRole", b =>
                 {
-                    b.HasOne("Bioterio.Models.PlanoAlimentar", "PlanoAlimentarIdPlanAlimNavigation")
-                        .WithMany("RegAlimentar")
-                        .HasForeignKey("PlanoAlimentarIdPlanAlim")
-                        .HasConstraintName("fk_Reg_Alimentar_Plano_Alimentar1");
-
-                    b.HasOne("Bioterio.Models.Tanque", "TanqueIdTanqueNavigation")
-                        .WithMany("RegAlimentar")
-                        .HasForeignKey("TanqueIdTanque")
-                        .HasConstraintName("fk_Reg_Alimentar_Tanque1");
-                });
-
-            modelBuilder.Entity("Bioterio.Models.RegAmostragens", b =>
-                {
-                    b.HasOne("Bioterio.Models.Tanque", "TanqueIdTanqueNavigation")
-                        .WithMany("RegAmostragens")
-                        .HasForeignKey("TanqueIdTanque")
-                        .HasConstraintName("fk_Reg_Amostragens_Tanque1");
-                });
-
-            modelBuilder.Entity("Bioterio.Models.RegCondAmb", b =>
-                {
-                    b.HasOne("Bioterio.Models.CircuitoTanque", "CircuitoTanqueIdCircuitoNavigation")
-                        .WithMany("RegCondAmb")
-                        .HasForeignKey("CircuitoTanqueIdCircuito")
-                        .HasConstraintName("fk_Reg_Cond_Amb_Circuito_Tanque1");
-                });
-
-            modelBuilder.Entity("Bioterio.Models.RegManutencao", b =>
-                {
-                    b.HasOne("Bioterio.Models.Tanque", "TanqueIdTanqueNavigation")
-                        .WithMany("RegManutencao")
-                        .HasForeignKey("TanqueIdTanque")
-                        .HasConstraintName("fk_Reg_Manutencao_Tanque1");
-
-                    b.HasOne("Bioterio.Models.TipoManuntecao", "TipoManuntecaoIdTManutencaoNavigation")
-                        .WithMany("RegManutencao")
-                        .HasForeignKey("TipoManuntecaoIdTManutencao")
-                        .HasConstraintName("fk_Reg_Manutencao_Tipo_Manuntecao1");
+                    b.HasOne("Bioterio.Models.Perfil", "Profile")
+                        .WithMany("Roles")
+                        .HasForeignKey("IdPerfil")
+                        .HasConstraintName("fk_IdPerfil");
                 });
 
             modelBuilder.Entity("Bioterio.Models.RegNovosAnimais", b =>
@@ -1352,40 +1442,82 @@ namespace Bioterio.Migrations
                         .HasConstraintName("fk_Reg_Novos_Animais_TipoEstatutoGenetico1");
                 });
 
-            modelBuilder.Entity("Bioterio.Models.RegRemocoes", b =>
+            modelBuilder.Entity("Bioterio.RegAlimentar", b =>
                 {
-                    b.HasOne("Bioterio.Models.Motivo", "MotivoIdMotivoNavigation")
+                    b.HasOne("Bioterio.PlanoAlimentar", "PlanoAlimentarIdPlanAlimNavigation")
+                        .WithMany("RegAlimentar")
+                        .HasForeignKey("PlanoAlimentarIdPlanAlim")
+                        .HasConstraintName("fk_Reg_Alimentar_Plano_Alimentar1");
+
+                    b.HasOne("Bioterio.Tanque", "TanqueIdTanqueNavigation")
+                        .WithMany("RegAlimentar")
+                        .HasForeignKey("TanqueIdTanque")
+                        .HasConstraintName("fk_Reg_Alimentar_Tanque1");
+                });
+
+            modelBuilder.Entity("Bioterio.RegAmostragens", b =>
+                {
+                    b.HasOne("Bioterio.Tanque", "TanqueIdTanqueNavigation")
+                        .WithMany("RegAmostragens")
+                        .HasForeignKey("TanqueIdTanque")
+                        .HasConstraintName("fk_Reg_Amostragens_Tanque1");
+                });
+
+            modelBuilder.Entity("Bioterio.RegCondAmb", b =>
+                {
+                    b.HasOne("Bioterio.CircuitoTanque", "CircuitoTanqueIdCircuitoNavigation")
+                        .WithMany("RegCondAmb")
+                        .HasForeignKey("CircuitoTanqueIdCircuito")
+                        .HasConstraintName("fk_Reg_Cond_Amb_Circuito_Tanque1");
+                });
+
+            modelBuilder.Entity("Bioterio.RegManutencao", b =>
+                {
+                    b.HasOne("Bioterio.Tanque", "TanqueIdTanqueNavigation")
+                        .WithMany("RegManutencao")
+                        .HasForeignKey("TanqueIdTanque")
+                        .HasConstraintName("fk_Reg_Manutencao_Tanque1");
+
+                    b.HasOne("Bioterio.TipoManuntecao", "TipoManuntecaoIdTManutencaoNavigation")
+                        .WithMany("RegManutencao")
+                        .HasForeignKey("TipoManuntecaoIdTManutencao")
+                        .HasConstraintName("fk_Reg_Manutencao_Tipo_Manuntecao1");
+                });
+
+            modelBuilder.Entity("Bioterio.RegRemocoes", b =>
+                {
+                    b.HasOne("Bioterio.Motivo", "MotivoIdMotivoNavigation")
                         .WithMany("RegRemocoes")
                         .HasForeignKey("MotivoIdMotivo")
                         .HasConstraintName("fk_Reg_Remocoes_Motivo1");
 
-                    b.HasOne("Bioterio.Models.Tanque", "TanqueIdTanqueNavigation")
+                    b.HasOne("Bioterio.Tanque", "TanqueIdTanqueNavigation")
                         .WithMany("RegRemocoes")
                         .HasForeignKey("TanqueIdTanque")
                         .HasConstraintName("fk_Reg_Remocoes_Tanque1");
                 });
 
-            modelBuilder.Entity("Bioterio.Models.RegTratamento", b =>
+            modelBuilder.Entity("Bioterio.RegTratamento", b =>
                 {
-                    b.HasOne("Bioterio.Models.AgenteTrat", "AgenteTratIdAgenTraNavigation")
+                    b.HasOne("Bioterio.AgenteTrat", "AgenteTratIdAgenTraNavigation")
                         .WithMany("RegTratamento")
                         .HasForeignKey("AgenteTratIdAgenTra")
                         .HasConstraintName("fk_Reg_Tratamento_agente_Trat1");
 
-                    b.HasOne("Bioterio.Models.Finalidade", "FinalidadeIdFinalidadeNavigation")
+                    b.HasOne("Bioterio.Finalidade", "FinalidadeIdFinalidadeNavigation")
                         .WithMany("RegTratamento")
                         .HasForeignKey("FinalidadeIdFinalidade")
                         .HasConstraintName("fk_Reg_Tratamento_Finalidade1");
 
-                    b.HasOne("Bioterio.Models.Tanque", "TanqueIdTanqueNavigation")
+                    b.HasOne("Bioterio.Tanque", "TanqueIdTanqueNavigation")
                         .WithMany("RegTratamento")
                         .HasForeignKey("TanqueIdTanque")
                         .HasConstraintName("fk_Reg_Tratamento_Tanque1");
                 });
 
-            modelBuilder.Entity("Bioterio.Models.Tanque", b =>
+            modelBuilder.Entity("Bioterio.Tanque", b =>
                 {
-                    b.HasOne("Bioterio.Models.CircuitoTanque", "CircuitoTanqueIdCircuitoNavigation")
+                    b.HasOne("Bioterio.CircuitoTanque", "CircuitoTanqueIdCircuitoNavigation")
                         .WithMany("Tanque")
                         .HasForeignKey("CircuitoTanqueIdCircuito")
                         .HasConstraintName("fk_Tanque_Circuito_Tanque1");
@@ -1441,12 +1573,17 @@ namespace Bioterio.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Bioterio.Models.ApplicationUser", b =>
+            modelBuilder.Entity("Bioterio.Models.ApplicationUsers", b =>
                 {
                     b.HasOne("Bioterio.Models.Funcionario", "FuncionarioNavigation")
                         .WithMany("User")
                         .HasForeignKey("FuncionarioIdFuncionario")
                         .HasConstraintName("fk_FuncionarioIdFuncionario");
+
+                    b.HasOne("Bioterio.Models.Perfil", "PerfilNavigation")
+                        .WithMany("User")
+                        .HasForeignKey("IdPerfil")
+                        .HasConstraintName("fk_PerfilId");
                 });
 #pragma warning restore 612, 618
         }

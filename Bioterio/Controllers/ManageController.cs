@@ -18,8 +18,8 @@ using Bioterio.Services;
 [Route("[controller]/[action]")]
 public class ManageController : Controller
 {
-    private readonly UserManager<ApplicationUser> _userManager;
-    private readonly SignInManager<ApplicationUser> _signInManager;
+    private readonly UserManager<ApplicationUsers> _userManager;
+    private readonly SignInManager<ApplicationUsers> _signInManager;
     private readonly IEmailSender _emailSender;
     private readonly ILogger _logger;
     private readonly UrlEncoder _urlEncoder;
@@ -28,8 +28,8 @@ public class ManageController : Controller
     private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
 
     public ManageController(
-      UserManager<ApplicationUser> userManager,
-      SignInManager<ApplicationUser> signInManager,
+      UserManager<ApplicationUsers> userManager,
+      SignInManager<ApplicationUsers> signInManager,
       IEmailSender emailSender,
       ILogger<ManageController> logger,
       UrlEncoder urlEncoder)
@@ -236,7 +236,7 @@ public class ManageController : Controller
             unformattedKey);
     }
 
-    private async Task LoadSharedKeyAndQrCodeUriAsync(ApplicationUser user, EnableAuthenticatorViewModel model)
+    private async Task LoadSharedKeyAndQrCodeUriAsync(ApplicationUsers user, EnableAuthenticatorViewModel model)
     {
         var unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
         if (string.IsNullOrEmpty(unformattedKey))

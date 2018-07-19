@@ -16,10 +16,10 @@ namespace Bioterio.Controllers
     public class FuncionariosController : Controller
     {
         private readonly bd_lesContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUsers> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public FuncionariosController(bd_lesContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public FuncionariosController(bd_lesContext context, UserManager<ApplicationUsers> userManager, RoleManager<IdentityRole> roleManager)
         {
             _context = context;
             _userManager = userManager;
@@ -29,12 +29,15 @@ namespace Bioterio.Controllers
         // GET: Funcionarios
         public async Task<IActionResult> Index()
         {
-            var func_list = await _context.Funcionario.ToListAsync();
+            var func_list = await _context.Funcionario
+                .ToListAsync();
             List<UserViewModel> userViewModels = new List<UserViewModel>();
             foreach (Funcionario f in func_list) {
                 var user = await _context.ApplicationUsers
+                    .Include(u => u.PerfilNavigation)
                     .SingleOrDefaultAsync(u => u.FuncionarioIdFuncionario == f.IdFuncionario);
-                userViewModels.Add(new UserViewModel { UserName = user.UserName, NomeCompleto = f.NomeCompleto, PhoneNumber = user.PhoneNumber, IdFuncionario = f.IdFuncionario, Permissions = _userManager.GetRolesAsync(user).Result.FirstOrDefault() ?? "User"  });
+                UserViewModel uvm = new UserViewModel { UserName = user.UserName, NomeCompleto = f.NomeCompleto, PhoneNumber = user.PhoneNumber, IdFuncionario = f.IdFuncionario, IdPerfil = user.PerfilNavigation.IdPerfil, NomePerfil = user.PerfilNavigation.NomePerfil };
+                userViewModels.Add(uvm);
             }
 
             return View(userViewModels);
@@ -52,6 +55,7 @@ namespace Bioterio.Controllers
                 .SingleOrDefaultAsync(m => m.IdFuncionario == id);
 
             var user = await _context.ApplicationUsers
+                .Include(u => u.PerfilNavigation)
                 .SingleOrDefaultAsync(u => u.FuncionarioIdFuncionario == id);
 
             if (funcionario == null || user == null)
@@ -59,12 +63,13 @@ namespace Bioterio.Controllers
                 return NotFound();
             }
 
-            return View(new UserViewModel { UserName = user.UserName, NomeCompleto = funcionario.NomeCompleto, PhoneNumber = user.PhoneNumber, IdFuncionario = funcionario.IdFuncionario, Permissions = _userManager.GetRolesAsync(user).Result.FirstOrDefault() ?? "User" } );
+            return View(new UserViewModel { UserName = user.UserName, NomeCompleto = funcionario.NomeCompleto, PhoneNumber = user.PhoneNumber, IdFuncionario = funcionario.IdFuncionario, IdPerfil = user.PerfilNavigation.IdPerfil, NomePerfil = user.PerfilNavigation.NomePerfil } );
         }
 
         // GET: Funcionarios/Create
         public IActionResult Create()
         {
+            ViewData["IdPerfil"] = new SelectList(_context.Perfil, "IdPerfil", "NomePerfil").Prepend(new SelectListItem() { Text = "---Selecione um Perfil---", Value = "" });
             return View();
         }
 
@@ -88,12 +93,19 @@ namespace Bioterio.Controllers
                     _context.Add(func);
                     await _context.SaveChangesAsync();
                 }
-                var user = new ApplicationUser { UserName = registerViewModel.UserName, PhoneNumber = registerViewModel.PhoneNumber, FuncionarioIdFuncionario = func.IdFuncionario };
+                var user = new ApplicationUsers { UserName = registerViewModel.UserName, PhoneNumber = registerViewModel.PhoneNumber, FuncionarioIdFuncionario = func.IdFuncionario, IdPerfil = registerViewModel.IdPerfil };
                 var result = await _userManager.CreateAsync(user, registerViewModel.Password);
                 if (result.Succeeded)
                 {
-                    if (await _roleManager.RoleExistsAsync(registerViewModel.Permissions))
-                        await _userManager.AddToRoleAsync(user, registerViewModel.Permissions);
+                    List<ProfileRole> roles = await _context.ProfileRole
+                        .Where(p => p.IdPerfil == user.IdPerfil)
+                        .ToListAsync();
+                    foreach(ProfileRole role in roles)
+                    {
+                        string role_name = _roleManager.FindByIdAsync(role.RoleId).Result.Name;
+                        if (await _roleManager.RoleExistsAsync(role_name))
+                            await _userManager.AddToRoleAsync(user, role_name);
+                    }
                     return RedirectToAction(nameof(Index));
                 }
                 else
@@ -102,6 +114,7 @@ namespace Bioterio.Controllers
                     await _context.SaveChangesAsync();
                 }
             }
+            ViewData["IdPerfil"] = new SelectList(_context.Perfil, "IdPerfil", "NomePerfil").Prepend(new SelectListItem() { Text = "---Selecione um Perfil---", Value = "" });
             return View(registerViewModel);
         }
 
@@ -117,14 +130,15 @@ namespace Bioterio.Controllers
                 .SingleOrDefaultAsync(m => m.IdFuncionario == id);
 
             var user = await _context.ApplicationUsers
+                .Include(u => u.PerfilNavigation)
                 .SingleOrDefaultAsync(u => u.FuncionarioIdFuncionario == id);
 
             if (funcionario == null || user == null)
             {
                 return NotFound();
             }
-
-            return View(new UserViewModel { UserName = user.UserName, NomeCompleto = funcionario.NomeCompleto, PhoneNumber = user.PhoneNumber, IdFuncionario = funcionario.IdFuncionario, Permissions = _userManager.GetRolesAsync(user).Result.FirstOrDefault() ?? "User" });
+            ViewData["IdPerfil"] = new SelectList(_context.Perfil, "IdPerfil", "NomePerfil", user.IdPerfil).Prepend(new SelectListItem() { Text = "---Selecione um Perfil---", Value = "" });
+            return View(new UserViewModel { UserName = user.UserName, NomeCompleto = funcionario.NomeCompleto, PhoneNumber = user.PhoneNumber, IdFuncionario = funcionario.IdFuncionario, IdPerfil = user.PerfilNavigation.IdPerfil, NomePerfil = user.PerfilNavigation.NomePerfil });
         }
 
         // POST: Funcionarios/Edit/5
@@ -152,6 +166,7 @@ namespace Bioterio.Controllers
             {
                 user.UserName = userViewModel.UserName;
                 user.PhoneNumber = userViewModel.PhoneNumber;
+                user.IdPerfil = userViewModel.IdPerfil;
                 func.NomeCompleto = userViewModel.NomeCompleto;
 
                 try
@@ -161,8 +176,15 @@ namespace Bioterio.Controllers
                     await _context.SaveChangesAsync();
                     var roles = await _userManager.GetRolesAsync(user);
                     await _userManager.RemoveFromRolesAsync(user, roles.ToArray());
-                    if (await _roleManager.RoleExistsAsync(userViewModel.Permissions))
-                        await _userManager.AddToRoleAsync(user, userViewModel.Permissions);
+                    List<ProfileRole> profileroles = await _context.ProfileRole
+                        .Where(p => p.IdPerfil == userViewModel.IdPerfil)
+                        .ToListAsync();
+                    foreach (ProfileRole role in profileroles)
+                    {
+                        string role_name = _roleManager.FindByIdAsync(role.RoleId).Result.Name;
+                        if (await _roleManager.RoleExistsAsync(role_name))
+                            await _userManager.AddToRoleAsync(user, role_name);
+                    }
                     return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
@@ -200,14 +222,15 @@ namespace Bioterio.Controllers
             }
 
             var user = await _context.ApplicationUsers
+                .Include(u => u.PerfilNavigation)
                 .SingleOrDefaultAsync(u => u.FuncionarioIdFuncionario == id);
 
             if (funcionario == null || user == null)
             {
                 return NotFound();
             }
-
-            return View(new UserViewModel { UserName = user.UserName, NomeCompleto = funcionario.NomeCompleto, PhoneNumber = user.PhoneNumber, IdFuncionario = funcionario.IdFuncionario, Permissions = _userManager.GetRolesAsync(user).Result.FirstOrDefault() ?? "User" });
+            ViewData["IdPerfil"] = new SelectList(_context.Perfil, "IdPerfil", "NomePerfil", user.IdPerfil).Prepend(new SelectListItem() { Text = "---Selecione um Perfil---", Value = "" });
+            return View(new UserViewModel { UserName = user.UserName, NomeCompleto = funcionario.NomeCompleto, PhoneNumber = user.PhoneNumber, IdFuncionario = funcionario.IdFuncionario, IdPerfil = user.PerfilNavigation.IdPerfil, NomePerfil = user.PerfilNavigation.NomePerfil });
         }
 
         // POST: Funcionarios/Delete/5
@@ -216,9 +239,11 @@ namespace Bioterio.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var funcionario = await _context.Funcionario.SingleOrDefaultAsync(m => m.IdFuncionario == id);
-            _context.Funcionario.Remove(funcionario);
             var user = await _context.ApplicationUsers
                 .SingleOrDefaultAsync(u => u.FuncionarioIdFuncionario == id);
+            var roles = await _userManager.GetRolesAsync(user);
+            await _userManager.RemoveFromRolesAsync(user, roles.ToArray());
+            _context.Funcionario.Remove(funcionario);
             await _userManager.DeleteAsync(user);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

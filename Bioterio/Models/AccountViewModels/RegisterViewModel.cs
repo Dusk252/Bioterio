@@ -36,6 +36,6 @@ namespace Bioterio.Models.AccountViewModels
         public string ConfirmPassword { get; set; }
 
         [Display(Name = "Perfil")]
-        public string Permissions { get; set; }
+        public int IdPerfil { get; set; }
     }
 }

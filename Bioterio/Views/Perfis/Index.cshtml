@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Bioterio.Models.Perfil>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a type="button" class="btn btn-info" asp-action="Create">Criar Novo Perfil</a>
+</p>
+<div class="col-md-10">
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NomePerfil)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NomePerfil)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.IdPerfil">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.IdPerfil">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.IdPerfil">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+    </div>
+<div class="col-md-2">
+    <ul class="list-group">
+        <li class="list-group-item active"><b>Funcionários:</b></li>
+        <li class="list-group-item"><a asp-area="" asp-controller="Equipas" asp-action="Index">Equipas</a></li>
+        <li class="list-group-item"><a asp-area="" asp-controller="Funcionarios" asp-action="Index">Funcionários</a></li>
+    </ul>
+</div>

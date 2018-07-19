@@ -6,8 +6,8 @@
     <p>The @TempData["empty"] @name is now empty.</p>
     <p class="del">Do you want to delete @name?</p>
     <form asp-action="Delete" asp-controller="@TempData["controller"]" asp-route-id="@TempData["id"]">
-        <input type="submit" value="Delete" class="del btn btn-default" /> |
-        <a asp-action="Index" class="btn btn-default">Cancel</a>
+        <input type="submit" value="Apagar" class="del btn btn-default" /> |
+        <a asp-action="Index" class="btn btn-default">Cancelar</a>
     </form>
 }
 <hr />

@@ -4801,7 +4801,7 @@ jQuery.event = {
 	},
 
 	// Includes some event props shared by KeyEvent and MouseEvent
-	props: ( "altKey bubbles cancelable ctrlKey currentTarget detail eventPhase " +
+	props: ( "altKey bubbles Cancelarable ctrlKey currentTarget detail eventPhase " +
 		"metaKey relatedTarget shiftKey target timeStamp view which" ).split( " " ),
 
 	fixHooks: {},
@@ -8408,7 +8408,7 @@ jQuery.extend( {
 			state = 0,
 
 			// Default abort message
-			strAbort = "canceled",
+			strAbort = "Cancelared",
 
 			// Fake xhr
 			jqXHR = {
@@ -8471,7 +8471,7 @@ jQuery.extend( {
 					return this;
 				},
 
-				// Cancel the request
+				// Cancelar the request
 				abort: function( statusText ) {
 					var finalText = statusText || strAbort;
 					if ( transport ) {
@@ -8614,7 +8614,7 @@ jQuery.extend( {
 			return jqXHR.abort();
 		}
 
-		// Aborting is no longer a cancellation
+		// Aborting is no longer a Cancelarlation
 		strAbort = "abort";
 
 		// Install callbacks on deferreds

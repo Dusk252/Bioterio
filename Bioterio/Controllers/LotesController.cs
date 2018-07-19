@@ -198,7 +198,7 @@ namespace Bioterio.Controllers
             else return Json(string.Format("Já existe um lote com o código {0}.", CodigoLote));
         }
 
-        public async Task<ActionResult> ValidateDates(DateTime DataInicio, DateTime DataFim)
+        public ActionResult ValidateDates(DateTime DataInicio, DateTime DataFim)
         {
             if (DataInicio <= DataFim) return Json(true);
             else return Json("A Data de Fim é menor que a Data de Inicio.");

@@ -20,15 +20,15 @@ namespace Bioterio.Controllers
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUsers> _userManager;
+        private readonly SignInManager<ApplicationUsers> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly bd_lesContext _context;
 
         public AccountController(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
+            UserManager<ApplicationUsers> userManager,
+            SignInManager<ApplicationUsers> signInManager,
             IEmailSender emailSender,
             ILogger<AccountController> logger,
             bd_lesContext context)
@@ -119,7 +119,7 @@ namespace Bioterio.Controllers
                     _context.Add(func);
                     await _context.SaveChangesAsync();
                 }
-                var user = new ApplicationUser { UserName = model.UserName, PhoneNumber = model.PhoneNumber, FuncionarioIdFuncionario = func.IdFuncionario};
+                var user = new ApplicationUsers { UserName = model.UserName, PhoneNumber = model.PhoneNumber, FuncionarioIdFuncionario = func.IdFuncionario};
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

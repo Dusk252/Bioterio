@@ -1,12 +1,15 @@
-﻿using Bioterio.Models;
+﻿using Bioterio.Authorization;
+using Bioterio.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
-using static Bioterio.Authorization.ApplicationUserManager;
+using static Bioterio.Authorization.ApplicationUsersManager;
 
 namespace Bioterio.Data
 {
@@ -18,35 +21,46 @@ namespace Bioterio.Data
             using (var context = new bd_lesContext(
                 serviceProvider.GetRequiredService<DbContextOptions<bd_lesContext>>()))
             {
-                // For sample purposes we are seeding 2 users both with the same password.
                 // The password is set with the following command:
                 // dotnet user-secrets set SeedUserPW <pw>
                 // The admin user can do anything
+                var profileID = await EnsureProfile("admin", 0, context);
+                await EnsureProfile("default", 1, context);
+                var adminID = await EnsureUser(serviceProvider, testUserPw, "admin", profileID, context);
+                await EnsureRole(serviceProvider, adminID, Constants.AdministratorsRole, profileID, context);
 
-                var adminID = await EnsureUser(serviceProvider, testUserPw, "admin", context);
-                await EnsureRole(serviceProvider, adminID, Constants.AdministratorsRole);
+                //var uid = await EnsureUser(serviceProvider, testUserPw, "manager", context);
+                //await EnsureRole(serviceProvider, uid, Constants.ManagersRole);
 
-                // allowed user can create and edit contacts that they create
-                var uid = await EnsureUser(serviceProvider, testUserPw, "manager", context);
-                await EnsureRole(serviceProvider, uid, Constants.ManagersRole);
-
-                await SeedDBAsync(serviceProvider, context, uid);
+                await SeedDBAsync(serviceProvider, context, adminID);
             }
         }
 
-        private static async Task<string> EnsureUser(IServiceProvider serviceProvider,
-                                                    string testUserPw, string UserName, bd_lesContext _context)
+        private static async Task<int> EnsureProfile(string ProfileName, int Default, bd_lesContext _context)
         {
-            var userManager = serviceProvider.GetService<UserManager<ApplicationUser>>();
+            var profile = await _context.Perfil.SingleOrDefaultAsync(p => p.NomePerfil == ProfileName);
+            if (profile == null && ProfileName != null)
+            {
+                profile = new Perfil { NomePerfil = ProfileName, IsDefault = Default };
+                _context.Add(profile);
+                await _context.SaveChangesAsync();
+            }
+            return profile.IdPerfil;
+        }
+
+        private static async Task<string> EnsureUser(IServiceProvider serviceProvider,
+                                                    string testUserPw, string UserName, int ProfileID, bd_lesContext _context)
+        {
+            var userManager = serviceProvider.GetService<UserManager<ApplicationUsers>>();
 
             var func = new Funcionario { NomeCompleto = UserName };
 
             var user = await userManager.FindByNameAsync(UserName);
-            if (user == null && UserName != null)
+            if (user == null && UserName != null && ProfileID != 0)
             {
                 _context.Add(func);
                 await _context.SaveChangesAsync();
-                user = new ApplicationUser { UserName = UserName, FuncionarioIdFuncionario = func.IdFuncionario };
+                user = new ApplicationUsers { UserName = UserName, FuncionarioIdFuncionario = func.IdFuncionario, IdPerfil = ProfileID };
                 var result = await userManager.CreateAsync(user, testUserPw);
                 if (!result.Succeeded)
                 {
@@ -60,17 +74,31 @@ namespace Bioterio.Data
         }
 
         private static async Task<IdentityResult> EnsureRole(IServiceProvider serviceProvider,
-                                                                      string uid, string role)
+                                                                      string uid, string role, int ProfileID, bd_lesContext _context)
         {
             IdentityResult IR = null;
             var roleManager = serviceProvider.GetService<RoleManager<IdentityRole>>();
+            IdentityRole IRole = null;
 
             if (!await roleManager.RoleExistsAsync(role))
             {
-                IR = await roleManager.CreateAsync(new IdentityRole(role));
+                IRole = new IdentityRole(role);
+                IR = await roleManager.CreateAsync(IRole);
+            }
+            else
+            {
+                IRole = roleManager.FindByNameAsync(role).Result;
             }
 
-            var userManager = serviceProvider.GetService<UserManager<ApplicationUser>>();
+            ProfileRole PR = await _context.ProfileRole.SingleOrDefaultAsync(pr => pr.IdPerfil == ProfileID && pr.RoleId == IRole.Id);
+            if (PR == null)
+            {
+                PR = new ProfileRole { IdPerfil = ProfileID, RoleId = IRole.Id};
+                _context.Add(PR);
+                await _context.SaveChangesAsync();
+            }
+
+            var userManager = serviceProvider.GetService<UserManager<ApplicationUsers>>();
 
             var user = await userManager.FindByIdAsync(uid);
 
@@ -82,6 +110,15 @@ namespace Bioterio.Data
         #region snippet1
         public static async Task SeedDBAsync(IServiceProvider serviceProvider, bd_lesContext context, string uid)
         {
+            var roleManager = serviceProvider.GetService<RoleManager<IdentityRole>>();
+            foreach (KeyValuePair<string, string> entry in Constants.CategoryRoles)
+            {
+                if (!await roleManager.RoleExistsAsync(entry.Key))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(entry.Key));
+                }
+            }
+
             //if (context.Contact.Any())
             //{
             //    return;   // DB has been seeded
@@ -108,7 +145,7 @@ namespace Bioterio.Data
                 return; //DB already seeded
             }
 
-            //var userManager = serviceProvider.GetService<UserManager<ApplicationUser>>();
+            //var userManager = serviceProvider.GetService<UserManager<ApplicationUsers>>();
 
             //var user = await userManager.FindByIdAsync(uid);
 

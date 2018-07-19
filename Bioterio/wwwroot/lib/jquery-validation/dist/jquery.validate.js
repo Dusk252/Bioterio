@@ -45,14 +45,14 @@ $.extend($.fn, {
 					validator.submitButton = event.target;
 				}
 
-				// allow suppressing validation by adding a cancel class to the submit button
-				if ( $( this ).hasClass( "cancel" ) ) {
-					validator.cancelSubmit = true;
+				// allow suppressing validation by adding a Cancelar class to the submit button
+				if ( $( this ).hasClass( "Cancelar" ) ) {
+					validator.CancelarSubmit = true;
 				}
 
 				// allow suppressing validation by adding the html5 formnovalidate attribute to the submit button
 				if ( $( this ).attr( "formnovalidate" ) !== undefined ) {
-					validator.cancelSubmit = true;
+					validator.CancelarSubmit = true;
 				}
 			});
 
@@ -86,8 +86,8 @@ $.extend($.fn, {
 				}
 
 				// prevent submit for invalid forms or custom submit handlers
-				if ( validator.cancelSubmit ) {
-					validator.cancelSubmit = false;
+				if ( validator.CancelarSubmit ) {
+					validator.CancelarSubmit = false;
 					return handle();
 				}
 				if ( validator.form() ) {

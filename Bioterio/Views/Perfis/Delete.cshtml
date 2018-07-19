@@ -1,0 +1,41 @@
+﻿@model Bioterio.Models.Perfil
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3 class="del">Tem a certeza que deseja apagar este perfil? Os utilizadores associados retornarão ao perfil default.</h3>
+<div>
+    <h4>Perfil</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NomePerfil)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NomePerfil)
+        </dd>
+        <dt>Permissões</dt>
+        <dd>
+            @{
+                var roles = (List<string>)ViewData["checked"];
+                if (roles != null)
+                {
+                    <ul>
+                       @foreach(string role in roles) {
+                           <li>@Bioterio.Authorization.ApplicationUsersManager.Constants.CategoryRoles[role]</li>
+                       } 
+                    </ul>
+                }
+            }
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="IdPerfil" />
+        <input type="submit" value="Apagar" class="del btn btn-default" /> |
+        <a asp-action="Index" class="btn btn-default">Voltar à listagem</a>
+    </form>
+</div>

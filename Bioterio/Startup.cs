@@ -31,9 +31,12 @@ namespace Bioterio
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<bd_lesContext>(options =>
-                options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+            {
+                options.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
+                options.EnableSensitiveDataLogging(true);
+            });
 
-            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            services.AddIdentity<ApplicationUsers, IdentityRole>(options =>
             {
                 // Configure identity options here.
                 options.Password.RequireDigit = false;
@@ -72,8 +75,8 @@ namespace Bioterio
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("ElevatedRights", policy => policy.RequireRole("Administrators", "Managers"));
-                options.AddPolicy("AdminRights", policy => policy.RequireRole("Administrators"));
+                options.AddPolicy("ElevatedRights", policy => policy.RequireRole("Administrator"));
+                options.AddPolicy("AdminRights", policy => policy.RequireRole("Administrator"));
             });
         }
 

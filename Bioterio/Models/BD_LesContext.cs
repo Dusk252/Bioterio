@@ -7,7 +7,7 @@ namespace Bioterio.Models
     public partial class bd_lesContext : IdentityDbContext
     {
         public virtual DbSet<AgenteTrat> AgenteTrat { get; set; }
-        public virtual DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public virtual DbSet<ApplicationUsers> ApplicationUsers { get; set; }
         public virtual DbSet<CircuitoTanque> CircuitoTanque { get; set; }
         public virtual DbSet<Concelho> Concelho { get; set; }
         public virtual DbSet<Distrito> Distrito { get; set; }
@@ -23,8 +23,10 @@ namespace Bioterio.Models
         public virtual DbSet<Lote> Lote { get; set; }
         public virtual DbSet<LoteSubLote> LoteSubLote { get; set; }
         public virtual DbSet<Motivo> Motivo { get; set; }
+        public virtual DbSet<Perfil> Perfil { get; set; }
         public virtual DbSet<PlanoAlimentar> PlanoAlimentar { get; set; }
         public virtual DbSet<Projeto> Projeto { get; set; }
+        public virtual DbSet<ProfileRole> ProfileRole { get; set; }
         public virtual DbSet<RegAlimentar> RegAlimentar { get; set; }
         public virtual DbSet<RegAmostragens> RegAmostragens { get; set; }
         public virtual DbSet<RegCondAmb> RegCondAmb { get; set; }
@@ -54,7 +56,7 @@ namespace Bioterio.Models
                     .HasMaxLength(45);
             });
 
-            modelBuilder.Entity<ApplicationUser>(entity =>
+            modelBuilder.Entity<ApplicationUsers>(entity =>
             {
                 entity.Property(e => e.FuncionarioIdFuncionario)
                     .HasColumnName("IdFuncionario")
@@ -65,6 +67,16 @@ namespace Bioterio.Models
                     .HasForeignKey(d => d.FuncionarioIdFuncionario)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_FuncionarioIdFuncionario");
+
+                entity.Property(e => e.IdPerfil)
+                    .HasColumnName("IdPerfil")
+                    .HasColumnType("int(11)");
+
+                entity.HasOne(d => d.PerfilNavigation)
+                    .WithMany(p => p.User)
+                    .HasForeignKey(d => d.IdPerfil)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_PerfilId");
             });
 
             modelBuilder.Entity<AgenteTrat>(entity =>
@@ -575,6 +587,26 @@ namespace Bioterio.Models
                     .HasMaxLength(45);
             });
 
+            modelBuilder.Entity<Perfil>(entity =>
+            {
+                entity.HasKey(e => e.IdPerfil);
+
+                entity.ToTable("perfil");
+
+                entity.Property(e => e.IdPerfil)
+                    .HasColumnName("IdPerfil")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.NomePerfil)
+                    .IsRequired()
+                    .HasColumnName("nomePerfil")
+                    .HasMaxLength(45);
+
+                entity.Property(e => e.IsDefault)
+                    .HasColumnName("IsDefault")
+                    .HasColumnType("int(1)");
+            });
+
             modelBuilder.Entity<PlanoAlimentar>(entity =>
             {
                 entity.HasKey(e => e.IdPlanAlim);
@@ -592,6 +624,33 @@ namespace Bioterio.Models
                     .HasMaxLength(45);
 
                 entity.Property(e => e.Tipo).HasColumnType("int(11)");
+            });
+
+            modelBuilder.Entity<ProfileRole>(entity =>
+            {
+                entity.HasKey(e => new { e.IdPerfil, e.RoleId });
+
+                entity.ToTable("profilerole");
+
+                entity.Property(e => e.IdPerfil)
+                    .HasColumnName("IdPerfil")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.RoleId)
+                    .HasColumnName("RoleId")
+                    .HasColumnType("nvarchar(256)");
+
+                entity.HasIndex(e => e.IdPerfil)
+                     .HasName("fk_ProfileRole_Profile_idx");
+
+                entity.HasIndex(e => e.RoleId)
+                    .HasName("fk_ProfileRole_Role_idx");
+
+                entity.HasOne(d => d.Profile)
+                    .WithMany(p => p.Roles)
+                    .HasForeignKey(d => d.IdPerfil)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_IdPerfil");
             });
 
             modelBuilder.Entity<Projeto>(entity =>

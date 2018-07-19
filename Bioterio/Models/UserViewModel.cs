@@ -28,6 +28,9 @@ namespace Bioterio.Models
         public string PhoneNumber { get; set; }
 
         [Display(Name = "Perfil")]
-        public string Permissions { get; set; }
+        public int IdPerfil { get; set; }
+
+        [Display(Name = "Perfil")]
+        public string NomePerfil { get; set; }
     }
 }

@@ -1,0 +1,98 @@
+﻿@model Bioterio.Models.Perfil
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Editar</h2>
+
+<h4>Perfil</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdPerfil" />
+            <div class="form-group">
+                <label asp-for="NomePerfil" class="control-label"></label>
+                <input asp-for="NomePerfil" class="form-control" />
+                <span asp-validation-for="NomePerfil" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @{if (Model.IsDefault != 1)
+            { <input type = "checkbox" name = "IsDefault" value = "1"><span>Selecionar este perfil como o default para a criação de utilizadores.</span> }
+                else { <span class="default-profile">Este perfil encontra-se definido como default.</span>} }<br />
+                <span asp-validation-for="IsDefault" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Permissões</label>
+                <br />
+                @{
+            var roles = (List<string>)ViewData["checked"];
+            foreach (Dictionary<string, string> dic in (List<Dictionary<string, string>>)ViewData["permissions"])
+            {
+                <div>
+                    <input type="checkbox" class="@("select_all")" /> @dic.First().Value.Split(' ', 2)[1]<br />
+                    @foreach (KeyValuePair<string, string> entry in dic)
+            {
+                var check = (roles != null && roles.Contains(entry.Key)) ? "checked" : "";
+                <span class="level2checkbox"><input type="checkbox" class="@("select_one")" name="roles" value="@entry.Key" @check> @entry.Value<br /></span>
+    }
+                </div>
+                <br />
+    }
+                }
+                <span asp-validation-for="IdPerfil" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submeter" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a type="button" class="btn btn-info" asp-action="Index">Voltar à listagem</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(function () {
+            $('.select_all').change(function () {
+                $(this).parent().find('.select_one').prop('checked', $(this).prop('checked'));
+            });
+            debugger;
+            $('.select_one').change(function () {
+                if ($('.select_one:checked').length === 0) {
+                    $(this).parent().parent().find('.select_all').
+                        prop("indeterminate", false).
+                        prop('checked', false);
+                } else if ($(this).parent().parent().find('.select_one:not(:checked)').length === 0) {
+                    $(this).parent().parent().find('.select_all').
+                        prop("indeterminate", false).
+                        prop('checked', true);
+                } else {
+                    $(this).parent().parent().find('.select_all').
+                        prop("indeterminate", true);
+                }
+            });
+        });
+        $(window).on('load', function () {
+            $('.select_all').each(function () {
+                if ($(this).parent().find('.select_one:checked').length === 0) {
+                    $(this).
+                        prop("indeterminate", false).
+                        prop('checked', false);
+                } else if ($(this).parent().find('.select_one:not(:checked)').length === 0) {
+                    $(this).
+                        prop("indeterminate", false).
+                        prop('checked', true);
+                } else {
+                    $(this).
+                        prop("indeterminate", true);
+                }
+            });
+        });
+    </script>
+}

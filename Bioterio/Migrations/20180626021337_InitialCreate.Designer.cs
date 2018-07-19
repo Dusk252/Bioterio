@@ -1165,7 +1165,7 @@ namespace Bioterio.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Bioterio.Models.ApplicationUser", b =>
+            modelBuilder.Entity("Bioterio.Models.ApplicationUsers", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
@@ -1175,9 +1175,9 @@ namespace Bioterio.Migrations
 
                     b.HasIndex("FuncionarioIdFuncionario");
 
-                    b.ToTable("ApplicationUser");
+                    b.ToTable("ApplicationUsers");
 
-                    b.HasDiscriminator().HasValue("ApplicationUser");
+                    b.HasDiscriminator().HasValue("ApplicationUsers");
                 });
 
             modelBuilder.Entity("Bioterio.Models.CircuitoTanque", b =>
@@ -1451,7 +1451,7 @@ namespace Bioterio.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Bioterio.Models.ApplicationUser", b =>
+            modelBuilder.Entity("Bioterio.Models.ApplicationUsers", b =>
                 {
                     b.HasOne("Bioterio.Models.Funcionario", "FuncionarioNavigation")
                         .WithMany("User")
