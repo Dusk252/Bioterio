@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bioterio;
 using Bioterio.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bioterio.Controllers
 {
+    [Authorize]
     public class AgenteTratsController : Controller
     {
         private readonly bd_lesContext _context;
@@ -36,6 +38,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: AgenteTrats
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.AgenteTrat.ToListAsync());

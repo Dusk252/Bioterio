@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Bioterio.Controllers
 {
-    [Authorize(Policy = "AdminRights")]
     public class FornecedorcolectorsController : Controller
     {
         private readonly bd_lesContext _context;
@@ -27,12 +26,14 @@ namespace Bioterio.Controllers
         }
 
         // GET: Fornecedorcolectors
+        [Authorize(Roles = "Administrator, ReadFornecedor")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Fornecedorcolector.ToListAsync());
         }
 
         // GET: Fornecedorcolectors/Details/5
+        [Authorize(Roles = "Administrator, ReadFornecedor")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -51,6 +52,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Fornecedorcolectors/Create
+        [Authorize(Roles = "Administrator, CreateFornecedor")]
         public IActionResult Create()
         {
             ViewData["Tipo"] = types;
@@ -62,6 +64,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, CreateFornecedor")]
         public async Task<IActionResult> Create([Bind("IdFornColect,Tipo,Nome,Nif,NroLicenca,Morada,Telefone")] Fornecedorcolector fornecedorcolector)
         {
             //validation
@@ -82,6 +85,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Fornecedorcolectors/Edit/5
+        [Authorize(Roles = "Administrator, EditFornecedor")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -104,6 +108,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, EditFornecedor")]
         public async Task<IActionResult> Edit(int id, [Bind("IdFornColect,Tipo,Nome,Nif,NroLicenca,Morada,Telefone")] Fornecedorcolector fornecedorcolector)
         {
             if (id != fornecedorcolector.IdFornColect)
@@ -143,6 +148,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Fornecedorcolectors/Delete/5
+        [Authorize(Roles = "Administrator, DeleteFornecedor")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -174,6 +180,7 @@ namespace Bioterio.Controllers
         // POST: Fornecedorcolectors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, DeleteFornecedor")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var fornecedorcolector = await _context.Fornecedorcolector.SingleOrDefaultAsync(m => m.IdFornColect == id);

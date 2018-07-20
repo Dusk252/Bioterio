@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bioterio;
 using Bioterio.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bioterio.Controllers
 {
@@ -20,6 +21,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Ensaios
+        [Authorize(Roles = "Administrator, ReadEnsaio")]
         public async Task<IActionResult> Index()
         {
             var bd_lesContext = _context.Ensaio.Include(e => e.LoteIdLoteNavigation).Include(e => e.ProjetoIdProjetoNavigation);
@@ -27,6 +29,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Ensaios/Details/5
+        [Authorize(Roles = "Administrator, ReadEnsaio")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -49,6 +52,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Ensaios/Create
+        [Authorize(Roles = "Administrator, CreateEnsaio")]
         public IActionResult Create()
         {
            
@@ -63,6 +67,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, CreateEnsaio")]
         public async Task<IActionResult> Create([Bind("IdEnsaio,DataInicio,DataFim,DescTratamento,GrauSeveridade,NroAnimaisAutoriz,ProjetoIdProjeto,LoteIdLote")] Ensaio ensaio)
         {
 
@@ -90,6 +95,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Ensaios/Edit/5
+        [Authorize(Roles = "Administrator, EditEnsaio")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -112,6 +118,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, EditEnsaio")]
         public async Task<IActionResult> Edit(int id, [Bind("IdEnsaio,DataInicio,DataFim,DescTratamento,GrauSeveridade,NroAnimaisAutoriz,ProjetoIdProjeto,LoteIdLote")] Ensaio ensaio)
         {
             if (id != ensaio.IdEnsaio)
@@ -158,6 +165,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Ensaios/Delete/5
+        [Authorize(Roles = "Administrator, DeleteEnsaio")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null )
@@ -182,6 +190,7 @@ namespace Bioterio.Controllers
         // POST: Ensaios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, DeleteEnsaio")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var ensaio = await _context.Ensaio.SingleOrDefaultAsync(m => m.IdEnsaio == id);

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bioterio;
 using Bioterio.Models;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bioterio.Controllers
 {
@@ -41,6 +41,7 @@ namespace Bioterio.Controllers
             return cirTanque;
         }
         // GET: CircuitoTanques
+        [Authorize(Roles = "Administrator, ReadCircuitoTanques")]
         public async Task<IActionResult> Index()
         {
             var bd_lesContext = _context.CircuitoTanque.Include(c => c.ProjetoIdProjetoNavigation);
@@ -69,6 +70,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: CircuitoTanques/Details/5
+        [Authorize(Roles = "Administrator, ReadCircuitoTanques")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -93,6 +95,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: CircuitoTanques/Create
+        [Authorize(Roles = "Administrator, CreateCircuitoTanques")]
         public IActionResult Create()
         {
             ViewData["ProjetoIdProjeto"] = new SelectList(_context.Projeto.Where(p => p.isarchived == 0), "IdProjeto", "Nome");
@@ -104,6 +107,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, CreateCircuitoTanques")]
         public async Task<IActionResult> Create([Bind("IdCircuito,ProjetoIdProjeto,CodigoCircuito,DataCriacao,DataFinal")] CircuitoTanque circuitoTanque)
         {
             if (circuitoTanque.DataCriacao > circuitoTanque.DataFinal)
@@ -131,6 +135,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: CircuitoTanques/Edit/5
+        [Authorize(Roles = "Administrator, EditCircuitoTanques")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -153,6 +158,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, EditCircuitoTanques")]
         public async Task<IActionResult> Edit(int id, [Bind("IdCircuito,ProjetoIdProjeto,CodigoCircuito,DataCriacao,DataFinal")] CircuitoTanque circuitoTanque)
         {
             if (id != circuitoTanque.IdCircuito || circuitoTanque.isarchived == 1)
@@ -199,6 +205,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: CircuitoTanques/Delete/5
+        [Authorize(Roles = "Administrator, DeleteCircuitoTanques")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -225,6 +232,7 @@ namespace Bioterio.Controllers
         // POST: CircuitoTanques/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, DeleteCircuitoTanques")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var circuitoTanque = await _context.CircuitoTanque.SingleOrDefaultAsync(m => m.IdCircuito == id);

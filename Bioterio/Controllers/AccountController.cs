@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using Bioterio.Models;
 using Bioterio.Models.AccountViewModels;
 using Bioterio.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bioterio.Controllers
 {
@@ -119,7 +120,8 @@ namespace Bioterio.Controllers
                     _context.Add(func);
                     await _context.SaveChangesAsync();
                 }
-                var user = new ApplicationUsers { UserName = model.UserName, PhoneNumber = model.PhoneNumber, FuncionarioIdFuncionario = func.IdFuncionario};
+                var default_profile = await _context.Perfil.SingleOrDefaultAsync(p => p.IsDefault == 1);
+                var user = new ApplicationUsers { UserName = model.UserName, PhoneNumber = model.PhoneNumber, FuncionarioIdFuncionario = func.IdFuncionario, IdPerfil = (model.IdPerfil == 0) ? default_profile.IdPerfil : model.IdPerfil};
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

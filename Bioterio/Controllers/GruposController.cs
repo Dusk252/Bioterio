@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Bioterio.Controllers
 {
-    [Authorize(Policy = "AdminRights")]
     public class GruposController : Controller
     {
         private readonly bd_lesContext _context;
@@ -22,6 +21,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Grupos
+        [Authorize(Roles = "Administrator, ReadEspecie")]
         public async Task<IActionResult> Index()
         {
             TempData["origin_controller"] = @Url.Action("Index", "Grupos");
@@ -29,6 +29,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Grupos/Details/5
+        [Authorize(Roles = "Administrator, ReadEspecie")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -47,6 +48,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Grupos/Create
+        [Authorize(Roles = "Administrator, CreateEspecie")]
         public IActionResult Create()
         {
             return View();
@@ -57,6 +59,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, CreateEspecie")]
         public async Task<IActionResult> Create([Bind("IdGrupo,NomeGrupo")] Grupo grupo)
         {
             //validation
@@ -77,6 +80,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Grupos/Edit/5
+        [Authorize(Roles = "Administrator, EditEspecie")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -97,6 +101,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, EditEspecie")]
         public async Task<IActionResult> Edit(int id, [Bind("IdGrupo,NomeGrupo")] Grupo grupo)
         {
             if (id != grupo.IdGrupo)
@@ -138,6 +143,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Grupos/Delete/5
+        [Authorize(Roles = "Administrator, DeleteEspecie")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -189,6 +195,7 @@ namespace Bioterio.Controllers
         // POST: Grupos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, DeleteEspecie")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var grupo = await _context.Grupo.SingleOrDefaultAsync(m => m.IdGrupo == id);

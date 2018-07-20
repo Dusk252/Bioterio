@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Bioterio.Controllers
 {
-    [Authorize(Policy = "AdminRights")]
     public class LocalcapturasController : Controller
     {
         private readonly bd_lesContext _context;
@@ -21,6 +20,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Localcapturas
+        [Authorize(Roles = "Administrator, ReadLocalizacao")]
         public async Task<IActionResult> Index()
         {
             var bd_lesContext = _context.Localcaptura.Include(l => l.Concelho).Include(l => l.Distrito);
@@ -28,6 +28,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Localcapturas/Details/5
+        [Authorize(Roles = "Administrator, ReadLocalizacao")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -48,6 +49,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Localcapturas/Create
+        [Authorize(Roles = "Administrator, CreateLocalizacao")]
         public IActionResult Create()
         {
             ViewData["DistritoId"] = new SelectList(_context.Distrito, "IdDistrito", "NomeDistrito").Prepend(new SelectListItem() { Text = "---Selecione um Distrito---", Value = "" });
@@ -60,6 +62,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, CreateLocalizacao")]
         public async Task<IActionResult> Create([Bind("IdLocalCaptura,Localidade,Latitude,Longitude,ConcelhoId,DistritoId")] Localcaptura localcaptura)
         {
 
@@ -84,6 +87,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Localcapturas/Edit/5
+        [Authorize(Roles = "Administrator, EditLocalizacao")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -106,6 +110,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, EditLocalizacao")]
         public async Task<IActionResult> Edit(int id, [Bind("IdLocalCaptura,Localidade,Latitude,Longitude,ConcelhoId,DistritoId")] Localcaptura localcaptura)
         {
             if (id != localcaptura.IdLocalCaptura)
@@ -148,6 +153,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Localcapturas/Delete/5
+        [Authorize(Roles = "Administrator, DeleteLocalizacao")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -168,6 +174,7 @@ namespace Bioterio.Controllers
         // POST: Localcapturas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, DeleteLocalizacao")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var localcaptura = await _context.Localcaptura.SingleOrDefaultAsync(m => m.IdLocalCaptura == id);

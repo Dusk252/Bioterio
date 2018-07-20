@@ -23,7 +23,7 @@ namespace Bioterio
             {
                 var services = scope.ServiceProvider;
 
-                var testUserPw = "rootrootroot";
+                var testUserPw = "root";
                 try
                 {
                     var context = services.GetRequiredService<bd_lesContext>();

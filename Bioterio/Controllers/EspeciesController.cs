@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Bioterio.Controllers
 {
-    [Authorize(Policy = "AdminRights")]
     public class EspeciesController : Controller
     {
         private readonly bd_lesContext _context;
@@ -22,6 +21,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Especies
+        [Authorize(Roles = "Administrator, ReadEspecie")]
         public async Task<IActionResult> Index()
         {
             TempData["origin_controller"] = @Url.Action("Index", "Especies");
@@ -31,6 +31,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Especies/Details/5
+        [Authorize(Roles = "Administrator, ReadEspecie")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -51,6 +52,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Especies/Create
+        [Authorize(Roles = "Administrator, CreateEspecie")]
         public IActionResult Create()
         {
             ViewData["FamiliaIdFamilia"] = new SelectList(_context.Familia, "IdFamilia", "NomeFamilia").Prepend(new SelectListItem() { Text = "---Selecione uma Familia---", Value = "" });
@@ -63,6 +65,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, CreateEspecie")]
         public async Task<IActionResult> Create([Bind("IdEspecie,NomeCient,NomeVulgar,FamiliaIdFamilia,GrupoIdGrupo")] Especie especie)
         {
             //validation
@@ -92,6 +95,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Especies/Edit/5
+        [Authorize(Roles = "Administrator, EditEspecie")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -114,6 +118,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, EditEspecie")]
         public async Task<IActionResult> Edit(int id, [Bind("IdEspecie,NomeCient,NomeVulgar,FamiliaIdFamilia,GrupoIdGrupo")] Especie especie)
         {
             if (id != especie.IdEspecie)
@@ -164,6 +169,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Especies/Delete/5
+        [Authorize(Roles = "Administrator, DeleteEspecie")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -193,6 +199,7 @@ namespace Bioterio.Controllers
         // POST: Especies/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, DeleteEspecie")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var especie = await _context.Especie

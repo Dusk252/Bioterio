@@ -40,7 +40,7 @@ namespace Bioterio
             {
                 // Configure identity options here.
                 options.Password.RequireDigit = false;
-                options.Password.RequiredLength = 6;
+                options.Password.RequiredLength = 4;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
@@ -75,8 +75,8 @@ namespace Bioterio
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("ElevatedRights", policy => policy.RequireRole("Administrator"));
-                options.AddPolicy("AdminRights", policy => policy.RequireRole("Administrator"));
+                //options.AddPolicy("ElevatedRights", policy => policy.RequireRole("Administrator"));
+                //options.AddPolicy("AdminRights", policy => policy.RequireRole("Administrator"));
             });
         }
 

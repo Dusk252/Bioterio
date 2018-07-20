@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bioterio;
 using Bioterio.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bioterio.Controllers
 {
@@ -22,6 +23,7 @@ namespace Bioterio.Controllers
 
 
         // GET: Projetoes
+        [Authorize(Roles = "Administrator, ReadProjeto")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Projeto.ToListAsync());
@@ -50,6 +52,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Projetoes/Details/5
+        [Authorize(Roles = "Administrator, ReadProjeto")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -99,6 +102,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Projetoes/Create
+        [Authorize(Roles = "Administrator, CreateProjeto")]
         public IActionResult Create()
         {
             return View();
@@ -109,6 +113,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, CreateProjeto")]
         public async Task<IActionResult> Create([Bind("IdProjeto,Nome,DataInicio,DataFim,AutorizacaoDgva,RefOrbea,SubmisInsEurop,NroAnimaisAutoriz")] Projeto projeto)
         {
             if(projeto.DataFim < projeto.DataInicio)
@@ -128,6 +133,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Projetoes/Edit/5
+        [Authorize(Roles = "Administrator, EditProjeto")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -150,6 +156,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, EditProjeto")]
         public async Task<IActionResult> Edit(int id, [Bind("IdProjeto,Nome,DataInicio,DataFim,AutorizacaoDgva,RefOrbea,SubmisInsEurop,NroAnimaisAutoriz")] Projeto projeto)
         {
             if (id != projeto.IdProjeto || projeto.isarchived == 1)
@@ -185,6 +192,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Projetoes/Delete/5
+        [Authorize(Roles = "Administrator, DeleteProjeto")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -218,6 +226,7 @@ namespace Bioterio.Controllers
         // POST: Projetoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, DeleteProjeto")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var projeto = await _context.Projeto.SingleOrDefaultAsync(m => m.IdProjeto == id);

@@ -20,6 +20,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Lotes
+        [Authorize(Roles = "Administrator, ReadLote")]
         public async Task<IActionResult> Index()
         {
             var bd_lesContext = _context.Lote.Include(l => l.FuncionarioIdFuncionarioNavigation).Include(l => l.RegNovosAnimaisIdRegAnimalNavigation);
@@ -27,6 +28,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Lotes/Details/5
+        [Authorize(Roles = "Administrator, ReadLote")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -46,7 +48,7 @@ namespace Bioterio.Controllers
             return View(lote);
         }
 
-        [Authorize(Policy = "ElevatedRights")]
+        [Authorize(Roles = "Administrator, CreateLote")]
         // GET: Lotes/Create
         public IActionResult Create()
         {
@@ -55,7 +57,7 @@ namespace Bioterio.Controllers
             return View();
         }
 
-        [Authorize(Policy = "ElevatedRights")]
+        [Authorize(Roles = "Administrator, CreateLote")]
         // POST: Lotes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -87,7 +89,7 @@ namespace Bioterio.Controllers
             return View(lote);
         }
 
-        [Authorize(Policy = "ElevatedRights")]
+        [Authorize(Roles = "Administrator, EditLote")]
         // GET: Lotes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -106,7 +108,7 @@ namespace Bioterio.Controllers
             return View(lote);
         }
 
-        [Authorize(Policy = "ElevatedRights")]
+        [Authorize(Roles = "Administrator, EditLote")]
         // POST: Lotes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -152,7 +154,7 @@ namespace Bioterio.Controllers
             return View(lote);
         }
 
-        [Authorize(Policy = "ElevatedRights")]
+        [Authorize(Roles = "Administrator, DeleteLote")]
         // GET: Lotes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -173,7 +175,7 @@ namespace Bioterio.Controllers
             return View(lote);
         }
 
-        [Authorize(Policy = "ElevatedRights")]
+        [Authorize(Roles = "Administrator, DeleteLote")]
         // POST: Lotes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

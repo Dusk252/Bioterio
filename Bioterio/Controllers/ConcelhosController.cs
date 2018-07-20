@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Bioterio.Controllers
 {
-    [Authorize(Policy = "AdminRights")]
     public class ConcelhosController : Controller
     {
         private readonly bd_lesContext _context;
@@ -21,6 +20,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Concelhos
+        [Authorize(Roles = "Administrator, ReadLocalizacao")]
         public async Task<IActionResult> Index()
         {
             TempData["origin_controller"] = @Url.Action("Index", "Concelhos");
@@ -29,6 +29,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Concelhos/Details/5
+        [Authorize(Roles = "Administrator, ReadLocalizacao")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -48,6 +49,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Concelhos/Create
+        [Authorize(Roles = "Administrator, CreateLocalizacao")]
         public IActionResult Create()
         {
             ViewData["DistritoId"] = new SelectList(_context.Distrito, "IdDistrito", "NomeDistrito").Prepend(new SelectListItem() { Text = "---Selecione um Distrito---", Value = "" }); ;
@@ -59,6 +61,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, CreateLocalizacao")]
         public async Task<IActionResult> Create([Bind("Id,NomeConcelho,DistritoId")] Concelho concelho)
         {
             //validation
@@ -79,6 +82,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Concelhos/Edit/5
+        [Authorize(Roles = "Administrator, EditLocalizacao")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -100,6 +104,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, EditLocalizacao")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,NomeConcelho,DistritoId")] Concelho concelho)
         {
             if (id != concelho.IdConcelho)
@@ -140,6 +145,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Concelhos/Delete/5
+        [Authorize(Roles = "Administrator, DeleteLocalizacao")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -175,6 +181,7 @@ namespace Bioterio.Controllers
         // POST: Concelhos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, DeleteLocalizacao")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var concelho = await _context.Concelho

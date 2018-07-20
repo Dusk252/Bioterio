@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Bioterio.Controllers
 {
-    [Authorize(Policy = "AdminRights")]
+    [Authorize(Roles = "Administrator")]
     public class FuncionariosController : Controller
     {
         private readonly bd_lesContext _context;
@@ -258,6 +258,14 @@ namespace Bioterio.Controllers
         {
             var user = await _userManager.FindByNameAsync(UserName);
             if (user == null || user.FuncionarioIdFuncionario == IdFuncionario) return Json(true);
+            else return Json(string.Format("Já existe um utilizador com o nome {0}.", UserName));
+        }
+
+        [AllowAnonymous]
+        public async Task<ActionResult> ValidateUserNameOnCreate(string UserName)
+        {
+            var user = await _userManager.FindByNameAsync(UserName);
+            if (user == null) return Json(true);
             else return Json(string.Format("Já existe um utilizador com o nome {0}.", UserName));
         }
     }

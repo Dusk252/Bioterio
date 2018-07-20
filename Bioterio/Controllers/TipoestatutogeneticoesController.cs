@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Bioterio.Controllers
 {
-    [Authorize(Policy = "AdminRights")]
+    [Authorize(Roles = "Administrator")]
     public class TipoestatutogeneticoesController : Controller
     {
         private readonly bd_lesContext _context;

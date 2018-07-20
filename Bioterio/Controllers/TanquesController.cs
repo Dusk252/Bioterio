@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bioterio;
 using Bioterio.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bioterio.Controllers
 {
@@ -20,6 +21,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Tanques
+        [Authorize(Roles = "Administrator, ReadTanque")]
         public async Task<IActionResult> Index()
         {
             var bd_lesContext = _context.Tanque.Include(t => t.CircuitoTanqueIdCircuitoNavigation).Include(t => t.LoteIdLoteNavigation);
@@ -55,6 +57,7 @@ namespace Bioterio.Controllers
             return tanque;
         }
         // GET: Tanques/Details/5
+        [Authorize(Roles = "Administrator, ReadTanque")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -75,6 +78,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Tanques/Create
+        [Authorize(Roles = "Administrator, CreateTanque")]
         public IActionResult Create()
         {
             ViewData["CircuitoTanqueIdCircuito"] = new SelectList(_context.CircuitoTanque.Where(p => p.isarchived == 0), "IdCircuito", "CodigoCircuito");
@@ -88,6 +92,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, ReadTanque")]
         public async Task<IActionResult> Create([Bind("IdTanque,codidenttanque,NroAnimais,Sala,Observacoes,LoteIdLote,CircuitoTanqueIdCircuito")] Tanque tanque)
         {
             var tanqueCodefindany = _context.Tanque.Where(b => EF.Property<string>(b, "codidenttanque").Equals(tanque.codidenttanque)).Where(b => EF.Property<int>(b, "isarchived") == 0);
@@ -110,6 +115,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Tanques/Edit/5
+        [Authorize(Roles = "Administrator, EditTanque")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -133,6 +139,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, EditTanque")]
         public async Task<IActionResult> Edit(int id, [Bind("IdTanque,codidenttanque,NroAnimais,Sala,Observacoes,LoteIdLote,CircuitoTanqueIdCircuito")] Tanque tanque)
         {
             if (id != tanque.IdTanque || tanque.isarchived == 1)
@@ -171,6 +178,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Tanques/Delete/5
+        [Authorize(Roles = "Administrator, DeleteTanque")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -194,6 +202,7 @@ namespace Bioterio.Controllers
         // POST: Tanques/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, DeleteTanque")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             

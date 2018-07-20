@@ -11,7 +11,6 @@ using Newtonsoft.Json;
 
 namespace Bioterio.Controllers
 {
-    [Authorize(Policy = "AdminRights")]
     public class DistritosController : Controller
     {
         private readonly bd_lesContext _context;
@@ -22,6 +21,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Distritos
+        [Authorize(Roles = "Administrator, ReadLocalizacao")]
         public async Task<IActionResult> Index()
         {
             TempData["origin_controller"] = @Url.Action("Index", "Distritos");
@@ -29,6 +29,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Distritos/Details/5
+        [Authorize(Roles = "Administrator, ReadLocalizacao")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -47,6 +48,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Distritos/Create
+        [Authorize(Roles = "Administrator, CreateLocalizacao")]
         public IActionResult Create()
         {
             return View();
@@ -57,6 +59,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, CreateLocalizacao")]
         public async Task<IActionResult> Create([Bind("Id,NomeDistrito")] Distrito distrito)
         {
             //validation
@@ -76,6 +79,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Distritos/Edit/5
+        [Authorize(Roles = "Administrator, EditLocalizacao")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -96,6 +100,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, EditLocalizacao")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,NomeDistrito")] Distrito distrito)
         {
             if (id != distrito.IdDistrito)
@@ -135,6 +140,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Distritos/Delete/5
+        [Authorize(Roles = "Administrator, DeleteLocalizacao")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -177,6 +183,7 @@ namespace Bioterio.Controllers
         // POST: Distritos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, DeleteLocalizacao")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var distrito = await _context.Distrito

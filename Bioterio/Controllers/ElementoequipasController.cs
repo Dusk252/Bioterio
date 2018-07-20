@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bioterio;
 using Bioterio.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bioterio.Controllers
 {
@@ -20,6 +21,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Elementoequipas
+        [Authorize(Roles = "Administrator, ReadEquipa")]
         public async Task<IActionResult> Index()
         {
             var bd_lesContext = _context.Elementoequipa.Include(e => e.FuncionarioIdFuncionarioNavigation).Include(e => e.ProjetoIdProjetoNavigation);
@@ -27,6 +29,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Elementoequipas/Details/5
+        [Authorize(Roles = "Administrator, ReadEquipa")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -47,6 +50,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Elementoequipas/Create
+        [Authorize(Roles = "Administrator, CreateEquipa")]
         public IActionResult Create()
         {
             ViewData["FuncionarioIdFuncionario"] = new SelectList(_context.Funcionario, "IdFuncionario", "NomeCompleto");
@@ -59,6 +63,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, CreateEquipa")]
         public async Task<IActionResult> Create([Bind("IdElementoEquipa,Nome,Funcao,ProjetoIdProjeto,FuncionarioIdFuncionario")] Elementoequipa elementoequipa)
         {
             var cTCodefindany = _context.Elementoequipa.Where(b => EF.Property<string>(b, "Nome").Equals(elementoequipa.Nome)).Where(b => EF.Property<int>(b, "ProjetoIdProjeto")==elementoequipa.ProjetoIdProjeto);
@@ -79,6 +84,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Elementoequipas/Edit/5
+        [Authorize(Roles = "Administrator, EditEquipa")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -101,6 +107,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, EditEquipa")]
         public async Task<IActionResult> Edit(int id, [Bind("IdElementoEquipa,Nome,Funcao,ProjetoIdProjeto,FuncionarioIdFuncionario")] Elementoequipa elementoequipa)
         {
             if (id != elementoequipa.IdElementoEquipa)
@@ -140,6 +147,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Elementoequipas/Delete/5
+        [Authorize(Roles = "Administrator, DeleteEquipa")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -162,6 +170,7 @@ namespace Bioterio.Controllers
         // POST: Elementoequipas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, DeleteEquipa")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var elementoequipa = await _context.Elementoequipa.SingleOrDefaultAsync(m => m.IdElementoEquipa == id);

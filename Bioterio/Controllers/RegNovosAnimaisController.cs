@@ -20,6 +20,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: RegNovosAnimais
+        [Authorize(Roles = "Administrator, ReadRegNovoAnimal")]
         public async Task<IActionResult> Index()
         {
             var bd_lesContext = _context.RegNovosAnimais.Include(r => r.FornecedorIdFornColectNavigation).Include(r => r.FuncionarioIdFuncionario1Navigation).Include(r => r.FuncionarioIdFuncionarioNavigation).Include(r => r.TOrigemIdTOrigemNavigation).Include(r => r.TipoEstatutoGeneticoIdTipoEstatutoGeneticoNavigation);
@@ -27,6 +28,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: RegNovosAnimais/Details/5
+        [Authorize(Roles = "Administrator, ReadRegNovoAnimal")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -49,7 +51,7 @@ namespace Bioterio.Controllers
             return View(regNovosAnimais);
         }
 
-        [Authorize(Policy = "ElevatedRights")]
+        [Authorize(Roles = "Administrator, CreateRegNovoAnimal")]
         // GET: RegNovosAnimais/Create
         public IActionResult Create()
         {
@@ -76,7 +78,7 @@ namespace Bioterio.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Authorize(Policy = "ElevatedRights")]
+        [Authorize(Roles = "Administrator, CreateRegNovoAnimal")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdRegAnimal,NroExemplares,NroMachos,NroFemeas,Imaturos,Juvenis,Larvas,Ovos,DataNasc,Idade,PesoMedio,CompMedio,DuracaoViagem,TempPartida,TempChegada,NroContentores,TipoContentor,VolContentor,VolAgua,NroCaixasIsoter,NroMortosCheg,SatO2transp,Anestesico,Gelo,AdicaoO2,Arejamento,Refrigeracao,sedacao,RespTransporte,EspecieIdEspecie,FornecedorIdFornColect,TOrigemIdTOrigem,LocalCapturaIdLocalCaptura,TipoEstatutoGeneticoIdTipoEstatutoGenetico,FuncionarioIdFuncionario,FuncionarioIdFuncionario1")] RegNovosAnimais regNovosAnimais)
         {
@@ -106,7 +108,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: RegNovosAnimais/Edit/5
-        [Authorize(Policy = "ElevatedRights")]
+        [Authorize(Roles = "Administrator, EditRegNovoAnimal")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -141,7 +143,7 @@ namespace Bioterio.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Authorize(Policy = "ElevatedRights")]
+        [Authorize(Roles = "Administrator, EditRegNovoAnimal")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("IdRegAnimal,NroExemplares,NroMachos,NroFemeas,Imaturos,Juvenis,Larvas,Ovos,DataNasc,Idade,PesoMedio,CompMedio,DuracaoViagem,TempPartida,TempChegada,NroContentores,TipoContentor,VolContentor,VolAgua,NroCaixasIsoter,NroMortosCheg,SatO2transp,Anestesico,Gelo,AdicaoO2,Arejamento,Refrigeracao,sedacao,RespTransporte,EspecieIdEspecie,FornecedorIdFornColect,TOrigemIdTOrigem,LocalCapturaIdLocalCaptura,TipoEstatutoGeneticoIdTipoEstatutoGenetico,FuncionarioIdFuncionario,FuncionarioIdFuncionario1")] RegNovosAnimais regNovosAnimais)
         {
@@ -188,7 +190,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: RegNovosAnimais/Delete/5
-        [Authorize(Policy = "ElevatedRights")]
+        [Authorize(Roles = "Administrator, DeleteRegNovoAnimal")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -224,7 +226,7 @@ namespace Bioterio.Controllers
 
         // POST: RegNovosAnimais/Delete/5
         [HttpPost, ActionName("Delete")]
-        [Authorize(Policy = "ElevatedRights")]
+        [Authorize(Roles = "Administrator, DeleteRegNovoAnimal")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
