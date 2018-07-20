@@ -4,11 +4,12 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>Locais de Captura</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a type="button" class="btn btn-info" asp-action="Create">Criar Novo Local de Captura</a>
 </p>
+<div class="col-md-10">
 <table class="table">
     <thead>
         <tr>
@@ -48,12 +49,21 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Distrito.NomeDistrito)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdLocalCaptura">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdLocalCaptura">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdLocalCaptura">Delete</a>
+            <td class="text-right">
+<a class="btn btn-default" asp-action="Edit" asp-route-id="@item.IdLocalCaptura">Editar</a> |
+                <a class="btn btn-default" asp-action="Details" asp-route-id="@item.IdLocalCaptura">Detalhes</a> |
+                <a class="btn btn-default" asp-action="Delete" asp-route-id="@item.IdLocalCaptura">Eliminar</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+</div>
+<div class="col-md-2">
+    <ul class="list-group">
+        <li class="list-group-item active"><b>Localização:</b></li>
+        <li class="list-group-item"><a asp-area="" asp-controller="Concelhos" asp-action="Index">Concelhos</a></li>
+        <li class="list-group-item"><a asp-area="" asp-controller="Distritos" asp-action="Index">Distritos</a></li>
+        <li class="list-group-item"><a asp-area="" asp-controller="Localcapturas" asp-action="Index">Locais de Captura</a></li>
+    </ul>
+</div>

@@ -1,4 +1,4 @@
-﻿@model Bioterio.RegTratamento
+﻿@model Bioterio.Models.RegTratamento
 
 @{
     ViewData["Title"] = "Edit";
@@ -52,15 +52,16 @@
                 <select asp-for="AgenteTratIdAgenTra" class="form-control" asp-items="ViewBag.AgenteTratIdAgenTra"></select>
                 <span asp-validation-for="AgenteTratIdAgenTra" class="text-danger"></span>
             </div>
-           
+
             <div class="form-group">
                 <label asp-for="TanqueIdTanque" class="control-label"></label>
                 <select asp-for="TanqueIdTanque" class="form-control" asp-items="ViewBag.TanqueIdTanque"></select>
                 <span asp-validation-for="TanqueIdTanque" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Confirmar" class="btn btn-success" />
-                <a type="button" class="btn btn-info" asp-action="Index">Cancelarar</a>
+                <br />
+                <input type="submit" value="Confirmar" class="btn btn-default" /> |
+                <a type="button" class="btn btn-info" asp-action="Index">Cancelar</a>
             </div>
         </form>
     </div>

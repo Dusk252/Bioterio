@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Bioterio.CircuitoTanque>
+﻿@model IEnumerable<Bioterio.Models.CircuitoTanque>
 
 @{
     ViewData["Title"] = "Index";
@@ -65,10 +65,10 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.ProjetoIdProjetoNavigation.Nome)
                                 </td>
-                                <td>
-                                    <a asp-action="Edit" asp-route-id="@item.IdCircuito"><span class="glyphicon glyphicon-pencil"></span></a> |
-                                    <a asp-action="Details" asp-route-id="@item.IdCircuito"><span class="glyphicon glyphicon-eye-open"></span></a> |
-                                    <a asp-action="Delete" asp-route-id="@item.IdCircuito"><span class="glyphicon glyphicon-inbox"></span></a>
+                                <td class="text-right">
+<a class="btn btn-default" asp-action="Edit" asp-route-id="@item.IdCircuito"><span class="glyphicon glyphicon-pencil"></span></a> |
+                                    <a class="btn btn-default" asp-action="Details" asp-route-id="@item.IdCircuito"><span class="glyphicon glyphicon-eye-open"></span></a> |
+                                    <a class="btn btn-default" asp-action="Delete" asp-route-id="@item.IdCircuito"><span class="glyphicon glyphicon-inbox"></span></a>
                                 </td>
                             </tr>
                         }
@@ -115,8 +115,8 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.ProjetoIdProjetoNavigation.Nome)
                                 </td>
-                                <td>
-                                    <a asp-action="Details" asp-route-id="@item.IdCircuito"><span class="glyphicon glyphicon-eye-open"></span></a> 
+                                <td class="text-right">
+<a class="btn btn-default" asp-action="Details" asp-route-id="@item.IdCircuito"><span class="glyphicon glyphicon-eye-open"></span></a> 
                                 </td>
                             </tr>
                         }

@@ -1,4 +1,4 @@
-﻿@model Bioterio.Elementoequipa
+﻿@model Bioterio.Models.Elementoequipa
 @{
     ViewData["Title"] = "Delete";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -44,7 +44,7 @@
 
     <form asp-action="Delete">
         <input type="hidden" asp-for="IdElementoEquipa" />
-        <input type="submit" value="Apagar" class="btn btn-danger" />
+        <input type="submit" value="Eliminar" class="btn btn-danger" />
         <a type="button" class="btn btn-info pull-right" asp-action="Index">Cancelarar</a>
     </form>
 </div>

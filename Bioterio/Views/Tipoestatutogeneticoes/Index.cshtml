@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>Tipos de Estatuto Genético</h2>
 
 <p>
     <a type="button" class="btn btn-info" asp-action="Create">Criar Novo Tipo de Estatuto Genético</a>
@@ -27,10 +27,10 @@
                 @Html.DisplayFor(modelItem => item.TipoEstatutoGeneticocol)
             </td>
 
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdTipoEstatutoGenetico">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdTipoEstatutoGenetico">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdTipoEstatutoGenetico">Delete</a>
+            <td class="text-right">
+<a class="btn btn-default" asp-action="Edit" asp-route-id="@item.IdTipoEstatutoGenetico">Editar</a> |
+                <a class="btn btn-default" asp-action="Details" asp-route-id="@item.IdTipoEstatutoGenetico">Detalhes</a> |
+                <a class="btn btn-default" asp-action="Delete" asp-route-id="@item.IdTipoEstatutoGenetico">Eliminar</a>
             </td>
         </tr>
 }

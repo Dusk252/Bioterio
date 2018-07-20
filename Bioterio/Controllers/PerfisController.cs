@@ -45,7 +45,29 @@ namespace Bioterio.Controllers
             {
                 return NotFound();
             }
+            var i = 0;
+            var permissions = new List<Dictionary<string, string>>();
+            var dic = new Dictionary<string, string>();
+            foreach (KeyValuePair<string, string> entry in Authorization.ApplicationUsersManager.Constants.CategoryRoles)
+            {
+                if (i % 4 == 0)
+                {
+                    if (i != 0) permissions.Add(dic);
+                    dic = new Dictionary<string, string>();
+                }
+                dic.Add(entry.Key, entry.Value);
+                i++;
+            }
+            permissions.Add(dic);
+            ViewData["permissions"] = permissions;
 
+            var roles = new List<string>();
+            var profileRoles = await _context.ProfileRole.Where(p => p.IdPerfil == id).ToListAsync();
+            foreach (ProfileRole role in profileRoles)
+            {
+                roles.Add(_roleManager.FindByIdAsync(role.RoleId).Result.Name);
+            }
+            ViewData["checked"] = roles;
             return View(Perfil);
         }
 

@@ -1,33 +1,10 @@
-﻿@model Bioterio.Models.Funcionario
+﻿@model Bioterio.Models.Perfil
 
 @{
     ViewData["Title"] = "Delete";
 }
-<h4 class="del">Não é possível apagar o registo seleccionado pois esta encontra-se associada aos seguintes registos:</h4>
+<h4 class="del">Não é possível apagar o perfil seleccionado.</h4>
 <div>
-
-    @if (Model.RegNovosAnimaisFuncionarioIdFuncionarioNavigation.Count() != 0)
-    {
-        <ul>
-            @foreach (var item in Model.Lote)
-            {
-            <li>
-                @Html.DisplayNameFor(model => item.CodigoLote): @Html.DisplayFor(model => item.CodigoLote)
-            </li>
-            }
-        </ul>
-    }
-    @if (Model.RegNovosAnimaisFuncionarioIdFuncionario1Navigation.Count() != 0)
-    {
-        <ul>
-            @foreach (var item in Model.Lote)
-            {
-            <li>
-                @Html.DisplayNameFor(model => item.CodigoLote): @Html.DisplayFor(model => item.CodigoLote)
-            </li>
-            }
-        </ul>
-    }
 
     <a type="button" class="btn btn-info" asp-action="Index">Voltar à listagem</a>
 </div>

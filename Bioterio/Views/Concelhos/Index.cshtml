@@ -4,10 +4,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>Concelhos</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a type="button" class="btn btn-info" asp-action="Create">Criar Novo Concelho</a>
 </p>
 
 @if ((bool?)TempData["deleted"] == true)
@@ -15,34 +15,44 @@
     @await Html.PartialAsync("DeleteSuccess")
 }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NomeConcelho)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Distrito)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<div class="col-md-10">
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NomeConcelho)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Distrito.NomeDistrito)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.IdConcelho">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.IdConcelho">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.IdConcelho">Delete</a>
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.NomeConcelho)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Distrito)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NomeConcelho)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Distrito.NomeDistrito)
+                    </td>
+                    <td class="text-right">
+                        <a class="btn btn-default" asp-action="Edit" asp-route-id="@item.IdConcelho">Editar</a> |
+                        <a class="btn btn-default" asp-action="Details" asp-route-id="@item.IdConcelho">Detalhes</a> |
+                        <a class="btn btn-default" asp-action="Delete" asp-route-id="@item.IdConcelho">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="col-md-2">
+    <ul class="list-group">
+        <li class="list-group-item active"><b>Localização:</b></li>
+        <li class="list-group-item"><a asp-area="" asp-controller="Concelhos" asp-action="Index">Concelhos</a></li>
+        <li class="list-group-item"><a asp-area="" asp-controller="Distritos" asp-action="Index">Distritos</a></li>
+        <li class="list-group-item"><a asp-area="" asp-controller="Localcapturas" asp-action="Index">Locais de Captura</a></li>
+    </ul>
+</div>

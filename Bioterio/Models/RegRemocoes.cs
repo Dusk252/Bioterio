@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;  //needed for Display annotation
 using System.ComponentModel;  //needed for DisplayName annotation
 
-namespace Bioterio
+namespace Bioterio.Models
 {
     public partial class RegRemocoes
     {

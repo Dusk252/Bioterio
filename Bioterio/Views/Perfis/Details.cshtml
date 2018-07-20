@@ -1,4 +1,4 @@
-﻿@model Bioterio.Models.UserViewModel
+﻿@model Bioterio.Models.Perfil
 
 @{
     ViewData["Title"] = "Details";
@@ -11,32 +11,67 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.UserName)
+            @Html.DisplayNameFor(model => model.NomePerfil)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.UserName)
+            @Html.DisplayFor(model => model.NomePerfil)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.NomeCompleto)
+            @Html.DisplayNameFor(model => model.IsDefault)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.NomeCompleto)
+            @{var d = (Model.IsDefault == 1) ? "Yes" : "No";}
+            @d
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
+            Permissões
         </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Permissions)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Permissions)
-        </dd>
+        @{
+            var roles = (List<string>)ViewData["checked"];
+            foreach (Dictionary<string, string> dic in (List<Dictionary<string, string>>)ViewData["permissions"])
+            {
+                <dd>
+                    <input type="checkbox" class="@("select_all")" disabled/> @dic.First().Value.Split(' ', 2)[1]<br />
+                    @foreach (KeyValuePair<string, string> entry in dic)
+                    {
+                        var check = ((Model.IdPerfil == 1) || (roles != null && roles.Contains(entry.Key))) ? "checked disabled" : "disabled";
+                        <span class="level2checkbox"><input type="checkbox" class="@("select_one")" name="roles" value="@entry.Key" @check> @entry.Value<br /></span>
+                    }
+                </dd>
+            }
+        }
     </dl>
+
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.IdFuncionario">Edit</a> |
+    <a class="btn btn-default" asp-action="Edit" asp-route-id="@Model.IdPerfil">Editar</a> |
     <a type="button" class="btn btn-info" asp-action="Index">Voltar à listagem</a>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(window).on('load', function () {
+            $('.select_all').each(function () {
+                if ($(this).parent().find('.select_one:checked').length === 0) {
+                    $(this).
+                        prop("indeterminate", false).
+                        prop('checked', false);
+                } else if ($(this).parent().find('.select_one:not(:checked)').length === 0) {
+                    $(this).
+                        prop("indeterminate", false).
+                        prop('checked', true);
+                } else {
+                    $(this).
+                        prop("indeterminate", true);
+                }
+            });
+            $('.select_all:not(:checked):not(:indeterminate)').each(function () {
+                $(this).parent().css("opacity", "0.3");
+            })
+            $('.select_all:indeterminate').each(function () {
+                $(this).parent().find('.select_one:not(:checked)').parent().css("opacity", "0.3");
+            });
+        });
+    </script>
+}

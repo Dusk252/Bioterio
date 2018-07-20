@@ -1,4 +1,4 @@
-﻿@model Bioterio.TipoManuntecao
+﻿@model Bioterio.Models.TipoManuntecao
 
 @{
     ViewData["Title"] = "Delete";
@@ -55,7 +55,7 @@
     @if (Model.isDeletable) {
     <form asp-action="Delete">
         <input type="hidden" asp-for="IdTManutencao" />
-        <input type="submit" value="Apagar" class="btn btn-danger" />
+        <input type="submit" value="Eliminar" class="btn btn-danger" />
         <a type="button" class="btn btn-info pull-right" asp-action="Index">Cancelarar</a>
     </form>
     }

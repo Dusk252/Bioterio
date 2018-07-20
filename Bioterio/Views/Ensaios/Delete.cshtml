@@ -1,4 +1,4 @@
-﻿@model Bioterio.Ensaio
+﻿@model Bioterio.Models.Ensaio
 
 @{
     ViewData["Title"] = "Delete";
@@ -9,7 +9,7 @@
         <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Página Inicial</a></li>
         <li class="breadcrumb-item"><a asp-controller="Projetoes" asp-action="Index">Projetos</a></li>
         <li class="breadcrumb-item"><a asp-controller="Ensaios" asp-action="Index">Ensaios</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Apagar</li>
+        <li class="breadcrumb-item active" aria-current="page">Eliminar</li>
     </ol>
 </nav>
 <h2>Eliminar</h2>
@@ -66,7 +66,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="IdEnsaio" />
-        <input type="submit" value="Apagar" class="btn btn-danger" /> 
+        <input type="submit" value="Eliminar" class="btn btn-danger" /> 
         <a type="button" class="btn btn-primary" asp-action="Index">Cancelarar</a>
     </form>
 </div>

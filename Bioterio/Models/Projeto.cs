@@ -8,7 +8,7 @@ using System.Linq;
 //needed for DisplayName annotation
 
 
-namespace Bioterio
+namespace Bioterio.Models
 {
     public partial class Projeto
     {

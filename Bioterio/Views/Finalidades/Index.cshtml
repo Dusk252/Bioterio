@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Bioterio.Finalidade>
+﻿@model IEnumerable<Bioterio.Models.Finalidade>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -33,10 +33,10 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.TFinalidade)
                 </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.IdFinalidade"><span class="glyphicon glyphicon-pencil"></span></a> |
-                    <a asp-action="Details" asp-route-id="@item.IdFinalidade"><span class="glyphicon glyphicon-eye-open"></span></a> |
-                    <a asp-action="Delete" asp-route-id="@item.IdFinalidade"><span class="glyphicon glyphicon-trash"></span></a>
+                <td class="text-right">
+<a class="btn btn-default" asp-action="Edit" asp-route-id="@item.IdFinalidade"><span class="glyphicon glyphicon-pencil"></span></a> |
+                    <a class="btn btn-default" asp-action="Details" asp-route-id="@item.IdFinalidade"><span class="glyphicon glyphicon-eye-open"></span></a> |
+                    <a class="btn btn-default" asp-action="Delete" asp-route-id="@item.IdFinalidade"><span class="glyphicon glyphicon-trash"></span></a>
                 </td>
             </tr>
         }

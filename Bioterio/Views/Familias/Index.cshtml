@@ -38,10 +38,10 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.GrupoIdGrupoNavigation.NomeGrupo)
                     </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.IdFamilia">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.IdFamilia">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.IdFamilia">Delete</a>
+                    <td class="text-right">
+<a class="btn btn-default" asp-action="Edit" asp-route-id="@item.IdFamilia">Editar</a> |
+                        <a class="btn btn-default" asp-action="Details" asp-route-id="@item.IdFamilia">Detalhes</a> |
+                        <a class="btn btn-default" asp-action="Delete" asp-route-id="@item.IdFamilia">Eliminar</a>
                     </td>
                 </tr>
             }

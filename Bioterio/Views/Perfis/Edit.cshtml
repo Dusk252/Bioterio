@@ -20,8 +20,9 @@
             </div>
             <div class="form-group">
                 @{if (Model.IsDefault != 1)
-            { <input type = "checkbox" name = "IsDefault" value = "1"><span>Selecionar este perfil como o default para a criação de utilizadores.</span> }
-                else { <span class="default-profile">Este perfil encontra-se definido como default.</span>} }<br />
+            { <input type="checkbox" name="IsDefault" value="1"><span>Selecionar este perfil como o default para a criação de utilizadores.</span> }
+    else
+    { <span class="default-profile">Este perfil encontra-se definido como default.</span>} }<br />
                 <span asp-validation-for="IsDefault" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -45,14 +46,12 @@
                 <span asp-validation-for="IdPerfil" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Submeter" class="btn btn-default" />
+                <br />
+                <input type="submit" value="Confirmar" class="btn btn-default" /> |
+                <a type="button" class="btn btn-info" asp-action="Index">Cancelar</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a type="button" class="btn btn-info" asp-action="Index">Voltar à listagem</a>
 </div>
 
 @section Scripts {

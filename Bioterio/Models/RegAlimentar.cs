@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Bioterio.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Bioterio
+namespace Bioterio.Models
 {
     public partial class RegAlimentar
     {

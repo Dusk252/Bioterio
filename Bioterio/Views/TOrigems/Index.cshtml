@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>Tipo de Origem</h2>
 
 <p>
     <a type="button" class="btn btn-info" asp-action="Create">Criar Novo Tipo de Origem</a>
@@ -25,10 +25,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.descricao)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdTOrigem">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdTOrigem">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdTOrigem">Delete</a>
+            <td class="text-right">
+<a class="btn btn-default" asp-action="Edit" asp-route-id="@item.IdTOrigem">Editar</a> |
+                <a class="btn btn-default" asp-action="Details" asp-route-id="@item.IdTOrigem">Detalhes</a> |
+                <a class="btn btn-default" asp-action="Delete" asp-route-id="@item.IdTOrigem">Eliminar</a>
             </td>
         </tr>
 }

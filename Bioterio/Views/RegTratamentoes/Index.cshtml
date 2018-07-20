@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Bioterio.RegTratamento>
+﻿@model IEnumerable<Bioterio.Models.RegTratamento>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -14,7 +14,7 @@
 </nav>
 <h2>Listagem de Tratamentos</h2>
 <p>
-    <a class="btn btn-info" asp-action="Create">Criar Registo</a>
+    <a class="btn btn-info" asp-action="Create">Criar Novo Registo de Tratamentos</a>
 </p>
 <div class="col-md-10">
 <table class="table">
@@ -68,10 +68,10 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.TanqueIdTanqueNavigation.codidenttanque)
                     </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.IdRegTra"><span class="glyphicon glyphicon-pencil"></span></a> |
-                        <a asp-action="Details" asp-route-id="@item.IdRegTra"><span class="glyphicon glyphicon-eye-open"></span></a> |
-                        <a asp-action="Delete" asp-route-id="@item.IdRegTra"><span class="glyphicon glyphicon-trash"></span></a>
+                    <td class="text-right">
+<a class="btn btn-default" asp-action="Edit" asp-route-id="@item.IdRegTra"><span class="glyphicon glyphicon-pencil"></span></a> |
+                        <a class="btn btn-default" asp-action="Details" asp-route-id="@item.IdRegTra"><span class="glyphicon glyphicon-eye-open"></span></a> |
+                        <a class="btn btn-default" asp-action="Delete" asp-route-id="@item.IdRegTra"><span class="glyphicon glyphicon-trash"></span></a>
                     </td>
                 </tr>
             }

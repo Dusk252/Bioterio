@@ -24,12 +24,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Nif" class="control-label"></label>
-                <input asp-for="Nif" class="form-control" type="text"/>
+                <input asp-for="Nif" class="form-control" type="text" />
                 <span asp-validation-for="Nif" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="NroLicenca" class="control-label"></label>
-                <input asp-for="NroLicenca" class="form-control" type="text"/>
+                <input asp-for="NroLicenca" class="form-control" type="text" />
                 <span asp-validation-for="NroLicenca" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -43,7 +43,9 @@
                 <span asp-validation-for="Telefone" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Criar" class="btn btn-default" />
+                <br />
+                <input type="submit" value="Criar" class="btn btn-default" /> |
+                <a type="button" class="btn btn-info" asp-action="Index">Voltar à listagem</a>
             </div>
         </form>
     </div>

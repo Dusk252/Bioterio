@@ -4,6 +4,7 @@
 
 body {
     padding-top: 80px;
+    overflow-x: hidden;
 }
 
 /* Wrapping element */
@@ -274,6 +275,7 @@ li > a:only-child:after {
     position: absolute;
     width: 100vw;
     left: 0;
+    top: -50px;
 }
 
 #blog {
@@ -289,4 +291,34 @@ li > a:only-child:after {
 .level2checkbox {
     position:relative;
     left: 20px;
+}
+
+.default-profile {
+    font-size: 11px;
+    color: #d7893e;
+    padding-left: 10px;
+}
+
+td {
+    vertical-align: middle !important;
+}
+
+td .btn {
+    font-size: 12px;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 70px;
+}
+
+.container-fluid {
+    max-width: 1400px;
+}
+
+#right-side .container-fluid {
+    max-width: unset;
+    padding: 0 0;
+}
+
+.body-content {
+    padding-top: 50px;
 }

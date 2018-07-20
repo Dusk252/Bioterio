@@ -1,4 +1,4 @@
-﻿@model Bioterio.TipoManuntecao
+﻿@model Bioterio.Models.TipoManuntecao
 
 @{
     ViewData["Title"] = "Create";
@@ -32,8 +32,9 @@
                 <span asp-validation-for="TManutencao" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Criar" class="btn btn-success" />
-                <a type="button" class="btn btn-info" asp-action="Index">Cancelarar</a>
+                <br />
+                <input type="submit" value="Criar" class="btn btn-default" /> |
+                <a type="button" class="btn btn-info" asp-action="Index">Voltar à listagem</a>
             </div>
         </form>
     </div>

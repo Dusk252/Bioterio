@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Bioterio.Projeto>
+﻿@model IEnumerable<Bioterio.Models.Projeto>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,7 +12,7 @@
 </nav>
 <h2>Projetos</h2>
 <div class="form-group">
-    <a class="btn btn-info" asp-action="Create">Criar novo</a>
+    <a class="btn btn-info" asp-action="Create">Criar novo Projeto</a>
 </div>
 <div class="col-md-9">
     <ul class="nav nav-tabs" style="text-align: left;">
@@ -89,10 +89,10 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.NroAnimaisAutoriz)
                                 </td>
-                                <td>
-                                    <a asp-action="Edit" asp-route-id="@item.IdProjeto"><span class="glyphicon glyphicon-pencil"></span></a>
-                                    <a asp-action="Details" asp-route-id="@item.IdProjeto"><span class="glyphicon glyphicon-eye-open"></span></a>
-                                    <a asp-action="Delete" asp-route-id="@item.IdProjeto"><span class="glyphicon glyphicon-inbox"></span></a>
+                                <td class="text-right">
+<a class="btn btn-default" asp-action="Edit" asp-route-id="@item.IdProjeto"><span class="glyphicon glyphicon-pencil"></span></a>
+                                    <a class="btn btn-default" asp-action="Details" asp-route-id="@item.IdProjeto"><span class="glyphicon glyphicon-eye-open"></span></a>
+                                    <a class="btn btn-default" asp-action="Delete" asp-route-id="@item.IdProjeto"><span class="glyphicon glyphicon-inbox"></span></a>
                                 </td>
                             </tr>
                         }
@@ -167,8 +167,8 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.NroAnimaisAutoriz)
                                 </td>
-                                <td>
-                                    <a asp-action="Details" asp-route-id="@item.IdProjeto"><span class="glyphicon glyphicon-eye-open"></span></a>
+                                <td class="text-right">
+<a class="btn btn-default" asp-action="Details" asp-route-id="@item.IdProjeto"><span class="glyphicon glyphicon-eye-open"></span></a>
 
                                 </td>
                             </tr>

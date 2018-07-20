@@ -54,10 +54,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Telefone)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdFornColect">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdFornColect">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdFornColect">Delete</a>
+            <td class="text-right">
+<a class="btn btn-default" asp-action="Edit" asp-route-id="@item.IdFornColect">Editar</a> |
+                <a class="btn btn-default" asp-action="Details" asp-route-id="@item.IdFornColect">Detalhes</a> |
+                <a class="btn btn-default" asp-action="Delete" asp-route-id="@item.IdFornColect">Eliminar</a>
             </td>
         </tr>
 }

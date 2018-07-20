@@ -1,4 +1,4 @@
-﻿@model Bioterio.Ensaio
+﻿@model Bioterio.Models.Ensaio
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -70,5 +70,5 @@
     <a type="button" class="btn btn-primary" asp-action="Index">Retornar</a>
     @if (Model.isarchived == 0)
     {
-        <a type="button" class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.IdEnsaio">Apagar Ensaio</a>}
+        <a type="button" class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.IdEnsaio">Eliminar Ensaio</a>}
     </div>

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Bioterio.TipoManuntecao>
+﻿@model IEnumerable<Bioterio.Models.TipoManuntecao>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -15,9 +15,9 @@
     </ol>
 </nav>
 
-<h2>Tipos de Manutencao</h2>
+<h2>Tipos de Manutenção</h2>
 <p>
-    <a type="button" class="btn btn-info" asp-action="Create">Criar Novo</a>
+    <a type="button" class="btn btn-info" asp-action="Create">Criar Novo Tipo de Manutenção</a>
 </p>
 <table class="table">
     <thead>
@@ -35,10 +35,10 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.TManutencao)
                 </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.IdTManutencao"><span class="glyphicon glyphicon-pencil"></span></a> |
-                    <a asp-action="Details" asp-route-id="@item.IdTManutencao"><span class="glyphicon glyphicon-eye-open"></span></a> |
-                    <a asp-action="Delete" asp-route-id="@item.IdTManutencao"><span class="glyphicon glyphicon-trash"></span></a>
+                <td class="text-right">
+<a class="btn btn-default" asp-action="Edit" asp-route-id="@item.IdTManutencao"><span class="glyphicon glyphicon-pencil"></span></a> |
+                    <a class="btn btn-default" asp-action="Details" asp-route-id="@item.IdTManutencao"><span class="glyphicon glyphicon-eye-open"></span></a> |
+                    <a class="btn btn-default" asp-action="Delete" asp-route-id="@item.IdTManutencao"><span class="glyphicon glyphicon-trash"></span></a>
                 </td>
             </tr>
         }

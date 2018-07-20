@@ -1,4 +1,4 @@
-﻿@model Bioterio.PlanoAlimentar
+﻿@model Bioterio.Models.PlanoAlimentar
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -46,21 +46,22 @@
             </div>
             <div class="form-group">
                 <a href="#" data-toggle="popover" title="Racao" data-content="Quantidade de racao em gramas"><span class="glyphicon glyphicon-question-sign"></span></a>
-                    <label asp-for="Racao" class="control-label"></label>
-                    <input asp-for="Racao" class="form-control" />
-                    <span asp-validation-for="Racao" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <a href="#" data-toggle="popover" title="RacaoDia" data-content="Numéro de vezes que o animal é alimentado"><span class="glyphicon glyphicon-question-sign"></span></a>
-                    <label asp-for="RacaoDia" class="control-label"></label>
-                    <input asp-for="RacaoDia" class="form-control" />
-                    <span asp-validation-for="RacaoDia" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Criar" class="btn btn-success" />
-                    <a type="button" class="btn btn-info" asp-action="Index">Cancelarar</a>
-                </div>
-</form>
+                <label asp-for="Racao" class="control-label"></label>
+                <input asp-for="Racao" class="form-control" />
+                <span asp-validation-for="Racao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <a href="#" data-toggle="popover" title="RacaoDia" data-content="Numéro de vezes que o animal é alimentado"><span class="glyphicon glyphicon-question-sign"></span></a>
+                <label asp-for="RacaoDia" class="control-label"></label>
+                <input asp-for="RacaoDia" class="form-control" />
+                <span asp-validation-for="RacaoDia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <br />
+                <input type="submit" value="Criar" class="btn btn-default" /> |
+                <a type="button" class="btn btn-info" asp-action="Index">Voltar à listagem</a>
+            </div>
+        </form>
     </div>
 </div>
 <script>$(document).ready(function(){

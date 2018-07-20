@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Bioterio;
 using Bioterio.Models;
 
-namespace Bioterio
+namespace Bioterio.Models
 {
     public partial class CircuitoTanque
     {
