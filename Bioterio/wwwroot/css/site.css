@@ -195,14 +195,17 @@ nav {
         text-decoration: none;
         padding: 0 15px;
         margin: 0px;
+    }
+
+#top-menu nav button {
         height: 80px;
     }
 
 #top-menu nav a:hover, #top-menu nav a:visited, #top-menu nav button:hover {
-        background-color: #808080;
-        color: #fff;
-        text-decoration: none;
-    }
+    background-color: #808080;
+    color: #fff;
+    text-decoration: none;
+}
 
     /* Hide Dropdowns by Default */
 #top-menu nav ul ul {
