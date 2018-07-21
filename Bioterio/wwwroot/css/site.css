@@ -187,20 +187,22 @@ nav {
             margin-right: -3px;
         }
 
-#top-menu nav a {
+#top-menu nav a, #top-menu nav button {
         display: block;
         color: #FFF;
         font-size: 16px;
         line-height: 80px;
         text-decoration: none;
         padding: 0 15px;
+        margin: 0px;
+        height: 80px;
     }
 
-#top-menu nav a:hover, #top-menu nav a:visited {
-            background-color: #808080;
-            color: #fff;
-            text-decoration: none;
-        }
+#top-menu nav a:hover, #top-menu nav a:visited, #top-menu nav button:hover {
+        background-color: #808080;
+        color: #fff;
+        text-decoration: none;
+    }
 
     /* Hide Dropdowns by Default */
 #top-menu nav ul ul {

@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Bioterio.Controllers
 {
-    [Authorize(Roles = "Administrator")]
     public class TOrigemsController : Controller
     {
         private readonly bd_lesContext _context;
@@ -21,12 +20,14 @@ namespace Bioterio.Controllers
         }
 
         // GET: TOrigems
+        [Authorize(Roles = "Administrator, ReadOutrasConfiguracoes")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.TOrigem.ToListAsync());
         }
 
         // GET: TOrigems/Details/5
+        [Authorize(Roles = "Administrator, ReadOutrasConfiguracoes")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -45,6 +46,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: TOrigems/Create
+        [Authorize(Roles = "Administrator, CreateOutrasConfiguracoes")]
         public IActionResult Create()
         {
             return View();
@@ -55,6 +57,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, CreateOutrasConfiguracoes")]
         public async Task<IActionResult> Create([Bind("IdTOrigem,descricao")] TOrigem tOrigem)
         {
             if (ModelState.IsValid)
@@ -67,6 +70,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: TOrigems/Edit/5
+        [Authorize(Roles = "Administrator, EditOutrasConfiguracoes")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -87,6 +91,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, EditOutrasConfiguracoes")]
         public async Task<IActionResult> Edit(int id, [Bind("IdTOrigem,descricao")] TOrigem tOrigem)
         {
             if (id != tOrigem.IdTOrigem)
@@ -118,6 +123,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: TOrigems/Delete/5
+        [Authorize(Roles = "Administrator, DeleteOutrasConfiguracoes")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -138,6 +144,7 @@ namespace Bioterio.Controllers
         // POST: TOrigems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, DeleteOutrasConfiguracoes")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var tOrigem = await _context.TOrigem.SingleOrDefaultAsync(m => m.IdTOrigem == id);

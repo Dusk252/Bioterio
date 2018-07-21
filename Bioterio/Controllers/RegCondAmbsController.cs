@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bioterio;
 using Bioterio.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bioterio.Controllers
 {
@@ -20,6 +21,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: RegCondAmbs
+        [Authorize(Roles = "Administrator, ReadRegisto")]
         public async Task<IActionResult> Index()
         {
             var bd_lesContext = _context.RegCondAmb.Include(r => r.CircuitoTanqueIdCircuitoNavigation);
@@ -27,6 +29,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: RegCondAmbs/Details/5
+        [Authorize(Roles = "Administrator, ReadRegisto")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -46,6 +49,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: RegCondAmbs/Create
+        [Authorize(Roles = "Administrator, CreateRegisto")]
         public IActionResult Create()
         {
             ViewData["CircuitoTanqueIdCircuito"] = new SelectList(_context.CircuitoTanque.Where(p => p.isarchived == 0), "IdCircuito", "CodigoCircuito");
@@ -57,6 +61,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, CreateRegisto")]
         public async Task<IActionResult> Create([Bind("IdRegCondAmb,Data,Temperatura,VolAgua,SalinidadeAgua,NivelO2,CircuitoTanqueIdCircuito")] RegCondAmb regCondAmb)
         {
             if (regCondAmb.VolAgua < 0)
@@ -87,6 +92,7 @@ namespace Bioterio.Controllers
             return t;
         }
         // GET: RegCondAmbs/Edit/5
+        [Authorize(Roles = "Administrator, EditRegisto")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -108,6 +114,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, EditRegisto")]
         public async Task<IActionResult> Edit(int id, [Bind("IdRegCondAmb,Data,Temperatura,VolAgua,SalinidadeAgua,NivelO2,CircuitoTanqueIdCircuito")] RegCondAmb regCondAmb)
         {
             if (id != regCondAmb.IdRegCondAmb)
@@ -152,6 +159,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: RegCondAmbs/Delete/5
+        [Authorize(Roles = "Administrator, DeleteRegisto")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -174,6 +182,7 @@ namespace Bioterio.Controllers
         // POST: RegCondAmbs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, DeleteRegisto")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var regCondAmb = await _context.RegCondAmb.SingleOrDefaultAsync(m => m.IdRegCondAmb == id);

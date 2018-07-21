@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bioterio;
 using Bioterio.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bioterio.Controllers
 {
@@ -20,6 +21,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: RegTratamentoes
+        [Authorize(Roles = "Administrator, ReadRegisto")]
         public async Task<IActionResult> Index()
         {
             var bd_lesContext = _context.RegTratamento.Include(r => r.AgenteTratIdAgenTraNavigation).Include(r => r.FinalidadeIdFinalidadeNavigation).Include(r => r.TanqueIdTanqueNavigation);
@@ -27,6 +29,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: RegTratamentoes/Details/5
+        [Authorize(Roles = "Administrator, ReadRegisto")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -49,6 +52,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: RegTratamentoes/Create
+        [Authorize(Roles = "Administrator, CreateRegisto")]
         public IActionResult Create()
         {
 
@@ -64,6 +68,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, CreateRegisto")]
         public async Task<IActionResult> Create([Bind("IdRegTra,Date,Tempo,Concentracao,FinalidadeIdFinalidade,AgenteTratIdAgenTra,ConcAgenTra,TanqueIdTanque")] RegTratamento regTratamento)
         {
             if (regTratamento.Tempo < 0)
@@ -89,6 +94,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: RegTratamentoes/Edit/5
+        [Authorize(Roles = "Administrator, EditRegisto")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -113,6 +119,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, EditRegisto")]
         public async Task<IActionResult> Edit(int id, [Bind("IdRegTra,Date,Tempo,Concentracao,FinalidadeIdFinalidade,AgenteTratIdAgenTra,ConcAgenTra,TanqueIdTanque")] RegTratamento regTratamento)
         {
             if (id != regTratamento.IdRegTra || regTratamento.isarchived == 1)
@@ -156,6 +163,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: RegTratamentoes/Delete/5
+        [Authorize(Roles = "Administrator, DeleteRegisto")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -180,6 +188,7 @@ namespace Bioterio.Controllers
         // POST: RegTratamentoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, DeleteRegisto")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var regTratamento = await _context.RegTratamento.SingleOrDefaultAsync(m => m.IdRegTra == id);

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bioterio;
 using Bioterio.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bioterio.Controllers
 {
@@ -20,6 +21,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: RegAlimentars
+        [Authorize(Roles = "Administrator, ReadRegisto")]
         public async Task<IActionResult> Index()
         {
             var bd_lesContext = _context.RegAlimentar.Include(r => r.PlanoAlimentarIdPlanAlimNavigation).Include(r => r.TanqueIdTanqueNavigation);
@@ -27,6 +29,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: RegAlimentars/Details/5
+        [Authorize(Roles = "Administrator, ReadRegisto")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -47,6 +50,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: RegAlimentars/Create
+        [Authorize(Roles = "Administrator, CreateRegisto")]
         public IActionResult Create()
         {
             ViewData["PlanoAlimentarIdPlanAlim"] = new SelectList(_context.PlanoAlimentar, "IdPlanAlim", "Nome");
@@ -59,6 +63,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, CreateRegisto")]
         public async Task<IActionResult> Create([Bind("IdRegAlim,Data,Peso,Sobras,PlanoAlimentarIdPlanAlim,TanqueIdTanque")] RegAlimentar regAlimentar)
         {
             if (regAlimentar.Peso < 0)
@@ -81,6 +86,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: RegAlimentars/Edit/5
+        [Authorize(Roles = "Administrator, EditRegisto")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -104,6 +110,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, EditRegisto")]
         public async Task<IActionResult> Edit(int id, [Bind("IdRegAlim,Data,Peso,Sobras,PlanoAlimentarIdPlanAlim,TanqueIdTanque")] RegAlimentar regAlimentar)
         {
             if (id != regAlimentar.IdRegAlim)
@@ -146,6 +153,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: RegAlimentars/Delete/5
+        [Authorize(Roles = "Administrator, DeleteRegisto")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -168,6 +176,7 @@ namespace Bioterio.Controllers
         // POST: RegAlimentars/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, DeleteRegisto")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var regAlimentar = await _context.RegAlimentar.SingleOrDefaultAsync(m => m.IdRegAlim == id);

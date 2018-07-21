@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Bioterio.Controllers
 {
-    [Authorize(Roles = "Administrator")]
     public class PerfisController : Controller
     {
         private readonly bd_lesContext _context;
@@ -26,12 +25,14 @@ namespace Bioterio.Controllers
         }
 
         // GET: Perfis
+        [Authorize(Roles = "Administrator, ReadUtilizador")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Perfil.ToListAsync());
         }
 
         // GET: Perfis/Details/5
+        [Authorize(Roles = "Administrator, ReadUtilizador")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -72,8 +73,8 @@ namespace Bioterio.Controllers
             return View(Perfil);
         }
 
-        [Authorize(Roles = "Administrator")]
         // GET: Perfis/Create
+        [Authorize(Roles = "Administrator, CreateUtilizador")]
         public IActionResult Create()
         {
             var i = 0;
@@ -95,12 +96,12 @@ namespace Bioterio.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Administrator")]
         // POST: Perfis/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, CreateUtilizador")]
         public async Task<IActionResult> Create([Bind("IdPerfil,NomePerfil,IsDefault")] Perfil Perfil, List<string> roles)
         {
             //validation
@@ -138,8 +139,8 @@ namespace Bioterio.Controllers
             return View(Perfil);
         }
 
-        [Authorize(Roles = "Administrator")]
         // GET: Perfis/Edit/5
+        [Authorize(Roles = "Administrator, EditUtilizador")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -182,12 +183,12 @@ namespace Bioterio.Controllers
             return View(Perfil);
         }
 
-        [Authorize(Roles = "Administrator")]
         // POST: Perfis/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, EditUtilizador")]
         public async Task<IActionResult> Edit(int id, [Bind("IdPerfil,NomePerfil,IsDefault")] Perfil Perfil, List<string> roles)
         {
             if (id != Perfil.IdPerfil)
@@ -278,8 +279,8 @@ namespace Bioterio.Controllers
             return View(Perfil);
         }
 
-        [Authorize(Roles = "Administrator")]
         // GET: Perfis/Delete/5
+        [Authorize(Roles = "Administrator, DeleteUtilizador")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -308,10 +309,10 @@ namespace Bioterio.Controllers
             return View(Perfil);
         }
 
-        [Authorize(Roles = "Administrator")]
         // POST: Perfis/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, DeleteUtilizador")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var defaultId = _context.Perfil.SingleOrDefault(m => m.IsDefault == 1).IdPerfil;

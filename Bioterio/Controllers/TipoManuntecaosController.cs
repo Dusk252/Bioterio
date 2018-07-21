@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Bioterio.Controllers
 {
-    [Authorize(Roles = "Administrator")]
     public class TipoManuntecaosController : Controller
     {
         private readonly bd_lesContext _context;
@@ -38,12 +37,14 @@ namespace Bioterio.Controllers
         }
 
         // GET: TipoManuntecaos
+        [Authorize(Roles = "Administrator, ReadOutrasConfiguracoes")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.TipoManuntecao.ToListAsync());
         }
 
         // GET: TipoManuntecaos/Details/5
+        [Authorize(Roles = "Administrator, ReadOutrasConfiguracoes")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -62,6 +63,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: TipoManuntecaos/Create
+        [Authorize(Roles = "Administrator, CreateOutrasConfiguracoes")]
         public IActionResult Create()
         {
             return View();
@@ -72,6 +74,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, CreateOutrasConfiguracoes")]
         public async Task<IActionResult> Create([Bind("IdTManutencao,TManutencao")] TipoManuntecao tipoManuntecao)
         {
             var cTCodefindany = _context.TipoManuntecao.Where(b => EF.Property<string>(b, "TManutencao").Equals(tipoManuntecao.TManutencao));
@@ -89,6 +92,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: TipoManuntecaos/Edit/5
+        [Authorize(Roles = "Administrator, EditOutrasConfiguracoes")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -109,6 +113,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, EditOutrasConfiguracoes")]
         public async Task<IActionResult> Edit(int id, [Bind("IdTManutencao,TManutencao")] TipoManuntecao tipoManuntecao)
         {
             if (id != tipoManuntecao.IdTManutencao)
@@ -144,6 +149,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: TipoManuntecaos/Delete/5
+        [Authorize(Roles = "Administrator, DeleteOutrasConfiguracoes")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -165,6 +171,7 @@ namespace Bioterio.Controllers
         // POST: TipoManuntecaos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, DeleteOutrasConfiguracoes")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var tipoManuntecao = await _context.TipoManuntecao.SingleOrDefaultAsync(m => m.IdTManutencao == id);

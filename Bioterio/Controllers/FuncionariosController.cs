@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Bioterio.Controllers
 {
-    [Authorize(Roles = "Administrator")]
     public class FuncionariosController : Controller
     {
         private readonly bd_lesContext _context;
@@ -27,6 +26,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Funcionarios
+        [Authorize(Roles = "Administrator, ReadUtilizador")]
         public async Task<IActionResult> Index()
         {
             var func_list = await _context.Funcionario
@@ -44,6 +44,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Funcionarios/Details/5
+        [Authorize(Roles = "Administrator, ReadUtilizador")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -67,6 +68,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Funcionarios/Create
+        [Authorize(Roles = "Administrator, CreateUtilizador")]
         public IActionResult Create()
         {
             ViewData["IdPerfil"] = new SelectList(_context.Perfil, "IdPerfil", "NomePerfil").Prepend(new SelectListItem() { Text = "---Selecione um Perfil---", Value = "" });
@@ -78,6 +80,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, CreateUtilizador")]
         public async Task<IActionResult> Create(RegisterViewModel registerViewModel)
         {
             var user2 = await _userManager.FindByNameAsync(registerViewModel.UserName);
@@ -119,6 +122,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Funcionarios/Edit/5
+        [Authorize(Roles = "Administrator, EditUtilizador")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -146,6 +150,7 @@ namespace Bioterio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, EditUtilizador")]
         public async Task<IActionResult> Edit(int id, UserViewModel userViewModel)
         {
             var func = await _context.Funcionario
@@ -203,6 +208,7 @@ namespace Bioterio.Controllers
         }
 
         // GET: Funcionarios/Delete/5
+        [Authorize(Roles = "Administrator, DeleteUtilizador")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -236,6 +242,7 @@ namespace Bioterio.Controllers
         // POST: Funcionarios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, DeleteUtilizador")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var funcionario = await _context.Funcionario.SingleOrDefaultAsync(m => m.IdFuncionario == id);

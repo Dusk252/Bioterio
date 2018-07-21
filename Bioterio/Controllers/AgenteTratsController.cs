@@ -38,7 +38,6 @@ namespace Bioterio.Controllers
         }
 
         // GET: AgenteTrats
-        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.AgenteTrat.ToListAsync());
